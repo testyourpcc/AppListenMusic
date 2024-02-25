@@ -62,8 +62,8 @@ public class LoginView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email, password, rpPassword;
-                email = String.valueOf(emailInput.getText());
-                password = String.valueOf(passwordInput.getText());
+                email = emailInput.getText().toString();
+                password = passwordInput.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(LoginView.this, "Enter email", Toast.LENGTH_SHORT);
@@ -80,11 +80,17 @@ public class LoginView extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginView.this, "Login successfully.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), RegisterSuccess.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    if (user.isEmailVerified()) {
+                                        Toast.makeText(LoginView.this, "Login successfully.",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), RegisterSuccess.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(LoginView.this, "Please verify your email first.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
                                     Toast.makeText(LoginView.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();

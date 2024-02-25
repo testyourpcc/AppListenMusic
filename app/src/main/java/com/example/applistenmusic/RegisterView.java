@@ -96,6 +96,7 @@ public class RegisterView extends AppCompatActivity {
                                 if (task.isSuccessful()) {
 
                                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                    firebaseUser.sendEmailVerification();
                                     UserInfo userInfo = new UserInfo(name,email,password);
                                     reference.child("user").child(name).setValue(userInfo);
 
