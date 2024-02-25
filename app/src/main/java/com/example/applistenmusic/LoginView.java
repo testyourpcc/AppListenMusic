@@ -84,7 +84,7 @@ public class LoginView extends AppCompatActivity {
                                     if (user.isEmailVerified()) {
                                         Toast.makeText(LoginView.this, "Login successfully.",
                                                 Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), RegisterSuccess.class);
+                                        Intent intent = new Intent(getApplicationContext(), AccountInfo.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
