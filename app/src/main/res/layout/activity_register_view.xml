@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1A0437"
+    android:orientation="vertical"
+    tools:context=".RegisterView">
+
+    <ImageView
+        android:id="@+id/eclipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ellipse" />
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:fontFamily="@font/inknutantiqua_bold"
+        android:textColor="@color/white"
+        android:paddingTop="90sp"
+        android:text="REGISTER" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/eclipse"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="Enter your name"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameLabel"
+            android:background="@drawable/edit_text_rounded_corner"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="8dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/phoneLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editUsername"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="Enter your email address"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_rounded_corner"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/phoneLabel"
+            android:text="" />
+        <TextView
+            android:id="@+id/registerPasswordLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editEmail"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="Password"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/editRegisterPasswordLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerPasswordLabel"
+            android:background="@drawable/edit_text_rounded_corner"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:text="" />
+        <TextView
+            android:id="@+id/confirmPasswordLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editRegisterPasswordLabel"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="Repeat Password"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/editConfirmPasswordLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confirmPasswordLabel"
+            android:background="@drawable/edit_text_rounded_corner"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editConfirmPasswordLabel"
+            android:fontFamily="@font/inriasans_regular"
+            android:text="Have an account?"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/loginLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editConfirmPasswordLabel"
+            android:layout_toEndOf="@+id/question"
+            android:fontFamily="@font/inriasans_regular"
+            android:text=" Login"
+            android:textColor="#FB0D0D"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/RegisterBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginLabel"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="@font/inriaserif_regular"
+            android:paddingVertical="5dp"
+            android:text="Register"
+            android:textSize="25sp" />
+
+        <RelativeLayout
+            android:id="@+id/orWith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/RegisterBtn">
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="7dp"
+                android:layout_toStartOf="@+id/orwith"
+                android:background="#B2A6A6" />
+
+            <TextView
+                android:id="@+id/orwith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/inriasans_regular"
+                android:paddingHorizontal="15dp"
+                android:text="Or With"
+                android:textColor="#B2A6A6" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_marginTop="7dp"
+                android:layout_toEndOf="@+id/orwith"
+                android:background="#B2A6A6" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/orWith"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp">
+
+            <ImageButton
+                android:id="@+id/google"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/circle"
+                android:src="@drawable/google" />
+
+            <ImageButton
+                android:id="@+id/facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle"
+                android:src="@drawable/facebook" />
+
+            <ImageButton
+                android:id="@+id/tiktok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/circle"
+                android:src="@drawable/tiktok" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

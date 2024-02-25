@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A0437"
+    android:orientation="vertical"
+    tools:context=".RegisterSuccess">
+
+    <ImageView
+        android:id="@+id/eclipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ellipse" />
+
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:fontFamily="@font/inknutantiqua_bold"
+        android:textColor="@color/white"
+        android:paddingTop="90sp"
+        android:text="User dashboard" />
+    <ImageView
+        android:id="@+id/otpIcon"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@+id/eclipse"
+        android:src="@drawable/baseline_ad_units_24" />
+    <ImageView
+        android:id="@+id/phoneIcon"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/otpIcon"
+        android:src="@drawable/baseline_password_24" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneIcon"
+        android:layout_margin="20dp">
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inriasans_regular"
+            android:textColor="#ffffff"
+            android:textSize="35dp"
+            android:layout_marginHorizontal="15dp"
+            android:text="Hello!" />
+        <TextView
+            android:id="@+id/userAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inriasans_regular"
+            android:textColor="#ffffff"
+            android:textSize="35dp"
+            android:layout_below="@+id/hello"
+            android:layout_marginHorizontal="15dp"
+            android:text="Your account" />
+
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userAccount"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="30sp"
+            android:fontFamily="@font/inriaserif_regular"
+            android:text="Login" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

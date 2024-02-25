@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A0437"
+    android:orientation="vertical"
+    tools:context=".LoginAndRegister">
+
+    <ImageView
+        android:id="@+id/eclipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ellipse" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:fontFamily="@font/inknutantiqua_bold"
+        android:textColor="@color/white"
+        android:paddingTop="90sp"
+        android:text="WELLCOME" />
+    <ImageView
+        android:id="@+id/retangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15sp"
+        android:layout_weight="1"
+        android:layout_below="@+id/eclipse"
+        android:src="@drawable/rectangle" />
+
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/retangle"
+        android:gravity="center"
+        android:textSize="57sp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="10sp"
+        android:fontFamily="@font/islandmoments_regular"
+        android:text="Hi, Welcome back!" />
+
+    <LinearLayout
+        android:id="@+id/LoginAndRegisterBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="50dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/LoginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/inriaserif_regular"
+            android:textSize="25sp"
+            android:text="Login"/>
+
+        <Button
+            android:id="@+id/RegisterBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/inriaserif_regular"
+            android:textSize="25sp"
+            android:text="Register"/>
+    </LinearLayout>
+
+</RelativeLayout>

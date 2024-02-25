@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37669953608",
+    "project_id": "applistenmusic-b4e45",
+    "storage_bucket": "applistenmusic-b4e45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37669953608:android:0ce40e9bfe648a5008f87d",
+        "android_client_info": {
+          "package_name": "com.example.applistenmusic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNu7kZlsPwcpZu1hNc42eRjSyz2sHFXcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
