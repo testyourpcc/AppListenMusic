@@ -27,17 +27,6 @@ public class LoginView extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_view);
@@ -80,17 +69,11 @@ public class LoginView extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    if (user.isEmailVerified()) {
                                         Toast.makeText(LoginView.this, "Login successfully.",
                                                 Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), AccountInfo.class);
                                         startActivity(intent);
                                         finish();
-                                    } else {
-                                        Toast.makeText(LoginView.this, "Please verify your email first.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
                                 } else {
                                     Toast.makeText(LoginView.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();

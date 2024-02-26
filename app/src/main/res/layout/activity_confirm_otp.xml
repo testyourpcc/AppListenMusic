@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A0437"
+    android:orientation="vertical"
+    tools:context=".ConfirmPhoneNumber">
+
+    <ImageView
+        android:id="@+id/eclipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="-10dp"
+        android:src="@drawable/ellipse" />
+
+    <TextView
+        android:id="@+id/confirmText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:fontFamily="@font/inknutantiqua_bold"
+        android:textColor="@color/white"
+        android:paddingTop="90sp"
+        android:text="CONFIRM" />
+    <ImageView
+        android:id="@+id/otpIcon"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@+id/eclipse"
+        android:src="@drawable/baseline_ad_units_24" />
+    <ImageView
+        android:id="@+id/phoneIcon"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/otpIcon"
+        android:src="@drawable/baseline_password_24" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneIcon"
+        android:layout_margin="20dp">
+        <TextView
+            android:id="@+id/otpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inriasans_regular"
+            android:textColor="#ffffff"
+            android:textSize="35dp"
+            android:text="Enter OTP sent to your Email" />
+
+        <EditText
+            android:id="@+id/editOTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/otpText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_rounded_corner"
+            android:ems="10"
+            android:inputType="number"
+            android:padding="15dp"
+            android:hint="OTP" />
+
+        <Button
+            android:id="@+id/confirmBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editOTP"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="30sp"
+            android:fontFamily="@font/inriaserif_regular"
+            android:text="Confirm" />
+
+        <TextView
+            android:id="@+id/resendOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/confirmBtn"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Resend OTP in 30 seconds"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</RelativeLayout>

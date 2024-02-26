@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppListenMusic"
         tools:targetApi="31">
         <activity
+            android:name=".ConfirmOtp"
+            android:exported="false" />
+        <activity
             android:name=".AccountInfo"
             android:exported="false" />
         <activity

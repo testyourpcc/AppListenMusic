@@ -114,7 +114,7 @@
                 android:textSize="26sp"
                 android:textColor="#ffffff"
                 android:fontFamily="@font/inriasans_regular"
-                android:text="TextView" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/emailText"
@@ -125,7 +125,7 @@
                 android:fontFamily="@font/inriasans_regular"
                 android:textColor="#ffffff"
                 android:layout_marginTop="20dp"
-                android:text="TextView" />
+                android:text="" />
         </LinearLayout>
 
 

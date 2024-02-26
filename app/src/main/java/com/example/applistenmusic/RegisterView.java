@@ -30,16 +30,6 @@ public class RegisterView extends AppCompatActivity {
     DatabaseReference reference;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_view);
@@ -95,8 +85,6 @@ public class RegisterView extends AppCompatActivity {
                             @Override public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                                    firebaseUser.sendEmailVerification();
                                     UserInfo userInfo = new UserInfo(name,email,password);
                                     reference.child("user").child(name).setValue(userInfo);
 
