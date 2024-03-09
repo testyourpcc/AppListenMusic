@@ -18,6 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class LoginView extends AppCompatActivity {
 
@@ -25,6 +32,8 @@ public class LoginView extends AppCompatActivity {
     Button loginBtn;
     TextView registerText;
     private FirebaseAuth mAuth;
+
+    UserInfo user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +72,15 @@ public class LoginView extends AppCompatActivity {
                     Toast.makeText(LoginView.this, "Enter password", Toast.LENGTH_SHORT);
                     return;
                 }
-
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                        Toast.makeText(LoginView.this, "Login successfully.",
-                                                Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), AccountInfo.class);
-                                        startActivity(intent);
-                                        finish();
-                                } else {
+                                    Intent intent = new Intent(LoginView.this, AccountInfo.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else {
                                     Toast.makeText(LoginView.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
 

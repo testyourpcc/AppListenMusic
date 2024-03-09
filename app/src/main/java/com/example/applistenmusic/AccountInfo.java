@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AccountInfo extends AppCompatActivity {
-    TextView nameText, emailText;
+    TextView nameText, emailText, uploadText;
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
@@ -33,6 +33,7 @@ public class AccountInfo extends AppCompatActivity {
 
         nameText = findViewById(R.id.nameText);
         emailText = findViewById(R.id.emailText);
+        uploadText = findViewById(R.id.uploadImgText);
 
         user = auth.getCurrentUser();
 
@@ -44,18 +45,27 @@ public class AccountInfo extends AppCompatActivity {
             getData();
             emailText.setText(user.getEmail());
         }
+        uploadText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(AccountInfo.this, LoginAndRegister.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     void getData(){
         reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("user").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child("user").child(auth.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    nameText.setText(String.valueOf(task.getResult().getChildren().iterator().next().getKey()));
+                    nameText.setText(String.valueOf(task.getResult().getValue()));
                 }
             }
         });

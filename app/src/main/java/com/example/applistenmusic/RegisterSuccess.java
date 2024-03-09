@@ -14,9 +14,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterSuccess extends AppCompatActivity {
     FirebaseAuth auth;
-    Button logoutBtn;
+    Button continueBtn;
     FirebaseUser user;
     TextView userInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,7 @@ public class RegisterSuccess extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        logoutBtn = findViewById(R.id.logoutBtn);
+        continueBtn = findViewById(R.id.continueBtn);
         userInfo = findViewById(R.id.userAccount);
         user = auth.getCurrentUser();
 
@@ -35,11 +36,10 @@ public class RegisterSuccess extends AppCompatActivity {
         }else{
             userInfo.setText(user.getEmail());
         }
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), LoginView.class);
+                Intent intent = new Intent(getApplicationContext(), AccountInfo.class);
                 startActivity(intent);
                 finish();
             }

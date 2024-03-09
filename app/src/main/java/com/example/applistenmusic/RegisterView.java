@@ -21,6 +21,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.util.Calendar;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
 public class RegisterView extends AppCompatActivity {
     private FirebaseAuth mAuth;
     TextView loginText;
@@ -28,6 +43,7 @@ public class RegisterView extends AppCompatActivity {
     Button registerBtn;
 
     DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +76,11 @@ public class RegisterView extends AppCompatActivity {
 
 
                 String name,email, password, rpPassword;
+                boolean status = false;
                 email = emailInput.getText().toString();
                 password = passwordInput.getText().toString();
                 rpPassword = rpPasswordInput.getText().toString();
                 name = nameInput.getText().toString();
-
-
 
                 if(TextUtils.isEmpty(email)){
                     Toast.makeText(RegisterView.this, "Enter email", Toast.LENGTH_SHORT);
@@ -80,29 +95,77 @@ public class RegisterView extends AppCompatActivity {
                     Toast.makeText(RegisterView.this, "Password confirmation does not match", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                String otp = generateOTP();
+                sendEmail(email,otp);
 
-                                    UserInfo userInfo = new UserInfo(name,email,password);
-                                    reference.child("user").child(name).setValue(userInfo);
 
-                                    Toast.makeText(RegisterView.this, "Account created.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), RegisterSuccess.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(RegisterView.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                Intent intent = new Intent(RegisterView.this, ConfirmOtp.class);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("password",password);
+                intent.putExtra("otp",otp);
+
+                startActivity(intent);
+                finish();
             }
         });
 
 
+    }
+
+        public String generateOTP() {
+            Random random = new Random();
+            StringBuilder otp = new StringBuilder();
+
+            for (int i = 0; i < 6; i++) {
+                otp.append(random.nextInt(10));
+            }
+            return otp.toString();
+        }
+
+    public void sendEmail(String email, String num){
+        try {
+            String stringSenderEmail = "ngoductuanvn2@gmail.com";
+            String stringReceiverEmail = email;
+            String stringPasswordSenderEmail = "fphdnfbybudsdpep";
+            String stringHost = "smtp.gmail.com";
+            Properties properties = System.getProperties();
+            properties.put("mail.smtp.host", stringHost);
+            properties.put("mail.smtp.port", "465");
+            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+            javax.mail.Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(stringSenderEmail, stringPasswordSenderEmail);
+                }
+            });
+
+            MimeMessage mimeMessage = new MimeMessage(session);
+            mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(stringReceiverEmail));
+
+            mimeMessage.setSubject("Subject: Verify Email");
+            mimeMessage.setText("Your otp is: " + num);
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(mimeMessage);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

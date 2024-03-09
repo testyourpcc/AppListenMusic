@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class UserInfo {
     String name, email, password;
+
     public String getName() {
         return name;
     }
