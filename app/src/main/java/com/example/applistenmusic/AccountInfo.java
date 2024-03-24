@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,8 @@ public class AccountInfo extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference reference;
 
+    ImageView Home, Search, Play, Account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,11 @@ public class AccountInfo extends AppCompatActivity {
         nameText = findViewById(R.id.nameText);
         emailText = findViewById(R.id.emailText);
         uploadText = findViewById(R.id.uploadImgText);
+        Home = findViewById(R.id.imageViewHome);
+        Search = findViewById(R.id.imageViewSearch);
+        Play = findViewById(R.id.imageViewHeadPhone);
+        Account = findViewById(R.id.imageViewAccount);
+
 
         user = auth.getCurrentUser();
 
@@ -51,6 +59,36 @@ public class AccountInfo extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(AccountInfo.this, LoginAndRegister.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(com.example.applistenmusic.AccountInfo.this,Home.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+
+        Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(AccountInfo.this, SearchView.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+        Play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(com.example.applistenmusic.AccountInfo.this, PlayView.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
             }
         });

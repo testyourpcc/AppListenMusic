@@ -32,7 +32,7 @@ public class SplashView extends AppCompatActivity {
             public void run() {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 if(currentUser != null){
-                    startActivity(new Intent(SplashView.this, AccountInfo.class));
+                    startActivity(new Intent(SplashView.this, Home.class));
                     finish();
                 }else{
                 startActivity(new Intent(SplashView.this, LoginAndRegister.class));

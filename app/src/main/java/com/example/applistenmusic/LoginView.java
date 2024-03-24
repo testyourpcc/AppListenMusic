@@ -77,7 +77,8 @@ public class LoginView extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(LoginView.this, AccountInfo.class);
+                                    //Intent intent = new Intent(LoginView.this, AccountInfo.class);
+                                    Intent intent = new Intent(LoginView.this, Home.class);
                                     startActivity(intent);
                                     finish();
                                 }else {

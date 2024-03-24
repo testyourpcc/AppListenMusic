@@ -30,6 +30,15 @@
             android:name=".RegisterView"
             android:exported="false" />
         <activity
+            android:name=".Home"
+            android:exported="false" />
+        <activity
+            android:name=".PlayView"
+            android:exported="false" />
+        <activity
+            android:name=".SearchView"
+            android:exported="false" />
+        <activity
             android:name=".SplashView"
             android:exported="true">
             <intent-filter>
