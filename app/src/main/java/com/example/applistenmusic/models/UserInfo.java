@@ -1,4 +1,4 @@
-package com.example.applistenmusic;
+package com.example.applistenmusic.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

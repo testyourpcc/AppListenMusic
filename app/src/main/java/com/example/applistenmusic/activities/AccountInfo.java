@@ -1,4 +1,4 @@
-package com.example.applistenmusic;
+package com.example.applistenmusic.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.applistenmusic.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,7 +67,7 @@ public class AccountInfo extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.AccountInfo.this,Home.class);
+                Intent playIntent = new Intent(AccountInfo.this,Home.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
@@ -86,7 +86,7 @@ public class AccountInfo extends AppCompatActivity {
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.AccountInfo.this, PlayView.class);
+                Intent playIntent = new Intent(AccountInfo.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();

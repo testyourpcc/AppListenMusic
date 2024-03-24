@@ -1,4 +1,4 @@
-package com.example.applistenmusic;
+package com.example.applistenmusic.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.applistenmusic.R;
 
 public class PlayView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
@@ -21,9 +23,9 @@ public class PlayView extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.PlayView.this, Home.class);
+                Intent playIntent = new Intent(PlayView.this, Home.class);
                 startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
             }
         });
@@ -40,9 +42,9 @@ public class PlayView extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.PlayView.this, AccountInfo.class);
+                Intent playIntent = new Intent(PlayView.this, AccountInfo.class);
                 startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
         });

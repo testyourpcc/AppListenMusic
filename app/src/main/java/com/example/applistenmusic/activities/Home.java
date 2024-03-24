@@ -1,15 +1,14 @@
-package com.example.applistenmusic;
+package com.example.applistenmusic.activities;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.applistenmusic.R;
 
 public class Home extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
@@ -27,14 +26,14 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
                 Intent playIntent = new Intent(Home.this, SearchView.class);
                 startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
         });
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.Home.this, PlayView.class);
+                Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -43,7 +42,7 @@ public class Home extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(com.example.applistenmusic.Home.this, AccountInfo.class);
+                Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, AccountInfo.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#1A0437"
     android:orientation="vertical"
-    tools:context=".RegisterSuccess">
+    tools:context=".activities.RegisterSuccess">
 
     <ImageView
         android:id="@+id/eclipse"

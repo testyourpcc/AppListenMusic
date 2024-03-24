@@ -1,4 +1,4 @@
-package com.example.applistenmusic;
+package com.example.applistenmusic.activities;
 
 
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.applistenmusic.R;
 
 public class SearchView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
@@ -22,7 +24,7 @@ public class SearchView extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchView.this, PlayView.class);
+                Intent playIntent = new Intent(SearchView.this, Home.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
