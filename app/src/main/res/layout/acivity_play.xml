@@ -9,133 +9,157 @@
     tools:context=".activities.RegisterSuccess">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="68dp"
-        android:layout_height="63dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
-        app:srcCompat="@drawable/rectangle" />
 
-    <TextView
-        android:id="@+id/textViewMusicplayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="83dp"
-        android:layout_marginTop="15dp"
-        android:text="Nghe nhạc"
-        android:textColor="@color/white"
-        android:textSize="28sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignLeft="@+id/textViewMusicplayer"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="258dp"
-        android:layout_marginTop="12dp"
-        app:srcCompat="@drawable/baseline_dehaze_24" />
-
-    <TextView
-        android:id="@+id/textViewTrendingNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/textViewMusicplayer"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="71dp"
-        android:text="Trending now"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pagerTrendingNow"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignTop="@id/textViewTrendingNow"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_song_layout" />
-
-    <TextView
-        android:id="@+id/textViewArtist"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/view_pagerTrendingNow"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="71dp"
-        android:text="Artist"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:background="#1A0437"> <!-- Màu tím với độ trong suốt 50% -->
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pagerArtist"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignTop="@id/textViewArtist"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_artist_layout" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/textViewKPOP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/view_pagerArtist"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="71dp"
-        android:text="KPOP"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+            <!-- Nút trở về -->
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_icon"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="onBackPressed"
+                android:contentDescription="Go back to previous screen" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pagerKPOP"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignTop="@id/textViewKPOP"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_artist_layout" />
 
-    <TextView
-        android:id="@+id/textViewUSUK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/view_pagerKPOP"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="71dp"
-        android:text="USUK"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/navigationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Navigation Menu"
+                android:onClick="openNavigationDrawer"
+                android:layout_gravity="end"
+                android:padding="16dp" /> <!-- Adjust padding as needed -->
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pagerUSUK"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignTop="@id/textViewUSUK"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/list_artist_layout" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <ImageView
+            android:id="@+id/discImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/disc_placeholder"
+            android:padding="40dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <ImageView
+            android:id="@+id/heartIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart_icon"
+            app:layout_constraintTop_toBottomOf="@id/discImageView"
+            app:layout_constraintStart_toStartOf="@id/discImageView"
+            app:layout_constraintEnd_toEndOf="@id/discImageView"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="16dp" /> <!-- Adjust margin as needed -->
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/heartIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:thumb="@drawable/seekbar_thumb"
+            android:progress="0"
+            android:max="100" />
+
+        <LinearLayout
+            android:id="@+id/controlButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/seekBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/shuffleButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/shuffle_icon" /> <!-- Hình ảnh nút trộn bài -->
+
+            <ImageView
+                android:id="@+id/previousButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/previous_icon" /> <!-- Thay đổi hình ảnh của nút trước -->
+
+            <ImageView
+                android:id="@+id/playButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/play_icon" /> <!-- Thay đổi hình ảnh của nút play -->
+
+            <ImageView
+                android:id="@+id/nextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/next_icon" /> <!-- Thay đổi hình ảnh của nút sau -->
+
+            <ImageView
+                android:id="@+id/repeatButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/repeat_icon" /> <!-- Hình ảnh nút lặp bài -->
+
+        </LinearLayout>
+
+
+
+
+        <!-- Lyric View -->
+        <TextView
+            android:id="@+id/lyricTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/controlButtonsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Lyric View"
+            android:visibility="gone" />
+
+        <!-- Track List View -->
+        <ListView
+            android:id="@+id/trackListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/lyricTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

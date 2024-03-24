@@ -60,7 +60,6 @@ public class ConfirmOtp extends AppCompatActivity {
 
                                         UserInfo userInfo = new UserInfo(name,email,password);
                                         reference.child("user").child(mAuth.getUid()).setValue(userInfo);
-
                                         Toast.makeText(ConfirmOtp.this, "Account created",
                                                 Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(ConfirmOtp.this, RegisterSuccess.class);
