@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import android.media.AudioAttributes;
 
@@ -22,21 +23,22 @@ public class PlayView extends AppCompatActivity {
     private ImageView playButton, songImage;
     private boolean isPlaying = false;
 
-    private final String AUDIO_URL = "https://www.ashleecadell.com/xyzstorelibrary/01-01-%20Dear%20Future%20Self%20(Hands%20Up)%20%5bfeat%20Wyclef%20Jean%5d.mp3";
-
+    private String AUDIO_URL = "https://www.ashleecadell.com/xyzstorelibrary/01-01-%20Dear%20Future%20Self%20(Hands%20Up)%20%5bfeat%20Wyclef%20Jean%5d.mp3";
+    private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
-        String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+
 
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
                 .load(imageUrl)
                 .transform(new RoundedCornersTransformation(50, 0))
                 .into(songImage);
+
         mediaPlayer = new MediaPlayer();
 
         // Đặt các thuộc tính âm thanh cho MediaPlayer
@@ -49,6 +51,7 @@ public class PlayView extends AppCompatActivity {
             public void onClick(View v) {
                 if (!isPlaying) {
                     startPlaying();
+                    playButton.setImageResource(R.drawable.ic_pause_40px);
                 } else {
                     stopPlaying();
                 }
