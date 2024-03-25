@@ -1,17 +1,28 @@
 package com.example.applistenmusic.activities;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.media.AudioAttributes;
 
+import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+
+import java.io.IOException;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class PlayView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
+    private MediaPlayer mediaPlayer;
+    private ImageView playButton, songImage;
+    private boolean isPlaying = false;
 
+    private final String AUDIO_URL = "https://www.ashleecadell.com/xyzstorelibrary/01-01-%20Dear%20Future%20Self%20(Hands%20Up)%20%5bfeat%20Wyclef%20Jean%5d.mp3";
 
 
     @Override
@@ -19,6 +30,32 @@ public class PlayView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
+        String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+
+        // Sử dụng Glide để tải và hiển thị ảnh từ URL
+        Glide.with(this)
+                .load(imageUrl)
+                .transform(new RoundedCornersTransformation(50, 0))
+                .into(songImage);
+        mediaPlayer = new MediaPlayer();
+
+        // Đặt các thuộc tính âm thanh cho MediaPlayer
+        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                .setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build());
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isPlaying) {
+                    startPlaying();
+                } else {
+                    stopPlaying();
+                }
+            }
+        });
+
+
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,10 +89,41 @@ public class PlayView extends AppCompatActivity {
 
     }
 
+    private void startPlaying() {
+        try {
+            mediaPlayer.setDataSource(AUDIO_URL);
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                    isPlaying = true;
+                }
+            });
+            mediaPlayer.prepareAsync(); // Chuẩn bị mediaPlayer bất đồng bộ
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopPlaying() {
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        isPlaying = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release(); // Giải phóng tài nguyên khi không cần thiết
+    }
+
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
+        playButton = findViewById(R.id.playButton);
+        songImage = findViewById(R.id.discImageView);
     }
 }

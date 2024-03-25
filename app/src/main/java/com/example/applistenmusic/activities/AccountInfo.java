@@ -97,7 +97,8 @@ public class AccountInfo extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
 
         reference.child("user").child(auth.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
+
+                @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
