@@ -3,7 +3,10 @@ package com.example.applistenmusic.activities;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -12,12 +15,17 @@ import android.media.AudioAttributes;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
-
+import android.view.GestureDetector;
 import java.io.IOException;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class PlayView extends AppCompatActivity {
+    private GestureDetector gestureDetector;
+    View mainView;
+    private Animation slideInLeftAnimation;
+    private Animation slideOutRightAnimation;
+
     ImageView Feature, Home,Search,Play,Account;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
@@ -31,6 +39,7 @@ public class PlayView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
+
 
 
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
@@ -88,7 +97,12 @@ public class PlayView extends AppCompatActivity {
                 finish();
             }
         });
-
+        mainView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
 
     }
 
@@ -128,5 +142,47 @@ public class PlayView extends AppCompatActivity {
         Account = findViewById(R.id.imageViewAccount);
         playButton = findViewById(R.id.playButton);
         songImage = findViewById(R.id.discImageView);
+        mainView = findViewById(R.id.PlayView);
+        gestureDetector = new GestureDetector(this, new GestureListener());
+
+
+    }
+
+    class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_THRESHOLD = 50;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 50;
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            boolean result = false;
+            try {
+                float diffX = e2.getX() - e1.getX();
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX < 0) {
+                        // Vuốt sang trái, chuyển sang một activity khác
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                        Intent intent = new Intent(PlayView.this, LyricView.class);
+                        startActivity(intent);
+                        result = true;
+                    }  else {
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        // Vuốt sang phải, chuyển sang activity khác
+                        Intent intent = new Intent(PlayView.this, SongDetailView.class);
+                        startActivity(intent);
+                        result = true;
+                    }
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            return result;
+        }
     }
 }
+
