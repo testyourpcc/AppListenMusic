@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class AccountInfo extends AppCompatActivity {
-    TextView nameText, emailText, uploadText;
+    TextView nameText, emailText, uploadText, logoutText, resetPasswdText;
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference;
@@ -41,19 +41,22 @@ public class AccountInfo extends AppCompatActivity {
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
+        logoutText = findViewById(R.id.logoutText);
+        resetPasswdText = findViewById(R.id.resetPasswdText);
 
 
         user = auth.getCurrentUser();
+
 
         if(user==null){
             Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
             startActivity(intent);
             finish();
         }else{
-            getData();
+            nameText.setText(user.getDisplayName());
             emailText.setText(user.getEmail());
         }
-        uploadText.setOnClickListener(new View.OnClickListener() {
+        logoutText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
@@ -63,6 +66,17 @@ public class AccountInfo extends AppCompatActivity {
                 finish();
             }
         });
+
+        resetPasswdText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountInfo.this, ResetPasswd.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,22 +104,6 @@ public class AccountInfo extends AppCompatActivity {
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
-            }
-        });
-    }
-    void getData(){
-        reference = FirebaseDatabase.getInstance().getReference();
-
-        reference.child("user").child(auth.getUid()).child("name").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-                @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    nameText.setText(String.valueOf(task.getResult().getValue()));
-                }
             }
         });
     }

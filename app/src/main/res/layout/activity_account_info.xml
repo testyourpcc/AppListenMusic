@@ -127,6 +127,20 @@
                 android:layout_marginTop="20dp"
                 android:text="" />
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:id="@+id/logoutText"
+            android:textSize="30sp"
+            android:textColor="#ffffff"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset password"
+            android:id="@+id/resetPasswdText"
+            android:textSize="30sp"
+            android:textColor="#ffffff"/>
 
 
     </LinearLayout>
