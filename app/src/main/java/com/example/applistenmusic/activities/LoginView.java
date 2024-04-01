@@ -24,7 +24,7 @@ public class LoginView extends AppCompatActivity {
 
     EditText emailInput, passwordInput;
     Button loginBtn;
-    TextView registerText;
+    TextView registerText,forgotPasswd;
     private FirebaseAuth mAuth;
 
     UserInfo user;
@@ -40,6 +40,7 @@ public class LoginView extends AppCompatActivity {
         passwordInput = findViewById(R.id.editPassword);
         loginBtn = findViewById(R.id.loginBtn);
         registerText = findViewById(R.id.register);
+        forgotPasswd = findViewById(R.id.forgot);
 
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,13 @@ public class LoginView extends AppCompatActivity {
                                 }
                             }
                         });
+            }
+        });
+        forgotPasswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginView.this, ForgotPassword.class);
+                startActivity(intent);
             }
         });
     }

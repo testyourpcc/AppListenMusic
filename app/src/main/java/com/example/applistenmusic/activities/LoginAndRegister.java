@@ -28,7 +28,6 @@ public class LoginAndRegister extends AppCompatActivity {
             public void onClick(View v) {
                 Intent loginIntent = new Intent(LoginAndRegister.this, LoginView.class);
                 startActivity(loginIntent);
-                finish();
             }
         });
         RegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +35,6 @@ public class LoginAndRegister extends AppCompatActivity {
             public void onClick(View v) {
                 Intent registerItent = new Intent(LoginAndRegister.this, RegisterView.class);
                 startActivity(registerItent);
-                finish();
             }
         });
     }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,14 +60,26 @@ public class ConfirmOtp extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                                        UserInfo userInfo = new UserInfo(name,email,password);
-                                        reference.child("user").child(mAuth.getUid()).setValue(userInfo);
-                                        Toast.makeText(ConfirmOtp.this, "Account created",
-                                                Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(ConfirmOtp.this, RegisterSuccess.class);
-                                        startActivity(intent);
-                                        finish();
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(name)
+                                                .setPhotoUri(Uri.parse("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thewrap.com%2Fcillian-murphy-to-reteam-with-christopher-nolan-for-dunkirk-exclusive%2F&psig=AOvVaw2QPIHcp74jvTz4R9Xu8iPW&ust=1712063268393000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMDdkumKoYUDFQAAAAAdAAAAABAE"))
+                                                .build();
+
+                                        user.updateProfile(profileUpdates)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(ConfirmOtp.this, "Account created",
+                                                                    Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(ConfirmOtp.this, RegisterSuccess.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                                });
                                     } else {
                                         Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
