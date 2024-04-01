@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Thông tin"
+                android:textColor="@color/white"
                 android:textSize="22sp"
                 android:gravity="center"
                 />
@@ -69,19 +70,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/SongInfo"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal">
 
+
+    <LinearLayout
+        android:id="@+id/SongInfoTag1"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/SongInfoTag2"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    </LinearLayout>
 
     <!-- TextView hiển thị lời bài hát -->
     <TextView
         android:id="@+id/textViewLyrics"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:text="Lời bài hát sẽ được hiển thị ở đây"
-        android:gravity="center"
+        android:text="Có thể bạn muốn nghe"
+        android:gravity="left"
+        android:textColor="@color/white"
         android:textSize="18sp"
-        android:layout_marginTop="30dp"/>
-
+        android:layout_marginLeft="30dp"/>
+    <ListView
+        android:id="@+id/ListOfSong"
+        android:layout_width="wrap_content"
+        android:layout_height="270dp"/>
     <!-- SeekBar -->
     <SeekBar
         android:id="@+id/seekBar"

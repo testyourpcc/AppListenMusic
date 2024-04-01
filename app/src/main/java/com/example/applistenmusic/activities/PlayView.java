@@ -5,8 +5,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -23,14 +21,11 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
-    private Animation slideInLeftAnimation;
-    private Animation slideOutRightAnimation;
 
     ImageView Feature, Home,Search,Play,Account;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
     private boolean isPlaying = false;
-
     private String AUDIO_URL = "https://www.ashleecadell.com/xyzstorelibrary/01-01-%20Dear%20Future%20Self%20(Hands%20Up)%20%5bfeat%20Wyclef%20Jean%5d.mp3";
     private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
