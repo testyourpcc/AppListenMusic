@@ -6,7 +6,7 @@ public class Song {
     private String Url;
     private String image;
     private String lyric;
-    private String genres;
+    private int genres;
     private int artis;
     private int album;
     private int view;
@@ -14,7 +14,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(int id, String name, String url, String image, String lyric, String genres, int artis, int album, int view) {
+    public Song(int id, String name, String url, String image, String lyric, int genres, int artis, int album, int view) {
         this.Id = id;
         this.name = name;
         this.Url = url;
@@ -67,11 +67,11 @@ public class Song {
         this.lyric = lyric;
     }
 
-    public String getGenres() {
+    public int getGenres() {
         return genres;
     }
 
-    public void setGenres(String genres) {
+    public void setGenres(int genres) {
         this.genres = genres;
     }
 

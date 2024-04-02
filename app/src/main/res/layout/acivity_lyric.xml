@@ -71,24 +71,53 @@
     </LinearLayout>
 
 
-
-    <!-- TextView hiển thị lời bài hát -->
-    <TextView
-        android:id="@+id/textViewLyrics"
+    <ScrollView
+        android:id="@+id/ScrollLyric"
         android:layout_width="match_parent"
         android:layout_height="450dp"
+        android:padding="7dp"
         android:layout_below="@id/toolbar"
-        android:text="Lời bài hát sẽ được hiển thị ở đây"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="35dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewLyricsStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lời bài hát sẽ được hiển thị ở đây"
+                android:gravity="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textViewLyricsHighLight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lời bài hát sẽ được hiển thị ở đây"
+                android:gravity="center"
+                android:textSize="18sp" />
+            <!-- TextView hiển thị lời bài hát -->
+
+            <TextView
+                android:id="@+id/textViewLyricsEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lời bài hát sẽ được hiển thị ở đây"
+                android:gravity="center"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <!-- SeekBar -->
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewLyrics"
+        android:layout_below="@id/ScrollLyric"
         android:layout_marginTop="16dp" />
 
     <!-- Nút điều khiển -->
