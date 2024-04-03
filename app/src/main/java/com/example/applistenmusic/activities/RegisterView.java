@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.applistenmusic.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,7 +37,8 @@ public class RegisterView extends AppCompatActivity {
     private FirebaseAuth mAuth;
     MailHelper sendOtp = new MailHelper();
     TextView loginText;
-    EditText nameInput, emailInput, passwordInput, rpPasswordInput;
+    TextInputEditText nameInput, emailInput, passwordInput, rpPasswordInput;
+    TextInputLayout nameInputLayout, emailInputLayout, passwordInputLayout, rpPasswordInputLayout;
     Button registerBtn;
 
     DatabaseReference reference;
@@ -50,10 +53,17 @@ public class RegisterView extends AppCompatActivity {
 
         nameInput = findViewById(R.id.editUsername);
         emailInput = findViewById(R.id.editEmail);
-        passwordInput = findViewById(R.id.editRegisterPasswordLabel);
-        rpPasswordInput = findViewById(R.id.editConfirmPasswordLabel);
+        passwordInput = findViewById(R.id.newPasswd);
+        rpPasswordInput = findViewById(R.id.repeatPasswd);
         registerBtn = findViewById(R.id.RegisterBtn);
         loginText = findViewById(R.id.loginLabel);
+
+        nameInputLayout = findViewById(R.id.editUsernameLayout);
+        passwordInputLayout = findViewById(R.id.newPasswdLayout);
+        emailInputLayout = findViewById(R.id.editEmailLayout);
+        rpPasswordInputLayout = findViewById(R.id.repeatPasswdLayout);
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,35 +88,33 @@ public class RegisterView extends AppCompatActivity {
                 rpPassword = rpPasswordInput.getText().toString();
                 name = nameInput.getText().toString();
 
-                if(TextUtils.isEmpty(email)){
-                    Toast.makeText(RegisterView.this, "Enter email", Toast.LENGTH_SHORT);
-                    return;
+                if(TextUtils.isEmpty(name)){
+                    nameInputLayout.setError("This field can not be left blank");
+                } else if (TextUtils.isEmpty(email)) {
+                    emailInputLayout.setError("This field can not be left blank");
+                } else if (TextUtils.isEmpty(password)) {
+                    passwordInputLayout.setError("This field can not be left blank");
+                } else if (TextUtils.isEmpty(rpPassword)) {
+                    rpPasswordInputLayout.setError("This field can not be left blank");
+                } else if (!email.matches(emailPattern)) {
+                    emailInputLayout.setError("Invalid email format");
+                } else if (!TextUtils.equals(password, rpPassword)) {
+                    rpPasswordInputLayout.setError("Password confirmation does not match");
+                } else{
+                    String otp = sendOtp.generateOTP();
+                    sendOtp.sendEmail(email,otp);
+
+
+                    Intent intent = new Intent(RegisterView.this, ConfirmOtp.class);
+                    intent.putExtra("name",name);
+                    intent.putExtra("email",email);
+                    intent.putExtra("password",password);
+                    intent.putExtra("otp",otp);
+
+                    startActivity(intent);
+                    finish();
                 }
-
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(RegisterView.this, "Enter password", Toast.LENGTH_SHORT);
-                    return;
-                }
-                if(!TextUtils.equals(password, rpPassword)) {
-                    Toast.makeText(RegisterView.this, "Password confirmation does not match", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String otp = sendOtp.generateOTP();
-                sendOtp.sendEmail(email,otp);
-
-
-                Intent intent = new Intent(RegisterView.this, ConfirmOtp.class);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("password",password);
-                intent.putExtra("otp",otp);
-
-                startActivity(intent);
-                finish();
             }
         });
-
-
     }
-
 }

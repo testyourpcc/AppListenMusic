@@ -35,7 +35,7 @@ public class RegisterSuccess extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else{
-            userInfo.setText(user.getEmail());
+            userInfo.setText(user.getDisplayName());
         }
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,20 +1,34 @@
 package com.example.applistenmusic.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,15 +38,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Objects;
 
 public class ConfirmOtp extends AppCompatActivity {
     DatabaseReference reference;
     private FirebaseAuth mAuth;
-    EditText otp;
+    TextInputEditText otp;
     Button confirmBtn;
-    UserInfo user;
+    StorageReference storageReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +63,7 @@ public class ConfirmOtp extends AppCompatActivity {
         confirmBtn = findViewById(R.id.confirmBtn);
         otp = findViewById(R.id.editOTP);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +82,10 @@ public class ConfirmOtp extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+                                        uploadImageFromDrawable();
+
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name)
-                                                .setPhotoUri(Uri.parse("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thewrap.com%2Fcillian-murphy-to-reteam-with-christopher-nolan-for-dunkirk-exclusive%2F&psig=AOvVaw2QPIHcp74jvTz4R9Xu8iPW&ust=1712063268393000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMDdkumKoYUDFQAAAAAdAAAAABAE"))
                                                 .build();
 
                                         user.updateProfile(profileUpdates)
@@ -96,19 +117,40 @@ public class ConfirmOtp extends AppCompatActivity {
         });
 
     }
+    private void uploadImageFromDrawable(){
+        // Chuyển đổi Drawable thành Bitmap
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
 
-    UserInfo getOtpData(){
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("user").child(Objects.requireNonNull(mAuth.getUid()));
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    user = snapshot.getValue(UserInfo.class);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.print("error get data");
-            }
-        });
-        return user;
+        // Tạo URI từ Bitmap
+        Uri fileUri = getImageUri(ConfirmOtp.this, bitmap);
+
+        // Tạo đường dẫn tới thư mục trên Firebase Storage
+        StorageReference ref = storageReference.child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
+
+        // Tải ảnh lên Firebase Storage từ URI
+        ref.putFile(fileUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(ConfirmOtp.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ConfirmOtp.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
+    // Hàm này để chuyển đổi Bitmap thành URI
+    public Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
+
+
 }

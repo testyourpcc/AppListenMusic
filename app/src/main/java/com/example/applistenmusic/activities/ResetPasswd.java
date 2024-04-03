@@ -16,6 +16,8 @@ import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +32,8 @@ import java.util.Objects;
 
 public class ResetPasswd extends AppCompatActivity {
     Button confirmBtn;
-    EditText oldPasswd, newPasswd, repeatPasswd;
+    TextInputEditText oldPasswd, newPasswd, repeatPasswd;
+    TextInputLayout oldPasswordLayout,newPasswordLayout,repeatPasswordLayout;
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
@@ -42,8 +45,11 @@ public class ResetPasswd extends AppCompatActivity {
 
         confirmBtn = findViewById(R.id.confirmBtn);
         oldPasswd = findViewById(R.id.oldPasswd);
-        newPasswd = findViewById(R.id.newPassword);
+        newPasswd = findViewById(R.id.newPasswd);
         repeatPasswd = findViewById(R.id.repeatPasswd);
+        oldPasswordLayout = findViewById(R.id.oldPasswdLayout);
+        newPasswordLayout = findViewById(R.id.newPasswdLayout);
+        repeatPasswordLayout = findViewById(R.id.repeatPasswdLayout);
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,13 +59,13 @@ public class ResetPasswd extends AppCompatActivity {
                 String oldPassword = oldPasswd.getText().toString();
 
                 if (TextUtils.isEmpty(oldPassword)){
-                    oldPasswd.setError("This field cannot be left blank");
+                    oldPasswordLayout.setError("This field cannot be left blank");
                 } else if (TextUtils.isEmpty(newPassword)) {
-                    newPasswd.setError("This field cannot be left blank");
+                    newPasswordLayout.setError("This field cannot be left blank");
                 } else if (TextUtils.isEmpty(repeatPassword)) {
-                    repeatPasswd.setError("This field cannot be left blank");
+                    repeatPasswordLayout.setError("This field cannot be left blank");
                 } else if (!newPassword.equals(repeatPassword)) {
-                    repeatPasswd.setError("Re-entered password does not match");
+                    repeatPasswordLayout.setError("Re-entered password does not match");
                 } else {
                     // Xác minh mật khẩu cũ và tiến hành đổi mật khẩu mới
                     reauthenticateAndResetPassword(oldPassword,newPassword);

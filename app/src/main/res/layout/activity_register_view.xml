@@ -36,98 +36,95 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp">
 
-        <TextView
-            android:id="@+id/nameLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/inriasans_regular"
-            android:text="Enter your name"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
 
-        <EditText
-            android:id="@+id/editUsername"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editUsernameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nameLabel"
-            android:background="@drawable/edit_text_rounded_corner"
-            android:ems="10"
             android:inputType="text"
-            android:padding="8dp"
-            android:text="" />
+            android:text=""
+            android:textColorHint="#ffffff"
+            app:passwordToggleTint="#ffffff"
+            android:layout_marginVertical="5dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textColor="#ffffff"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/phoneLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editUsername"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/inriasans_regular"
-            android:text="Enter your email address"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
 
-        <EditText
-            android:id="@+id/editEmail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editEmailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_rounded_corner"
-            android:ems="10"
             android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/phoneLabel"
-            android:text="" />
-        <TextView
-            android:id="@+id/registerPasswordLabel"
+            android:layout_below="@+id/editUsernameLayout"
+            android:text=""
+            android:textColorHint="#ffffff"
+            app:passwordToggleTint="#ffffff"
+            android:layout_marginVertical="5dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email Address"
+                android:textColor="#ffffff"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newPasswdLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editEmail"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/inriasans_regular"
-            android:text="Password"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
-        <EditText
-            android:id="@+id/editRegisterPasswordLabel"
+            android:layout_below="@+id/editEmailLayout"
+            android:inputType="textPassword"
+            app:passwordToggleEnabled="true"
+            android:textColorHint="#ffffff"
+            app:passwordToggleTint="#ffffff"
+            android:layout_marginVertical="5dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newPasswd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="New Password"
+                android:inputType="textPassword"
+                android:textColor="#ffffff"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/repeatPasswdLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/registerPasswordLabel"
-            android:background="@drawable/edit_text_rounded_corner"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:text="" />
-        <TextView
-            android:id="@+id/confirmPasswordLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editRegisterPasswordLabel"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:fontFamily="@font/inriasans_regular"
-            android:text="Repeat Password"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
-        <EditText
-            android:id="@+id/editConfirmPasswordLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/confirmPasswordLabel"
-            android:background="@drawable/edit_text_rounded_corner"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:text="" />
+            android:layout_below="@+id/newPasswdLayout"
+            android:inputType="textPassword"
+            app:passwordToggleEnabled="true"
+            android:textColorHint="#ffffff"
+            app:passwordToggleTint="#ffffff"
+            android:layout_marginVertical="5dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repeatPasswd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Repeat Password"
+                android:inputType="textPassword"
+                android:textColor="#ffffff"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editConfirmPasswordLabel"
+            android:layout_below="@+id/repeatPasswdLayout"
             android:fontFamily="@font/inriasans_regular"
             android:text="Have an account?"
             android:textColor="#ffffff"
@@ -138,7 +135,7 @@
             android:id="@+id/loginLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editConfirmPasswordLabel"
+            android:layout_below="@+id/repeatPasswdLayout"
             android:layout_toEndOf="@+id/question"
             android:fontFamily="@font/inriasans_regular"
             android:text=" Login"
