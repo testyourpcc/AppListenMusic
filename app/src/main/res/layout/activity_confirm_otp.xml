@@ -50,32 +50,120 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inriasans_regular"
             android:textColor="#ffffff"
-            android:textSize="35dp"
+            android:textSize="25dp"
+            android:layout_marginVertical="10dp"
+            android:layout_centerHorizontal="true"
             android:text="Enter OTP sent to your Email" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:id="@+id/editOTPLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/otpText"
-            android:textColorHint="#ffffff"
+            android:gravity="center"
+            android:layout_below="@id/otpText"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
             >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editOTP"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="OTP"
+
+            <EditText
+                android:id="@+id/inputCode1"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
                 android:textColor="#ffffff"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+            <EditText
+                android:id="@+id/inputCode2"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+            <EditText
+                android:id="@+id/inputCode3"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+            <EditText
+                android:id="@+id/inputCode4"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+            <EditText
+                android:id="@+id/inputCode5"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+            <EditText
+                android:id="@+id/inputCode6"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="#ffffff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="LableFor"
+                android:backgroundTint="#ffffff"
+                android:gravity="center"
+                android:maxLength="1" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/confirmBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editOTPLayout"
-
-            android:textSize="30sp"
+            android:layout_margin="20dp"
+            android:textSize="25sp"
             android:fontFamily="@font/inriaserif_regular"
             android:text="Confirm" />
 

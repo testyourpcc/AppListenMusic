@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,9 +51,10 @@ import java.util.Objects;
 public class ConfirmOtp extends AppCompatActivity {
     DatabaseReference reference;
     private FirebaseAuth mAuth;
-    TextInputEditText otp;
+    EditText inputCode1,inputCode2,inputCode3,inputCode4,inputCode5,inputCode6;
     Button confirmBtn;
     StorageReference storageReference;
+    String[] otpDigits = new String[6];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +64,22 @@ public class ConfirmOtp extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
 
         confirmBtn = findViewById(R.id.confirmBtn);
-        otp = findViewById(R.id.editOTP);
+        inputCode1 = findViewById(R.id.inputCode1);
+        inputCode2 = findViewById(R.id.inputCode2);
+        inputCode3 = findViewById(R.id.inputCode3);
+        inputCode4 = findViewById(R.id.inputCode4);
+        inputCode5 = findViewById(R.id.inputCode5);
+        inputCode6 = findViewById(R.id.inputCode6);
+
+        setupInput();
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String otpInput = otp.getText().toString();
+                String otpInput = getInputCode();
                 Intent OtpIntent = getIntent();
                 String name = OtpIntent.getStringExtra("name");
                 String email = OtpIntent.getStringExtra("email");
@@ -151,6 +162,141 @@ public class ConfirmOtp extends AppCompatActivity {
         return Uri.parse(path);
     }
 
+    private void setupInput(){
+        inputCode1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[0] = s.toString();
+                if(!s.toString().trim().isEmpty()){
+                    inputCode2.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode1.requestFocus();
+                }
+            }
+        });
+        inputCode2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[1] = s.toString();
+                if(!s.toString().trim().isEmpty()){
+                    inputCode3.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode1.requestFocus();
+                }
+            }
+        });
+        inputCode3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[2] = s.toString();
+                if(!s.toString().trim().isEmpty()){
+                    inputCode4.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode2.requestFocus();
+                }
+            }
+        });
+        inputCode4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[3] = s.toString();
+                if(!s.toString().trim().isEmpty()){
+                    inputCode5.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode3.requestFocus();
+                }
+            }
+        });
+        inputCode5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[4] = s.toString();
+                if(!s.toString().trim().isEmpty()){
+                    inputCode6.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode4.requestFocus();
+                }
+            }
+        });
+        inputCode6.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                otpDigits[5] = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    inputCode5.requestFocus();
+                }
+            }
+        });
+
+    }
+
+    private String getInputCode() {
+        StringBuilder otpInput = new StringBuilder();
+        for (String digit : otpDigits) {
+            if (digit != null) {
+                otpInput.append(digit);
+            }
+        }
+        return otpInput.toString();
+    }
 
 }
