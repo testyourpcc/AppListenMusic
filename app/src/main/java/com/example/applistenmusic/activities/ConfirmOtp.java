@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -49,12 +52,16 @@ import java.io.File;
 import java.util.Objects;
 
 public class ConfirmOtp extends AppCompatActivity {
+    ProgressBar progressBar;
     DatabaseReference reference;
     private FirebaseAuth mAuth;
     EditText inputCode1,inputCode2,inputCode3,inputCode4,inputCode5,inputCode6;
+    TextView resendOtp;
     Button confirmBtn;
     StorageReference storageReference;
+    MailHelper resend = new MailHelper();
     String[] otpDigits = new String[6];
+    CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +71,7 @@ public class ConfirmOtp extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
 
         confirmBtn = findViewById(R.id.confirmBtn);
+        resendOtp = findViewById(R.id.resendOtp);
         inputCode1 = findViewById(R.id.inputCode1);
         inputCode2 = findViewById(R.id.inputCode2);
         inputCode3 = findViewById(R.id.inputCode3);
@@ -71,14 +79,20 @@ public class ConfirmOtp extends AppCompatActivity {
         inputCode5 = findViewById(R.id.inputCode5);
         inputCode6 = findViewById(R.id.inputCode6);
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
+        startCountdown(30);
+
         setupInput();
 
-
         storageReference = FirebaseStorage.getInstance().getReference();
+
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 String otpInput = getInputCode();
                 Intent OtpIntent = getIntent();
                 String name = OtpIntent.getStringExtra("name");
@@ -115,19 +129,51 @@ public class ConfirmOtp extends AppCompatActivity {
                                     } else {
                                         Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
                                     }
                                 }
                             });
 
                 } else{
-                    Toast.makeText(ConfirmOtp.this, "m còn lần nữa thôi con ạ!",
+                    Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                             Toast.LENGTH_SHORT).show();
-                    //thông báo sau mỗi lần user nhập sai
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
 
+        resendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent OtpIntent = getIntent();
+                String email = OtpIntent.getStringExtra("email");
+                String otp = resend.generateOTP();
+                resend.sendEmail(email,otp);
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                }
+                resendOtp.setClickable(false);
+                startCountdown(30);
+            }
+        });
+
     }
+
+    private void startCountdown(int seconds) {
+        countDownTimer = new CountDownTimer(seconds * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                resendOtp.setText("Resend OTP in " + millisUntilFinished / 1000 + " seconds");
+            }
+
+            @Override
+            public void onFinish() {
+                resendOtp.setText("Resend OTP");
+                resendOtp.setClickable(true);
+            }
+        }.start();
+    }
+
     private void uploadImageFromDrawable(){
         // Chuyển đổi Drawable thành Bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);

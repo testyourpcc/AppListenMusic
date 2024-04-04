@@ -38,7 +38,7 @@ public class ForgotPassword extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(ForgotPassword.this, LoginView.class);
+                                    Intent intent = new Intent(ForgotPassword.this, ResetPasswdNotify.class);
                                     startActivity(intent);
                                     finish();
                                 }
