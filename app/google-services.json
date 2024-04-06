@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "37669953608",
+    "firebase_url": "https://applistenmusic-b4e45-default-rtdb.firebaseio.com",
     "project_id": "applistenmusic-b4e45",
     "storage_bucket": "applistenmusic-b4e45.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.applistenmusic"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "37669953608-6baphvt89lolm1n8usqu86unkpeol9eg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.applistenmusic",
+            "certificate_hash": "8cf41b1138ea4fecea10266d42c3ed7c1b53a512"
+          }
+        },
+        {
+          "client_id": "37669953608-ts4oirtc74b16fpk1nc7uirvqsgqa74f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBNu7kZlsPwcpZu1hNc42eRjSyz2sHFXcw"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "37669953608-ts4oirtc74b16fpk1nc7uirvqsgqa74f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
