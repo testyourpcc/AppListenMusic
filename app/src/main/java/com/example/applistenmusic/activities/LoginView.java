@@ -1,6 +1,10 @@
 package com.example.applistenmusic.activities;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -51,7 +56,7 @@ public class LoginView extends AppCompatActivity {
     TextView registerText,forgotPasswd;
     ImageView googleBtn, facebookBtn;
     private FirebaseAuth mAuth;
-    GoogleSignInClient client;
+    GoogleSignInClient googleSignInClient;
     ProgressBar progressBar;
 
     @Override
@@ -90,15 +95,15 @@ public class LoginView extends AppCompatActivity {
         }
 
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("37669953608-6baphvt89lolm1n8usqu86unkpeol9eg.apps.googleusercontent.com")
+                .requestIdToken("37669953608-ts4oirtc74b16fpk1nc7uirvqsgqa74f.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-        client = GoogleSignIn.getClient(this,options);
+        googleSignInClient = GoogleSignIn.getClient(LoginView.this, options);
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = client.getSignInIntent();
-                startActivityForResult(i,20);
+                Intent intent = googleSignInClient.getSignInIntent();
+                activityResultLauncher.launch(intent);
             }
         });
 
@@ -196,36 +201,32 @@ public class LoginView extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 20){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+    private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                try {
+                    GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
+                    AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
 
-                AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(),null);
-                FirebaseAuth.getInstance().signInWithCredential(credential)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Intent intent = new Intent(LoginView.this,Home.class);
-                                    startActivity(intent);
-                                    finish();
-                                }else {
-                                    Toast.makeText(LoginView.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-
+                    mAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(LoginView.this, Home.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginView.this, "Failed to sign in: " + task.getException(), Toast.LENGTH_SHORT).show();
                             }
-                        });
-
-            } catch (ApiException e) {
-                e.printStackTrace();
+                        }
+                    });
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
-
-    }
+    });
 
 }

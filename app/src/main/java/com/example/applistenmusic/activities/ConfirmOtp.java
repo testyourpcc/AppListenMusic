@@ -110,7 +110,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                                        uploadImageFromDrawable();
+//                                        uploadImageFromDrawable();
 
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name)
@@ -189,39 +189,39 @@ public class ConfirmOtp extends AppCompatActivity {
         }.start();
     }
 
-    private void uploadImageFromDrawable(){
-        // Chuyển đổi Drawable thành Bitmap
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
-
-        // Tạo URI từ Bitmap
-        Uri fileUri = getImageUri(ConfirmOtp.this, bitmap);
-
-        // Tạo đường dẫn tới thư mục trên Firebase Storage
-        StorageReference ref = storageReference.child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
-
-        // Tải ảnh lên Firebase Storage từ URI
-        ref.putFile(fileUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(ConfirmOtp.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ConfirmOtp.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    // Hàm này để chuyển đổi Bitmap thành URI
-    public Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
-    }
+//    private void uploadImageFromDrawable(){
+//        // Chuyển đổi Drawable thành Bitmap
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.noimage);
+//
+//        // Tạo URI từ Bitmap
+//        Uri fileUri = getImageUri(ConfirmOtp.this, bitmap);
+//
+//        // Tạo đường dẫn tới thư mục trên Firebase Storage
+//        StorageReference ref = storageReference.child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/avatar");
+//
+//        // Tải ảnh lên Firebase Storage từ URI
+//        ref.putFile(fileUri)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        Toast.makeText(ConfirmOtp.this, "Image Uploaded!", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(ConfirmOtp.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
+//
+//    // Hàm này để chuyển đổi Bitmap thành URI
+//    public Uri getImageUri(Context context, Bitmap bitmap) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+//        return Uri.parse(path);
+//    }
 
     private void setupInput(){
         inputCode1.addTextChangedListener(new TextWatcher() {

@@ -76,19 +76,18 @@ public class AccountInfo extends AppCompatActivity {
         user = auth.getCurrentUser();
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/images/"+user.getUid()+"/avatar");
-
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(AccountInfo.this).load(uri).into(noImage);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Xử lý lỗi nếu có
-                Log.e("TAG", "Error downloading image", exception);
-            }
-        });
+            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(AccountInfo.this).load(uri).into(noImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Xử lý lỗi nếu có
+                    Log.e("TAG", "Error downloading image", exception);
+                }
+            });
         uploadText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,10 +95,6 @@ public class AccountInfo extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
 
         if(user==null){
             Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
