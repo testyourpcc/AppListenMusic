@@ -9,6 +9,7 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class LyricView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
     ImageView Feature, Home,Search,Play,Account;
-    TextView textViewLyricStart, textViewLyricHighLight, textViewLyricEnd;
+    TextView textViewLyric;
     DatabaseReference reference;
     private Handler handler;
     private Runnable runnable;
@@ -189,39 +190,40 @@ public class LyricView extends AppCompatActivity {
 
     }
 
-
     private void changeColorAndText(String[] LyricLRC, int LyricHighlightIndex) {
-        StringBuilder LyricStart = new StringBuilder();
-        StringBuilder LyricEnd = new StringBuilder();
-        for (int i = 1; i < LyricLRC.length; i += 2) {
-            // Lấy các phần tử ở vị trí lẻ (vị trí bắt đầu từ 0)
-            if (i < LyricHighlightIndex) {
-                LyricStart.append(LyricLRC[i]).append("\n"); // Nối mỗi chuỗi và thêm dấu xuống dòng
+        if (LyricHighlightIndex >= 0 && LyricHighlightIndex <= LyricLRC.length) {
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+            for (int i = 1; i < LyricLRC.length; i = i + 2) {
+                String lyric = LyricLRC[i];
+                if (i == LyricHighlightIndex) {
+                    SpannableString spannableLyricHighLight = new SpannableString(lyric);
+                    spannableLyricHighLight.setSpan(new ForegroundColorSpan(Color.GREEN), 0, spannableLyricHighLight.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableStringBuilder.append(spannableLyricHighLight).append("\n");
+                } else {
+                    SpannableString spannableString = new SpannableString(lyric);
+                    spannableString.setSpan(new ForegroundColorSpan(Color.DKGRAY), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableStringBuilder.append(spannableString).append("\n");
+                }
             }
 
-            if (i == LyricHighlightIndex) {
-                // Tạo một SpannableString từ dòng hiện tại
-                SpannableString spannableString = new SpannableString(LyricLRC[i]);
-                spannableString.setSpan(new ForegroundColorSpan(Color.GREEN), 0, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                textViewLyricHighLight.setText(spannableString);
-                textViewLyricHighLight.setTextSize(24F);
-            }
-            if (i > LyricHighlightIndex){
-                LyricEnd.append(LyricLRC[i]).append("\n"); // Nối mỗi chuỗi và thêm dấu xuống dòng
+            textViewLyric.setText(spannableStringBuilder);
+
+            if (!isUserInteracting) {
+                int scrollViewHeight = scrollView.getHeight();
+                int textViewHeight = textViewLyric.getLayout().getLineTop((LyricHighlightIndex - 1) / 2);// Chiều cao của mỗi dòng trong textViewLyric
+                int scrollY = textViewHeight - scrollViewHeight / 4;
+                scrollView.smoothScrollTo(0, scrollY);
+
+//
+//            int scrollViewHeight = scrollView.getHeight();
+//            int textViewHeight = textViewLyricHighLight.getHeight();
+//            int scrollY = textViewLyricHighLight.getTop() - (scrollViewHeight - textViewHeight) / 4;
+//            scrollView.smoothScrollTo(0, scrollY);
             }
         }
-        textViewLyricStart.setText(LyricStart);
-        textViewLyricEnd.setText(LyricEnd);
-
-        if (!isUserInteracting) { // Kiểm tra xem người dùng có đang giữ tay trên ScrollView không
-            int scrollViewHeight = scrollView.getHeight();
-            int textViewHeight = textViewLyricHighLight.getHeight();
-            int scrollY = textViewLyricHighLight.getTop() - (scrollViewHeight - textViewHeight) /4;
-            scrollView.smoothScrollTo(0, scrollY);
-        }
-
 
     }
+
 
     String formatData(String Lyric){
         ArrayList<String> LyricLRC = new ArrayList<>();
@@ -236,9 +238,7 @@ public class LyricView extends AppCompatActivity {
         Account = findViewById(R.id.imageViewAccount);
         mainView = findViewById(R.id.LyricView);
         scrollView = findViewById(R.id.ScrollLyric);
-        textViewLyricStart = findViewById(R.id.textViewLyricsStart);
-        textViewLyricHighLight = findViewById(R.id.textViewLyricsHighLight);
-        textViewLyricEnd = findViewById(R.id.textViewLyricsEnd);
+        textViewLyric = findViewById(R.id.textViewLyric);
         gestureDetector = new GestureDetector(this, new GestureListener());
     }
 }

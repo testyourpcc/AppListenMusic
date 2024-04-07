@@ -83,30 +83,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/textViewLyricsStart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lời bài hát sẽ được hiển thị ở đây"
-                android:gravity="center"
-                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textViewLyricsHighLight"
+                android:id="@+id/textViewLyric"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Lời bài hát sẽ được hiển thị ở đây"
                 android:gravity="center"
                 android:textSize="18sp" />
             <!-- TextView hiển thị lời bài hát -->
-
-            <TextView
-                android:id="@+id/textViewLyricsEnd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lời bài hát sẽ được hiển thị ở đây"
-                android:gravity="center"
-                android:textSize="18sp" />
 
         </LinearLayout>
 
