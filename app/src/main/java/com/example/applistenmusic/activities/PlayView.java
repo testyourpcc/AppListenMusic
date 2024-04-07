@@ -2,12 +2,12 @@ package com.example.applistenmusic.activities;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import android.media.AudioAttributes;
 
@@ -18,6 +18,13 @@ import java.io.IOException;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
@@ -26,7 +33,6 @@ public class PlayView extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
     private boolean isPlaying = false;
-    private String AUDIO_URL = "https://www.ashleecadell.com/xyzstorelibrary/01-01-%20Dear%20Future%20Self%20(Hands%20Up)%20%5bfeat%20Wyclef%20Jean%5d.mp3";
     private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
     @Override
@@ -35,34 +41,69 @@ public class PlayView extends AppCompatActivity {
         setContentView(R.layout.acivity_play);
         setcontrol();
 
-
-
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
                 .load(imageUrl)
                 .transform(new RoundedCornersTransformation(50, 0))
                 .into(songImage);
 
+        // Khởi tạo MediaPlayer
         mediaPlayer = new MediaPlayer();
 
-        // Đặt các thuộc tính âm thanh cho MediaPlayer
+        // Thiết lập các thuộc tính âm thanh
         mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                .setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build());
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isPlaying) {
-                    startPlaying();
+//                    startPlaying();
                     playButton.setImageResource(R.drawable.ic_pause_40px);
+                    // Khởi tạo FirebaseStorage
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+                    // Tham chiếu đến file nhạc trên Firebase Storage
+                    StorageReference storageRef = storage.getReference().child("songs/NewJeans-Hype Boy.mp3");
+
+                    // Tải file nhạc từ Firebase Storage
+                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            try {
+                                // Reset MediaPlayer trước khi sử dụng
+                                mediaPlayer.reset();
+
+                                // Đặt AudioAttributes cho MediaPlayer
+                                mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                                        .build());
+
+                                // Đặt nguồn dữ liệu cho MediaPlayer
+                                mediaPlayer.setDataSource(PlayView.this, uri);
+
+                                // Chuẩn bị MediaPlayer
+                                mediaPlayer.prepare();
+
+                                // Bắt đầu phát nhạc
+                                mediaPlayer.start();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
-                    stopPlaying();
+                    isPlaying = false;
                 }
             }
         });
-
-
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,35 +142,15 @@ public class PlayView extends AppCompatActivity {
 
     }
 
-    private void startPlaying() {
-        try {
-            mediaPlayer.setDataSource(AUDIO_URL);
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mp) {
-                    mediaPlayer.start();
-                    isPlaying = true;
-                }
-            });
-            mediaPlayer.prepareAsync(); // Chuẩn bị mediaPlayer bất đồng bộ
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void stopPlaying() {
-        mediaPlayer.stop();
-        mediaPlayer.reset();
-        isPlaying = false;
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayer.release(); // Giải phóng tài nguyên khi không cần thiết
+        // Giải phóng tài nguyên MediaPlayer
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
-
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);

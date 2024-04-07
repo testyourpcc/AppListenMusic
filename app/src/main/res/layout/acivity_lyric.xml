@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="Lời bài hát sẽ được hiển thị ở đây"
                 android:gravity="center"
-                android:textSize="18sp" />
+                android:textSize="22sp" />
             <!-- TextView hiển thị lời bài hát -->
 
         </LinearLayout>
