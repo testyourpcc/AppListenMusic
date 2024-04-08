@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,8 +19,11 @@ import java.io.IOException;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import android.widget.SeekBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+
+import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,7 +32,8 @@ import com.google.firebase.storage.StorageReference;
 public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
-
+    private SeekBar seekBar;
+    private Handler handler;
     ImageView Feature, Home,Search,Play,Account;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
@@ -48,8 +53,8 @@ public class PlayView extends AppCompatActivity {
                 .into(songImage);
 
         // Khởi tạo MediaPlayer
-        mediaPlayer = new MediaPlayer();
-
+//        mediaPlayer = new MediaPlayer();
+        mediaPlayer = MediaPlayerSingleton.getInstance();
         // Thiết lập các thuộc tính âm thanh
         mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -86,6 +91,33 @@ public class PlayView extends AppCompatActivity {
 
                                 // Chuẩn bị MediaPlayer
                                 mediaPlayer.prepare();
+
+                                handler = new Handler();
+
+                                // Set max duration for seek bar
+                                seekBar.setMax(mediaPlayer.getDuration());
+
+                                // Update seek bar every 100 milliseconds
+                                handler.postDelayed(updateSeekBar, 100);
+
+                                // Seek bar change listener
+                                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                    @Override
+                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                        if (fromUser) {
+                                            mediaPlayer.seekTo(progress);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onStartTrackingTouch(SeekBar seekBar) {
+                                    }
+
+                                    @Override
+                                    public void onStopTrackingTouch(SeekBar seekBar) {
+                                    }
+                                });
+
 
                                 // Bắt đầu phát nhạc
                                 mediaPlayer.start();
@@ -142,6 +174,14 @@ public class PlayView extends AppCompatActivity {
 
     }
 
+    private Runnable updateSeekBar = new Runnable() {
+        @Override
+        public void run() {
+            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+            handler.postDelayed(this, 100);
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -150,6 +190,7 @@ public class PlayView extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        handler.removeCallbacks(updateSeekBar);
     }
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
@@ -160,7 +201,7 @@ public class PlayView extends AppCompatActivity {
         songImage = findViewById(R.id.discImageView);
         mainView = findViewById(R.id.PlayView);
         gestureDetector = new GestureDetector(this, new GestureListener());
-
+        seekBar = findViewById(R.id.seekBar);
 
     }
 

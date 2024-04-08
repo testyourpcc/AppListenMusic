@@ -24,6 +24,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -49,9 +51,12 @@ public class LyricView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     TextView textViewLyric;
     DatabaseReference reference;
-    private Handler handler;
+    private Handler handler,handlerSync;
+    private SeekBar seekBar;
+    private MediaPlayer mediaPlayer;
     private Runnable runnable;
     ScrollView  scrollView;
+    String[] LyricLRC;
     int index = 1;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -60,6 +65,8 @@ public class LyricView extends AppCompatActivity {
         setContentView(R.layout.acivity_lyric);
         setcontrol();
         getData();
+        mediaPlayer = MediaPlayerSingleton.getInstance();
+
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -117,6 +124,32 @@ public class LyricView extends AppCompatActivity {
             }
         });
 
+        handler = new Handler();
+
+        // Set max duration for seek bar
+        seekBar.setMax(mediaPlayer.getDuration());
+
+        // Update seek bar and media player every 100 milliseconds
+        handler.postDelayed(updateSeekBarAndMediaPlayer, 100);
+
+        // Seek bar change listener
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    mediaPlayer.seekTo(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -161,14 +194,13 @@ public class LyricView extends AppCompatActivity {
                 }
                 else {
                     String a = String.valueOf(task.getResult().getValue());
-                    String[] LyricLRC = a.split("/r/n");
-                    int LyricHighlightIndex = 1;
+                    LyricLRC = a.split("/r/n");
                     // Khởi tạo Handler và Runnable
                     handler = new Handler();
                     runnable = new Runnable() {
                         @Override
                         public void run() {
-                            changeColorAndText(LyricLRC, getLyricHighlightIndex(index));
+                            changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
                             handler.postDelayed(this, 1000);
                             // Thực hiện lại sau mỗi giây
                         }
@@ -182,10 +214,17 @@ public class LyricView extends AppCompatActivity {
         });
     }
 
-    public int getLyricHighlightIndex(int i) {
-
-        index += 2;
-        return i;
+    public int getLyricHighlightIndex(long currentTime) {
+        int currentIndex = 0;
+        for (int i = LyricLRC.length - 2 ; i >= 0; i = i - 2) {
+            String startLyricTime = LyricLRC[i];
+            long startLyricTimeFormat = convertTimeToMilliseconds(startLyricTime);
+            if(currentTime > startLyricTimeFormat){
+                currentIndex = i + 1 ;
+                break;
+            }
+        }
+        return currentIndex;
 
 
     }
@@ -213,15 +252,8 @@ public class LyricView extends AppCompatActivity {
                 int textViewHeight = textViewLyric.getLayout().getLineTop((LyricHighlightIndex - 1) / 2);// Chiều cao của mỗi dòng trong textViewLyric
                 int scrollY = textViewHeight - scrollViewHeight / 4;
                 scrollView.smoothScrollTo(0, scrollY);
-
-//
-//            int scrollViewHeight = scrollView.getHeight();
-//            int textViewHeight = textViewLyricHighLight.getHeight();
-//            int scrollY = textViewLyricHighLight.getTop() - (scrollViewHeight - textViewHeight) / 4;
-//            scrollView.smoothScrollTo(0, scrollY);
             }
         }
-
     }
 
 
@@ -229,6 +261,31 @@ public class LyricView extends AppCompatActivity {
         ArrayList<String> LyricLRC = new ArrayList<>();
 
         return Lyric;
+    }
+
+    public static long convertTimeToMilliseconds(String timeString) {
+        String[] parts = timeString.split(":");
+        int minutes = Integer.parseInt(parts[0].trim());
+        int seconds = Integer.parseInt(parts[1].trim());
+        return (minutes * 60 + seconds) * 1000;
+    }
+
+    private Runnable updateSeekBarAndMediaPlayer = new Runnable() {
+        @Override
+        public void run() {
+            if (mediaPlayer.isPlaying()) {
+                int currentPosition = mediaPlayer.getCurrentPosition();
+                seekBar.setProgress(currentPosition);
+            }
+            handler.postDelayed(this, 100);
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+        handler.removeCallbacks(updateSeekBarAndMediaPlayer);
     }
 
     public void setcontrol() {
@@ -240,5 +297,6 @@ public class LyricView extends AppCompatActivity {
         scrollView = findViewById(R.id.ScrollLyric);
         textViewLyric = findViewById(R.id.textViewLyric);
         gestureDetector = new GestureDetector(this, new GestureListener());
+        seekBar = findViewById(R.id.seekBar);
     }
 }
