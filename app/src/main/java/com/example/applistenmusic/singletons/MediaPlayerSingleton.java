@@ -34,10 +34,4 @@ public class MediaPlayerSingleton {
     }
 
 
-    public boolean isNull(){
-        if (instance != null){
-            return false;
-        }
-       return true;
-    }
 }

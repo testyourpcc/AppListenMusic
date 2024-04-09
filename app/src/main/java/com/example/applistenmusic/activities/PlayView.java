@@ -52,7 +52,11 @@ public class PlayView extends AppCompatActivity {
                 .into(songImage);
 
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
+
+        // Nếu có bài hát đang chạy khi khởi tạo view thì đồng bộ hóa với seek bar
         if( mediaPlayer.isPlaying()){
+            playButton.setImageResource(R.drawable.ic_pause_40px);
+
             handler = new Handler();
 
             // Set max duration for seek bar
@@ -79,6 +83,15 @@ public class PlayView extends AppCompatActivity {
                 }
             });
 
+        } else {
+            // đồng bộ thanh seek bar khi nhạc đang pause
+            Intent intent = getIntent();
+            int seekBarProcess = intent.getIntExtra("seekBarProcess", 0);
+            if (seekBarProcess != 0){
+                seekBar.setMax(mediaPlayer.getDuration());
+                seekBar.setProgress(seekBarProcess);
+                mediaPlayer.seekTo(seekBarProcess);
+            }
         }
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,12 +262,14 @@ public class PlayView extends AppCompatActivity {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                         Intent intent = new Intent(PlayView.this, LyricView.class);
+                        intent.putExtra("seekBarProcess", seekBar.getProgress());
                         startActivity(intent);
                         result = true;
                     }  else {
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         // Vuốt sang phải, chuyển sang activity khác
                         Intent intent = new Intent(PlayView.this, SongDetailView.class);
+
                         startActivity(intent);
                         result = true;
                     }

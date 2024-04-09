@@ -48,7 +48,7 @@ public class LyricView extends AppCompatActivity {
     boolean isUserInteracting = false;
     private GestureDetector gestureDetector;
     View mainView;
-    ImageView Feature, Home,Search,Play,Account;
+    ImageView Feature, Home,Search,Play,Account,playButton;
     TextView textViewLyric;
     DatabaseReference reference;
     private Handler handler,handlerSync;
@@ -57,8 +57,6 @@ public class LyricView extends AppCompatActivity {
     private Runnable runnable;
     ScrollView  scrollView;
     String[] LyricLRC;
-
-    MediaPlayerSingleton mediaPlayerSingleton;
 
     int index = 1;
     @SuppressLint("ClickableViewAccessibility")
@@ -69,12 +67,36 @@ public class LyricView extends AppCompatActivity {
         setcontrol();
         getData();
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
-
+        if(mediaPlayer.isPlaying()){
+            playButton.setImageResource(R.drawable.ic_pause_40px);
+        } else {
+            Intent intent = getIntent();
+            int seekBarProcess = intent.getIntExtra("seekBarProcess", 0);
+            if (seekBarProcess != 0){
+                seekBar.setMax(mediaPlayer.getDuration());
+                seekBar.setProgress(seekBarProcess);
+                mediaPlayer.seekTo(seekBarProcess);
+            }
+        }
         
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                    playButton.setImageResource(R.drawable.play_icon);
+                } else {
+                    mediaPlayer.seekTo(seekBar.getProgress());
+                    mediaPlayer.start();
+                    playButton.setImageResource(R.drawable.ic_pause_40px);
+                }
             }
         });
 
@@ -176,6 +198,7 @@ public class LyricView extends AppCompatActivity {
                     if (diffX > 0) { // Thay đổi điều kiện này từ diffX < 0 thành diffX > 0
                         // Vuốt sang phải, chuyển sang một activity khác
                         Intent intent = new Intent(LyricView.this, PlayView.class);
+                        intent.putExtra("seekBarProcess", seekBar.getProgress());
                         startActivity(intent);
                         result = true;
                     }
@@ -305,5 +328,6 @@ public class LyricView extends AppCompatActivity {
         textViewLyric = findViewById(R.id.textViewLyric);
         gestureDetector = new GestureDetector(this, new GestureListener());
         seekBar = findViewById(R.id.seekBar);
+        playButton = findViewById(R.id.playButton);
     }
 }
