@@ -37,7 +37,6 @@ public class PlayView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
-    private boolean isPlaying = false;
     private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
     @Override
@@ -84,9 +83,13 @@ public class PlayView extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isPlaying) {
-//                    startPlaying();
+                if (!mediaPlayer.isPlaying()) {
                     playButton.setImageResource(R.drawable.ic_pause_40px);
+                    if (mediaPlayer.getCurrentPosition() > 0) {
+                        mediaPlayer.seekTo(seekBar.getProgress());
+                        mediaPlayer.start();
+                    } else {
+
                     // Khởi tạo FirebaseStorage
                     FirebaseStorage storage = FirebaseStorage.getInstance();
 
@@ -98,6 +101,7 @@ public class PlayView extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             try {
+
                                 // Reset MediaPlayer trước khi sử dụng
                                 mediaPlayer.reset();
 
@@ -139,7 +143,6 @@ public class PlayView extends AppCompatActivity {
                                     }
                                 });
 
-
                                 // Bắt đầu phát nhạc
                                 mediaPlayer.start();
                             } catch (IOException e) {
@@ -152,9 +155,10 @@ public class PlayView extends AppCompatActivity {
                             Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
                         }
                     });
+                }
                 } else {
                     mediaPlayer.pause();
-                    playButton.setImageResource(R.drawable.ic_pause_40px);
+                    playButton.setImageResource(R.drawable.play_icon);
 
                 }
             }

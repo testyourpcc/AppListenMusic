@@ -293,8 +293,6 @@ public class LyricView extends AppCompatActivity {
         if(handler != null) {
             handlerSync.removeCallbacks(updateSeekBarAndMediaPlayer);
         }
-
-
     }
 
     public void setcontrol() {
