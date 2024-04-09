@@ -57,6 +57,9 @@ public class LyricView extends AppCompatActivity {
     private Runnable runnable;
     ScrollView  scrollView;
     String[] LyricLRC;
+
+    MediaPlayerSingleton mediaPlayerSingleton;
+
     int index = 1;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -65,8 +68,9 @@ public class LyricView extends AppCompatActivity {
         setContentView(R.layout.acivity_lyric);
         setcontrol();
         getData();
-        mediaPlayer = MediaPlayerSingleton.getInstance();
+        mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
 
+        
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -125,12 +129,13 @@ public class LyricView extends AppCompatActivity {
         });
 
         handler = new Handler();
+        handlerSync = new Handler();
 
         // Set max duration for seek bar
         seekBar.setMax(mediaPlayer.getDuration());
 
         // Update seek bar and media player every 100 milliseconds
-        handler.postDelayed(updateSeekBarAndMediaPlayer, 100);
+        handlerSync.postDelayed(updateSeekBarAndMediaPlayer, 100);
 
         // Seek bar change listener
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -277,15 +282,19 @@ public class LyricView extends AppCompatActivity {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 seekBar.setProgress(currentPosition);
             }
-            handler.postDelayed(this, 100);
+            handlerSync.postDelayed(this, 100);
         }
     };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayer.release();
-        handler.removeCallbacks(updateSeekBarAndMediaPlayer);
+        MediaPlayerSingleton.getInstance().setMediaPlayer(mediaPlayer);
+        if(handler != null) {
+            handlerSync.removeCallbacks(updateSeekBarAndMediaPlayer);
+        }
+
+
     }
 
     public void setcontrol() {

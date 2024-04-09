@@ -52,14 +52,35 @@ public class PlayView extends AppCompatActivity {
                 .transform(new RoundedCornersTransformation(50, 0))
                 .into(songImage);
 
-        // Khởi tạo MediaPlayer
-//        mediaPlayer = new MediaPlayer();
-        mediaPlayer = MediaPlayerSingleton.getInstance();
-        // Thiết lập các thuộc tính âm thanh
-        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build());
+        mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
+        if( mediaPlayer.isPlaying()){
+            handler = new Handler();
 
+            // Set max duration for seek bar
+            seekBar.setMax(mediaPlayer.getDuration());
+
+            // Update seek bar every 100 milliseconds
+            handler.postDelayed(updateSeekBar, 100);
+
+            // Seek bar change listener
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser) {
+                        mediaPlayer.seekTo(progress);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+
+        }
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +153,9 @@ public class PlayView extends AppCompatActivity {
                         }
                     });
                 } else {
-                    isPlaying = false;
+                    mediaPlayer.pause();
+                    playButton.setImageResource(R.drawable.ic_pause_40px);
+
                 }
             }
         });
@@ -185,12 +208,9 @@ public class PlayView extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Giải phóng tài nguyên MediaPlayer
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+       if(handler != null){
         handler.removeCallbacks(updateSeekBar);
+        }
     }
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
