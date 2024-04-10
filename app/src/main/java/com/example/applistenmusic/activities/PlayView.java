@@ -36,20 +36,17 @@ public class PlayView extends AppCompatActivity {
     View mainView;
     private SeekBar seekBar;
     TextView startTime, endTime;
-    private Handler handler;
-    ImageView Feature, Home,Search,Play,Account;
+    private Handler handler,handler1;
+    ImageView Home,Search,Play,Account;
 
     ImageView repeatImg, shuffleImg;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
 
-    int position = 0;
-    boolean repeat = false;
-    boolean checkrandom = false;
-    boolean next = false;
 
 
-    private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+
+    private final String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +112,7 @@ public class PlayView extends AppCompatActivity {
                     if (mediaPlayer.getCurrentPosition() > 0) {
                         mediaPlayer.seekTo(seekBar.getProgress());
                         mediaPlayer.start();
+                        updateTime();
                     } else {
 
                     // Khởi tạo FirebaseStorage
@@ -152,6 +150,8 @@ public class PlayView extends AppCompatActivity {
                                 // Update seek bar every 100 milliseconds
                                 handler.postDelayed(updateSeekBar, 100);
 
+                                updateTime();
+
                                 // Seek bar change listener
                                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                     @Override
@@ -172,7 +172,7 @@ public class PlayView extends AppCompatActivity {
 
                                 // Bắt đầu phát nhạc
                                 mediaPlayer.start();
-                                timeSong();
+                                updateTime();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -187,24 +187,11 @@ public class PlayView extends AppCompatActivity {
                 } else {
                     mediaPlayer.pause();
                     playButton.setImageResource(R.drawable.play_icon);
-
+                    updateTime();
                 }
             }
         });
 
-        repeatImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(repeat == false){
-                    if(checkrandom == true){
-                        checkrandom =  false;
-                    }
-                    repeat = true;
-                } else{
-                    repeat = false;
-                }
-            }
-        });
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,23 +231,17 @@ public class PlayView extends AppCompatActivity {
     }
 
 
-
-    private void timeSong() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-        endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
-        seekBar.setMax(mediaPlayer.getDuration());
-    }
-
     private Runnable updateSeekBar = new Runnable() {
         @Override
         public void run() {
             seekBar.setProgress(mediaPlayer.getCurrentPosition());
             handler.postDelayed(this, 100);
+            updateTime();
         }
     };
 
     private void updateTime(){
-        Handler handler1 = new Handler();
+        handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -268,6 +249,7 @@ public class PlayView extends AppCompatActivity {
                     seekBar.setProgress(mediaPlayer.getCurrentPosition());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+                    endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
                     handler.postDelayed(this,300);
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
@@ -286,6 +268,9 @@ public class PlayView extends AppCompatActivity {
         super.onDestroy();
        if(handler != null){
         handler.removeCallbacks(updateSeekBar);
+        }
+        if(handler1 != null){
+            handler1.removeCallbacksAndMessages(null);
         }
     }
     public void setcontrol() {
