@@ -16,10 +16,12 @@ import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import android.view.GestureDetector;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 
@@ -33,10 +35,20 @@ public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
     private SeekBar seekBar;
+    TextView startTime, endTime;
     private Handler handler;
     ImageView Feature, Home,Search,Play,Account;
+
+    ImageView repeatImg, shuffleImg;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
+
+    int position = 0;
+    boolean repeat = false;
+    boolean checkrandom = false;
+    boolean next = false;
+
+
     private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
 
     @Override
@@ -44,6 +56,7 @@ public class PlayView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
+
 
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
@@ -71,6 +84,7 @@ public class PlayView extends AppCompatActivity {
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if (fromUser) {
                         mediaPlayer.seekTo(progress);
+
                     }
                 }
 
@@ -158,6 +172,7 @@ public class PlayView extends AppCompatActivity {
 
                                 // Bắt đầu phát nhạc
                                 mediaPlayer.start();
+                                timeSong();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -173,6 +188,20 @@ public class PlayView extends AppCompatActivity {
                     mediaPlayer.pause();
                     playButton.setImageResource(R.drawable.play_icon);
 
+                }
+            }
+        });
+
+        repeatImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(repeat == false){
+                    if(checkrandom == true){
+                        checkrandom =  false;
+                    }
+                    repeat = true;
+                } else{
+                    repeat = false;
                 }
             }
         });
@@ -214,6 +243,14 @@ public class PlayView extends AppCompatActivity {
 
     }
 
+
+
+    private void timeSong() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+        endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
+        seekBar.setMax(mediaPlayer.getDuration());
+    }
+
     private Runnable updateSeekBar = new Runnable() {
         @Override
         public void run() {
@@ -221,6 +258,28 @@ public class PlayView extends AppCompatActivity {
             handler.postDelayed(this, 100);
         }
     };
+
+    private void updateTime(){
+        Handler handler1 = new Handler();
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(mediaPlayer!=null){
+                    seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+                    startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+                    handler.postDelayed(this,300);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+
+                        }
+                    });
+                }
+            }
+        },300);
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -239,6 +298,12 @@ public class PlayView extends AppCompatActivity {
         mainView = findViewById(R.id.PlayView);
         gestureDetector = new GestureDetector(this, new GestureListener());
         seekBar = findViewById(R.id.seekBar);
+        startTime = findViewById(R.id.startTime);
+        endTime = findViewById(R.id.endTime);
+        shuffleImg = findViewById(R.id.shuffleImg);
+        repeatImg = findViewById(R.id.repeatImg);
+
+
 
     }
 
