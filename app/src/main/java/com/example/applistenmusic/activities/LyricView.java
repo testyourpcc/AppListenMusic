@@ -313,7 +313,7 @@ public class LyricView extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         MediaPlayerSingleton.getInstance().setMediaPlayer(mediaPlayer);
-        if(handler != null) {
+        if(handlerSync != null) {
             handlerSync.removeCallbacks(updateSeekBarAndMediaPlayer);
         }
     }
