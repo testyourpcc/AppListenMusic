@@ -213,7 +213,7 @@ public class LyricView extends AppCompatActivity {
     void getData(){
         reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("song").child("1").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

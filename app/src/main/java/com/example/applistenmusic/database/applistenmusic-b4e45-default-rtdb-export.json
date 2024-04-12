@@ -1,0 +1,106 @@
+{
+  "admin": {
+    "RdgZeU2PoCSEtcij1aZsIV6VXRt1": {
+      "role": "ADMIN"
+    }
+  },
+  "album": [
+    null,
+    {
+      "artis": 1,
+      "name": "abc",
+      "song": [
+        null,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "artis": 3,
+      "name": "abc",
+      "song": [
+        null,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "artis": [
+    null,
+    {
+      "name": "NewJeans"
+    },
+    {
+      "name": "BABYMONSTER"
+    },
+    {
+      "name": "IVE"
+    },
+    {
+      "name": "LESSARAFIM"
+    }
+  ],
+  "playList": [
+    null,
+    {
+      "name": "K-POP",
+      "song": [
+        null,
+        2,
+        5,
+        1
+      ]
+    }
+  ],
+  "song": [
+    null,
+    {
+      "artis": 2,
+      "lyric": "0:16/r/nOoh hoo hoo hoo/r/n0:18/r/n발버둥 쳐봐/r/n0:19/r/n어차피 손바닥/r/n0:21/r/n위에서 못 나가/r/n0:23/r/nYou know that/r/n0:24/r/n눈을 뜬 순간 피어나/r/n0:28/r/nAll eyes on me 불을 질러라/r/n0:31/r/nDo or die/r/n0:33/r/nOn my life/r/n0:35/r/nYeah you ain’t seen nothing yet/r/n0:37/r/nGot them all going/r/n0:39/r/nSheesh Sheesh/r/n0:40/r/nSheesh Sheesh Sheesh yeah/r/n0:44/r/nB.A.B.Y.M.O.N/r/n0:45/r/nSheesh Sheesh/r/n0:47/r/nSheesh Sheesh Sheesh yeah/r/n0:51/r/nGot them all going/r/n0:52/r/nYo hold on 쉿/r/n0:54/r/n걍 들이부어라 네 달팽이관에/r/n0:56/r/n이건 네 귀에 줄 축복/r/n0:58/r/n음악에 맞춰 걍 춤 춰/r/n1:00/r/n히비리 합 합 boom boom pow/r/n1:01/r/n분위기 타올라 너네들 눈 돌아/r/n1:03/r/n띵하니 적잖이 충격일 거야/r/n1:06/r/nCrown this queen/r/n1:06/r/n홈런은 쳤고 내 다음은 위/r/n1:08/r/n어중이떠중이 중간 아님/r/n1:10/r/n날 보고 닫혔던 입들 say/r/n1:11/r/nSheesh Sheesh Sheesh/r/n1:13/r/nYou know what it is/r/n1:14/r/nI be running this/r/n1:15/r/nPull up in a ghost/r/n1:15/r/nPeek a peek a boo hoo/r/n1:16/r/nVroom vroom/r/n1:17/r/n너네 심장에 박동이 pump pump pop/r/n1:19/r/nPedal to the metal/r/n1:20/r/nClick clack click/r/n1:20/r/nPut’em up to the sky/r/n1:21/r/nHigh high high high/r/n1:23/r/n눈을 뜬 순간 피어나/r/n1:26/r/nAll eyes on me 불을 질러라/r/n1:29/r/nDo or die/r/n1:31/r/nOn my life/r/n1:33/r/nYeah you ain’t seen nothing yet/r/n1:36/r/nGot them all going/r/n1:37/r/nSheesh Sheesh/r/n1:39/r/nSheesh Sheesh Sheesh yeah/r/n1:42/r/nB.A.B.Y.M.O.N/r/n1:44/r/nSheesh Sheesh/r/n1:46/r/nSheesh Sheesh Sheesh yeah/r/n1:49/r/nGot them all going/r/n1:51/r/n마음껏 웃어봐/r/n1:53/r/n이젠 내 차례니까/r/n1:57/r/n천천히 불태워 네가 잠든 사이/r/n2:04/r/nTime’s up 올라가 올라가 더/r/n2:07/r/n꼭대기 꼭대기로/r/n2:08/r/n하늘 위 하늘 위로/r/n2:10/r/nFly away/r/n2:11/r/n온 세상을 뒤집어/r/n2:13/r/nCome on let’s ride/r/n2:18/r/nBABY I’mma MONSTER/r/n2:23/r/nB A B Y M O N/r/n2:26/r/nTell a friend tell a friend tell a friend/r/n2:30/r/nB A B Y M O N/r/n2:33/r/nTell a friend tell a friend tell a friend/r/n2:36/r/nLet's go/r/n2:37/r/nJump jump and let it go/r/n2:39/r/nWatch out we on a roll/r/n2:40/r/nRum pump pump pump it up then/r/n2:44/r/nJump jump and let it go/r/n2:45/r/nWatch out we on a roll/r/n2:47/r/nRum pump pump pump it up then",
+      "name": "Sheesh"
+    },
+    {
+      "artis": 1,
+      "lyric": "0:18/r/n(1,2,3,4)/r/n0:19/r/nBaby, got me looking so crazy/r/n0:22/r/n빠져버리는 daydream/r/n0:25/r/nGot me feeling you/r/n0:26/r/n너도 말해줄래/r/n0:29/r/n누가 내게 뭐라든/r/n0:30/r/n남들과는 달라 넌/r/n0:31/r/nMaybe you could be the one/r/n0:33/r/n날 믿어봐 한 번/r/n0:35/r/nI’m not looking for just fun/r/n0:36/r/nMaybe I could be the one/r/n0:37/r/nOh baby/r/n0:39/r/n예민하대 나 lately/r/n0:42/r/n너 없이는 매일 매일이 yeah/r/n0:45/r/n재미없어 어쩌지/r/n0:47/r/nI just want you/r/n0:49/r/nCall my phone right now/r/n0:50/r/nI just wanna hear you’re mine/r/n0:52/r/n'Cause I know what you like boy/r/n0:57/r/nYou’re my chemical hype boy/r/n1:02/r/n내 지난 날들은/r/n1:04/r/n눈 뜨면 잊는 꿈/r/n1:07/r/nHype boy 너만 원해/r/n1:09/r/nHype boy 내가 전해/r/n1:11/r/nAnd we can go high/r/n1:13/r/n말해봐 yeah 느껴봐 mm mm/r/n1:16/r/nTake him to the sky/r/n1:18/r/nYou know I hype you boy/r/n1:21/r/n눈을 감아/r/n1:23/r/n말해봐 yeah 느껴봐 mm mm/r/n1:25/r/nTake him to the sky/r/n1:28/r/nYou know I hype you boy/r/n1:34/r/n잠에 들려고 잠에 들려 해도/r/n1:36/r/n네 생각에 또 새벽 세 시 uh-oh/r/n1:39/r/n알려줄 거야/r/n1:39/r/nthey can’t have you no more/r/n1:41/r/n봐봐 여기/r/n1:42/r/n내 이름 써있다고/r/n1:45/r/n누가 내게 뭐라든/r/n1:47/r/n남들과는 달라 넌/r/n1:48/r/nMaybe you could be the one/r/n1:50/r/n날 믿어봐 한 번/r/n1:51/r/nI’m not looking for just fun/r/n1:53/r/nMaybe I could be the one/r/n1:54/r/nOh baby/r/n1:56/r/n예민하대 나 lately/r/n1:59/r/n너 없이는 매일 매일이 yeah/r/n2:02/r/n재미없어 어쩌지/r/n2:04/r/nI just want you/r/n2:05/r/nCall my phone right now/r/n2:07/r/nI just wanna hear you’re mine/r/n2:09/r/n'Cause I know what you like boy/r/n2:14/r/nYou’re my chemical hype boy/r/n2:19/r/n내 지난날들은/r/n2:21/r/n눈 뜨면 잊는 꿈/r/n2:24/r/nHype boy 너만 원해/r/n2:25/r/nHype boy 내가 전해/r/n2:28/r/nAnd we can go high/r/n2:30/r/n말해봐 yeah/r/n2:31/r/n느껴봐 mm mm/r/n2:32/r/nTake him to the sky/r/n2:35/r/nYou know I hype you boy/r/n2:37/r/n눈을 감아/r/n2:40/r/n말해봐 yeah/r/n2:41/r/n느껴봐 mm mm/r/n2:42/r/nTake him to the sky/r/n2:45/r/nYou know I hype you boy",
+      "name": "Hype Boy"
+    },
+    {
+      "artis": 1,
+      "lyric": "1:36/r/nYou and me 내 맘이 보이지/r/n1:39/r/n한참을 쳐다봐/r/n1:40/r/n가까이 다가가/r/n1:41/r/nYou see/r/n1:43/r/nYou see, ey ey ey ey/r/n1:46/r/nOne, two, three 용기가 생겼지/r/n1:48/r/n이미 아는 네 눈치/r/n1:49/r/n고개를 돌려 천천히/r/n1:50/r/n여기/r/n1:52/r/nYou see/r/n1:53/r/n여기 보이니/r/n1:55/r/nLooking for attention 너야겠어/r/n1:57/r/n확실하게 나로 만들겠어/r/n1:59/r/nStop, eyyy/r/n2:00/r/nDrop the question/r/n2:00/r/nDrop the, drop the question/r/n2:02/r/nWant attention/r/n2:03/r/nWanna want attention/r/n2:04/r/nYou give me butterflies you know/r/n2:06/r/n내 맘은 온통 paradise/r/n2:09/r/n꿈에서 깨워주지 마/r/n2:12/r/nYou got me looking for attention/r/n2:16/r/nYou got me looking for attention/r/n2:22/r/n가끔은 정말/r/n2:23/r/n헷갈리지만/r/n2:25/r/n분명한 건/r/n2:25/r/nGot me looking for attention/r/n2:32/r/n널 우연히 마주친 척할래/r/n2:34/r/n못 본 척 지나갈래/r/n2:35/r/nYou’re so fine/r/n2:36/r/nGotta gotta get to know ya/r/n2:39/r/n나와 나와 걸어가 줘/r/n2:41/r/n지금 돌아서면/r/n2:43/r/nI need ya, need ya, need ya/r/n2:45/r/nTo look at me back/r/n2:46/r/nHey 다 들켰었나/r/n2:47/r/n널 보면 하트가 튀어나와/r/n2:50/r/n난 사탕을 찾는 baby (baby)/r/n2:53/r/n내 맘은 설레이지/r/n2:54/r/nEyyy, drop the question/r/n2:55/r/nDrop the, drop the question/r/n2:57/r/nWant attention/r/n2:58/r/nWanna want attention/r/n2:59/r/nYou give me butterflies you know/r/n3:01/r/n내 맘은 온통 paradise/r/n3:04/r/n꿈에서 깨워주지 마/r/n3:06/r/nYou got me looking for attention/r/n3:11/r/nYou got me looking for attention/r/n3:17/r/n가끔은 정말/r/n3:18/r/n헷갈리지만/r/n3:19/r/n분명한 건/r/n3:20/r/nGot me looking for attention/r/n3:25/r/nYou got me looking for attention/r/n3:29/r/nYou got me looking for attention/r/n3:35/r/n가끔은 정말/r/n3:36/r/n헷갈리지만/r/n3:38/r/n분명한 건/r/n3:38/r/nGot me looking for attention/r/n3:45/r/nA T T E N T I on/r/n3:47/r/nAttention is what I want/r/n3:49/r/nA T T E N T I on/r/n3:51/r/nAttention is what I want/r/n3:53/r/nA T T E N T I on/r/n3:56/r/nAttention is what I want/r/n3:58/r/nA T T E N T I on/r/n4:01/r/nYou got me looking for attention",
+      "name": "Attention"
+    },
+    {
+      "artis": 1,
+      "lyric": "0:20/r/n느린 한마디보다/r/n0:23/r/n조용함이 더 좋아/r/n0:26/r/n기다리고 있지만/r/n0:28/r/n매일 이런 건 아냐/r/n0:32/r/n난 재미없어 게임 같은 건/r/n0:37/r/n다 필요 없어/r/n0:39/r/n아무리 좋아도 널 no/r/n0:43/r/n말로만은 지겨운걸/r/n0:45/r/n먼저 와서 보여줘/r/n0:48/r/n먼저 와서 보여줘/r/n0:50/r/n'Cause I’m not gonna be the one to get hurt/r/n0:53/r/nHurt (nah, nah)/r/n0:55/r/nI’m not gonna be the one to get hurt/r/n0:59/r/nHurt (nah, nah)/r/n1:01/r/nI’m not gonna be the one to get hurt/r/n1:04/r/nHurt (oh, oh, ooh)/r/n1:06/r/nI’m not gonna be the one to get hurt/r/n1:11/r/n(Oh, oh, ooh)/r/n1:12/r/nI’m not gonna be the one to get hurt/r/n1:16/r/n(Oh, oh, ooh)/r/n1:17/r/nI’m not gonna be the one to get hurt/r/n1:21/r/n(Oh, oh, ooh)/r/n1:24/r/n매일 잠들기 전에/r/n1:27/r/n그리고 또 아침에/r/n1:30/r/n쥐고 있는 내 손엔/r/n1:32/r/n너없는 화면인데/r/n1:35/r/n느린 한마디보다/r/n1:38/r/n조용함이 더 좋아/r/n1:40/r/n기다리고 있지만/r/n1:43/r/n매일 이런 건 아냐/r/n1:47/r/n난 재미없어 게임 같은 건/r/n1:52/r/n다 필요없어/r/n1:54/r/n아무리 좋아도 널 no/r/n1:57/r/n말로만은 지겨운걸/r/n1:59/r/n먼저 와서 보여줘/r/n2:02/r/n먼저 와서 보여줘/r/n2:05/r/n'Cause I’m not gonna the one to get hurt/r/n2:08/r/nHurt (nah, nah)/r/n2:10/r/nI’m not gonna the one to get hurt/r/n2:13/r/nHurt (nah, nah)/r/n2:16/r/nI’m not gonna the one to get hurt/r/n2:19/r/nHurt (oh, oh, ooh)/r/n2:24/r/nHurt (oh, oh, ooh)/r/n2:29/r/n여기까지야/r/n2:32/r/n네가 와있는 곳은/r/n2:35/r/n너무 멀었어/r/n2:37/r/nI’m not gonna the one to get hurt/r/n2:40/r/n여기까지야/r/n2:42/r/n네가 와있는 곳은/r/n2:46/r/n너무 멀었어/r/n2:48/r/nI’m not gonna the one to get hurt",
+      "name": "Hurt"
+    },
+    {
+      "artis": 1,
+      "lyric": "0:11/r/n내가 만든 쿠키/r/n0:17/r/n너를 위해 구웠지/r/n0:19/r/nBut you know that it ain’t for free,/r/n0:22/r/nyeah/r/n0:24/r/n내가 만든 쿠키/r/n0:29/r/n너무 부드러우니/r/n0:32/r/n자꾸만 떠오르니/r/n0:35/r/n널 choco-chip으로/r/n0:37/r/nSprinkle로/r/n0:38/r/n입맛 버리게 만들고 싶어/r/n0:40/r/n숨기고 있지만/r/n0:41/r/n널 더 보고 싶어/r/n0:43/r/nIf you want it/r/n0:44/r/nYou can get it/r/n0:44/r/nIf you want it/r/n0:45/r/n네 목소리를 또 들려줘 boy/r/n0:48/r/n식사는 없어 배고파도/r/n0:51/r/n음료는 없어 목말라도/r/n0:55/r/n달콤한 맛만 디저트만 만/r/n0:58/r/n원하게 될 거 알잖아/r/n1:00/r/n식사는 없어 배고파도/r/n1:03/r/n음료는 없어 목말라도/r/n1:07/r/n달콤한 맛만 디저트만 만/r/n1:10/r/n원하게 될 거 알잖아/r/n1:12/r/n내가 만든 쿠키/r/n1:18/r/n너에게는 독이지/r/n1:20/r/n네 마음속을 녹이지/r/n1:23/r/nSo good, yeah/r/n1:25/r/nLooking at my cookie/r/n1:29/r/n역시 향기부터 다르니/r/n1:32/r/n(Taste it)/r/n1:33/r/n한입은 모자라니/r/n1:36/r/n널 choco-chip으로/r/n1:38/r/nSprinkle로/r/n1:39/r/n정신 못 차리게/r/n1:40/r/n만들고 싶어/r/n1:41/r/n숨기고 있지만/r/n1:42/r/n널 더 보고 싶어/r/n1:44/r/nIf you want it/r/n1:45/r/nYou can get it/r/n1:46/r/nIf you want it/r/n1:46/r/n네 목소리를 또 들려줘 boy/r/n1:49/r/n식사는 없어 배고파도/r/n1:52/r/n음료는 없어 목말라도/r/n1:56/r/n달콤한 맛만 디저트만 만/r/n1:59/r/n원하게 될 거 알잖아/r/n2:02/r/n식사는 없어 배고파도/r/n2:05/r/n음료는 없어 목말라도/r/n2:08/r/n달콤한 맛만 디저트만 만/r/n2:11/r/n원하게 될 거 알잖아/r/n2:15/r/nBet you know/r/n2:17/r/nBet you know I/r/n2:18/r/n레시핀 없어/r/n2:19/r/n딴 데서는 못 찾아/r/n2:20/r/nTake it/r/n2:21/r/nDon't break it/r/n2:22/r/nI wanna see you taste it/r/n2:23/r/nSugar, got sugar/r/n2:25/r/n난 재료 안 아끼지/r/n2:27/r/nBet you know/r/n2:29/r/nBet you know I/r/n2:30/r/n네 다이어트를/r/n2:31/r/n망치고 싶어 나/r/n2:33/r/nTake it/r/n2:33/r/nDon’t break it/r/n2:34/r/nI wanna see you taste it/r/n2:35/r/nSugar, got sugar/r/n2:37/r/nBet you want some/r/n2:38/r/n식사는 없어 배고파도/r/n2:41/r/n음료는 없어 목말라도/r/n2:45/r/n달콤한 맛만 디저트만 만/r/n2:48/r/n원하게 될 거 알잖아/r/n2:50/r/n식사는 없어 배고파도/r/n2:54/r/n음료는 없어 목말라도/r/n2:57/r/n달콤한 맛만 디저트만 만/r/n3:00/r/n원하게 될 거 알잖아/r/n3:03/r/nYeah yo/r/n3:09/r/nYeah yo/r/n3:10/r/nMm mm/r/n3:15/r/nYeah yo/r/n3:18/r/nYeah yo/r/n3:22/r/nMm mm/r/n3:27/r/n내가 만든 쿠키/r/n3:28/r/nCome and take a lookie/r/n3:30/r/n우리 집에만 있지 놀러 와/r/n3:33/r/n얼마든지 굽지/r/n3:34/r/n그런데 너 충치/r/n3:36/r/n생겨도 난 몰라/r/n3:39/r/n내가 만든 쿠키/r/n3:40/r/nCome and take a lookie/r/n3:42/r/n우리 집에만 있지 놀러 와/r/n3:45/r/n얼마든지 굽지/r/n3:47/r/n그런데 너 충치/r/n3:48/r/n생겨도 난 몰라",
+      "name": "Cookie"
+    },
+    {
+      "artis": 3,
+      "lyric": "0:03/r/n또 모르지 내 마음이/r/n0:05/r/n저 날씨처럼 바뀔지/r/n0:07/r/n날 나조차 다 알 수 없으니/r/n0:11/r/n그게 뭐가 중요하니/r/n0:13/r/n지금 네게 완전히/r/n0:15/r/n푹 빠졌단 게 중요한 거지/r/n0:18/r/n아마 꿈만 같겠지만 분명 꿈이 아니야/r/n0:22/r/n달리 설명할 수 없는 이건 사랑일 거야/r/n0:26/r/n방금 내가 말한 감정 감히 의심하지 마/r/n0:30/r/n그냥 좋다는 게 아냐 What's after 'LIKE'?/r/n0:34/r/nYou and I/r/n0:37/r/nIt's more than 'LIKE'/r/n0:38/r/nL 다음 또 O 다음 난 yeah/r/n0:42/r/nYou and I/r/n0:44/r/nIt's more than 'LIKE'/r/n0:47/r/nWhat's after 'LIKE'?/r/n1:03/r/nWhat's after 'LIKE'?/r/n1:05/r/n조심해 두 심장에 핀/r/n1:07/r/n새파란 이 불꽃이/r/n1:08/r/n저 태양보다 뜨거울 테니/r/n1:12/r/n난 저 위로 또 아래로/r/n1:14/r/n내 그래프는 폭이 커/r/n1:17/r/nYeah that's me/r/n1:20/r/n두 번 세 번 피곤하게 자꾸 질문하지 마/r/n1:23/r/n내 장점이 뭔지 알아? 바로 솔직한 거야/r/n1:27/r/n방금 내가 말한 감정 감히 의심하지 마/r/n1:31/r/n그냥 좋다는 게 아냐 What's after 'LIKE'?/r/n1:36/r/nYou and I/r/n1:38/r/nIt's more than 'LIKE'/r/n1:40/r/nL 다음 또 O 다음 난 yeah/r/n1:44/r/nYou and I/r/n1:46/r/nIt's more than 'LIKE'/r/n1:49/r/nWhat's after 'LIKE'?/r/n1:51/r/nWhat after like 내 맘에 strike/r/n1:53/r/n지금 느낀 짜릿함은 마치 tike/r/n1:55/r/nLO 다음에 I 그 다음에 VE/r/n1:57/r/n여긴 너와 내 space 아무도 막지 못해/r/n1:59/r/n나를 보면 눈 깜빡할/r/n2:00/r/n시간 조차도 아까울 걸/r/n2:02/r/n드디어 만나 반가워/r/n2:04/r/nLOVE 사이 놓일 I/r/n2:07/r/nYou and I/r/n2:09/r/nIt's more than 'LIKE'/r/n2:10/r/nE 앞 또 V 앞 난 yeah/r/n2:14/r/nYou and I/r/n2:17/r/nIt's more than 'LIKE'/r/n2:20/r/nWhat's after 'LIKE'?/r/n2:22/r/nYou and I/r/n2:24/r/nIt's more than 'LIKE'/r/n2:26/r/nL 다음 또 O 다음 난 yeah/r/n2:30/r/nYou and I/r/n2:32/r/nIt's more than 'LIKE'/r/n2:35/r/nWhat's after 'LIKE'?/r/n2:50/r/nWhat's after 'LIKE'?",
+      "name": "After Like"
+    },
+    {
+      "artis": 3,
+      "lyric": "0:05/r/n다른 문을 열어 따라 갈 필요는 없어/r/n0:10/r/n넌 너의 길로 난 나의 길로 음/r/n0:13/r/n하루하루마다 색이 달라진 느낌/r/n0:17/r/n밝게 빛이 나는 길을 찾아/r/n0:20/r/nI’m on my way/r/n0:24/r/n넌 그냥 믿으면 돼/r/n0:27/r/nI’m on my way/r/n0:32/r/n보이는 그대로야/r/n0:36/r/n너는 누군가의 Dreams come true/r/n0:40/r/n제일 좋은 어느 날의 데자뷰/r/n0:44/r/n머물고픈 어딘가의 낯선 뷰/r/n0:48/r/nI’ll be far away/r/n0:51/r/nThat’s my/r/n0:52/r/nLife is 아름다운 갤럭시/r/n0:55/r/nBe a writer, 장르로는 판타지/r/n0:59/r/n내일 내게 열리는 건 big big 스테이지/r/n1:04/r/nSo that is who I am/r/n1:08/r/nLook at me/r/n1:09/r/nnow/r/n1:10/r/n어제랑 또 다른 짜릿한 나/r/n1:12/r/n두려운 모든 게 설레이게/r/n1:13/r/nI’m in sky high, OMG/r/n1:16/r/n사소한 건 다 아득해져 와/r/n1:20/r/nLook at me now/r/n1:21/r/nI’m on fire/r/n1:23/r/nI’m on my way/r/n1:27/r/n넌 그냥 믿으면 돼/r/n1:30/r/nI’m on my way/r/n1:35/r/n보이는 그대로야/r/n1:39/r/n너는 누군가의 Dreams come true/r/n1:43/r/n제일 좋은 어느 날의 데자뷰/r/n1:47/r/n머물고픈 어딘가의 낯선 뷰/r/n1:51/r/nI’ll be far away/r/n1:54/r/nThat’s my/r/n1:55/r/nLife is 아름다운 갤럭시/r/n1:58/r/nBe a writer, 장르로는 판타지/r/n2:02/r/n내일 내게 열리는 건 big big 스테이지/r/n2:07/r/nSo that is who I am/r/n2:10/r/n어느 깊은 밤 길을 잃어도/r/n2:18/r/n차라리 날아올라 그럼 네가/r/n2:20/r/n지나가는 대로 길이거든/r/n2:22/r/n1, 2, 3/r/n2:25/r/nFly up/r/n2:28/r/nI hope you’d be someone’s dreams come true/r/n2:32/r/n제일 좋은 어느 날의 데자뷰/r/n2:36/r/n머물고픈 어딘가의 낯선 뷰/r/n2:40/r/nI’ll be far away/r/n2:43/r/nThat’s my/r/n2:44/r/nLife is 아름다운 갤럭시/r/n2:47/r/nBe a writer, 장르로는 판타지/r/n2:51/r/n내일 내게 열리는 건 big big 스테이지/r/n2:56/r/nSo that is who I am",
+      "name": "I AM"
+    },
+    {
+      "artis": 3,
+      "lyric": "0:12/r/n이거면 충분해 쫓고 쫓는 이런 놀이/r/n0:16/r/n참을 수 없는 이끌림과 호기심/r/n0:20/r/n묘한 너와 나 두고 보면 알겠지/r/n0:24/r/n(Woo) 눈동자 아래로/r/n0:29/r/n(Woo) 감추고 있는 거/r/n0:33/r/n(Woo) yeah It’s so bad It’s good/r/n0:38/r/n난 그 맘을 좀 봐야겠어/r/n0:40/r/nNarcissistic, my god I love it/r/n0:44/r/n서로를 비춘 밤/r/n0:47/r/n아름다운 까만 눈빛 더 빠져 깊이/r/n0:52/r/n넌 내게로 난 네게로/r/n0:55/r/n숨 참고 love dive/r/n0:57/r/n(Woo) lalalalalalala/r/n1:01/r/n(Woo) 어서 와서 love dive/r/n1:05/r/n(Woo) Oh perfect sacrifice, yeah/r/n1:11/r/n숨 참고 love dive/r/n1:15/r/n마음은 이렇게 알다가도 모르지/r/n1:19/r/n사랑이라는 건 한순간에 필 테니/r/n1:23/r/n직접 들어와 두 눈으로 확인해/r/n1:27/r/n내 맘 가장 깊은 데로 오면 돼/r/n1:32/r/n(Woo) 망설일 시간은/r/n1:36/r/n(Woo) 3초면 되는 걸/r/n1:40/r/n(Woo) yeah It’s so bad It’s good/r/n1:45/r/n원하면 감히 뛰어들어/r/n1:47/r/nNarcissistic, my god I love it/r/n1:51/r/n서로를 비춘 밤/r/n1:55/r/n아름다운 까만 눈빛 더 빠져 깊이/r/n1:59/r/n넌 내게로 난 네게로/r/n2:02/r/n숨 참고 love dive/r/n2:04/r/n(Woo) lalalalalalala/r/n2:08/r/nWoo 어서 와서 love dive/r/n2:12/r/n(Woo) oh perfect sacrifice yeah/r/n2:18/r/n숨 참고 love dive/r/n2:22/r/n(숨 참고 love dive)/r/n2:26/r/n(숨 참고 love dive)/r/n2:30/r/n(숨 참고 love dive)/r/n2:34/r/n숨 참고 love dive/r/n2:37/r/n(Woo) lalalalalalala/r/n2:41/r/n(Woo) 어서 와서 love dive/r/n2:45/r/n(Woo) Oh perfect sacrifice, yeah/r/n2:50/r/n숨 참고 love dive",
+      "name": "LOVE DIVE"
+    },
+    {
+      "artis": 4,
+      "lyric": "0:26/r/n나와 내 친구들/r/n0:28/r/n우린 아침이 올 때까지 파티할 거야/r/n0:29/r/n오늘 밤 마치 다른 세계에 온 느낌/r/n0:33/r/n차는 조금 막히지만/r/n0:34/r/n라디오는 빵빵 터져/r/n0:36/r/n빨간 불이 들어와도 노래해 Goodbye/r/n0:40/r/nOoh/r/n0:43/r/n아침이 오면, 마법같은 느낌일거야/r/n0:47/r/n필요한 건 다 있어 다른 건 비교도 안 돼/r/n0:50/r/n우리 애들과 춤출 때 그 느낌/r/n0:54/r/n에너지 완벽해 yeah 우린 무결점 yeah 자유로워/r/n0:57/r/n이 넓은 세상에 이보다 더 좋은 기분은 없어/r/n1:01/r/n오늘 밤/r/n1:03/r/n뭐가 옳고 그른지 신경 안 쓸래/r/n1:07/r/n나한테 계속 연락하지 마/r/n1:10/r/n11:59라면 모르지만/r/n1:13/r/n자정이 지나면 아무 것도 신경 안 써/r/n1:16/r/n이리 와, 나랑 달리자/r/n1:18/r/n여기 신용카드도 있고 좋은 친구들도 있어/r/n1:22/r/n몇몇은 오더라구/r/n1:23/r/n아주 예쁘게 차려입고/r/n1:25/r/n왜 넌 계속 로딩 중인 거야?/r/n1:26/r/n널 기다리고 있어 babe/r/n1:29/r/nOoh/r/n1:33/r/n밤부터 아침까지, 슬로우 모션으로 살아/r/n1:37/r/n필요한 건 다 있어 다른 건 비교도 안 돼/r/n1:40/r/n우리 애들과 춤출 때 그 느낌/r/n1:44/r/n에너지 완벽해 yeah 우린 무결점 yeah 자유로워/r/n1:47/r/n이 넓은 세상에 이보다 더 좋은 기분은 없어/r/n1:50/r/n오늘 밤/r/n1:53/r/n뭐가 옳고 그른지 신경 안 쓸래/r/n1:56/r/n나한테 계속 연락하지 마/r/n1:59/r/n11:59라면 모르지만/r/n2:03/r/n자정이 지나면 아무 것도 신경 안 써/r/n2:12/r/nOoh/r/n2:15/r/n아침이 오면, 마법 같은 느낌일 거야/r/n2:19/r/n필요한 건 다 있어 다른 건 비교도 안 돼/r/n2:22/r/n우리 애들과 춤출 때 그 느낌/r/n2:26/r/n에너지 완벽해 yeah 우린 무결점 yeah/r/n2:29/r/n자유로워 이 넓은 세상에 이보다 더 좋은 기분은 없어/r/n2:33/r/nTonight/r/n2:35/r/n뭐가 옳고 그른지 신경 안 쓸래/r/n2:38/r/n나한테 계속 연락하지 마/r/n2:41/r/n11:59라면 또 모르지만/r/n2:45/r/n나한테 계속 연락하지 마",
+      "name": "Perfect Night"
+    }
+  ]
+}
