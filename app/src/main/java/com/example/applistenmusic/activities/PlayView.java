@@ -1,10 +1,13 @@
 package com.example.applistenmusic.activities;
 
+import static com.google.firebase.appcheck.internal.util.Logger.TAG;
+
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +20,8 @@ import com.example.applistenmusic.R;
 import android.view.GestureDetector;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -24,10 +29,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.collection.ArraySet;
 
+import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -42,11 +56,13 @@ public class PlayView extends AppCompatActivity {
     ImageView repeatImg, shuffleImg;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
-
+    private DatabaseReference databaseReference;
 
 
 
     private final String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+    private String Url;
+    private List<Song> songList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +70,31 @@ public class PlayView extends AppCompatActivity {
         setContentView(R.layout.acivity_play);
         setcontrol();
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference();
+
+        reference.child("song").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists()) {
+                        songList = new ArrayList<>();
+                        for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                            Song song = songSnapshot.getValue(Song.class);
+                            songList.add(song);
+                            if(songSnapshot.getKey().equals("2")) Url = song.getUrl();
+                        }
+                    } else {
+                        // Không có dữ liệu trong nhánh "song"
+                    }
+                }
+            }
+        });
 
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
@@ -115,11 +156,14 @@ public class PlayView extends AppCompatActivity {
                         updateTime();
                     } else {
 
+
+
+
                     // Khởi tạo FirebaseStorage
                     FirebaseStorage storage = FirebaseStorage.getInstance();
 
                     // Tham chiếu đến file nhạc trên Firebase Storage
-                    StorageReference storageRef = storage.getReference().child("songs/NewJeans-Hype Boy.mp3");
+                    StorageReference storageRef = storage.getReference().child(Url);
 
                     // Tải file nhạc từ Firebase Storage
                     storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

@@ -1,7 +1,7 @@
 package com.example.applistenmusic.models;
 
 public class Song {
-    private int Id;
+    private int id;
     private String name;
     private String Url;
     private String image;
@@ -15,7 +15,7 @@ public class Song {
     }
 
     public Song(int id, String name, String url, String image, String lyric, int genres, int artis, int album, int view) {
-        this.Id = id;
+        this.id = id;
         this.name = name;
         this.Url = url;
         this.image = image;
@@ -28,11 +28,11 @@ public class Song {
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        id = id;
     }
 
     public String getName() {
