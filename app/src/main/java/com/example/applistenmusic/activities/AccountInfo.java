@@ -8,13 +8,17 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +51,11 @@ import java.util.UUID;
 
 public class AccountInfo extends AppCompatActivity {
 
-    TextView nameText, emailText, uploadText, logoutText, resetPasswdText;
+    TextView nameText, emailText, uploadText, logoutText, resetPasswdText, changePhoneNumber,changeAddress;
     FirebaseAuth auth;
     FirebaseUser user;
-    Uri image;
-
     ImageView Home, Search, Play, Account, noImage, backgroundAcountImg;
+    EditText address,phoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,10 @@ public class AccountInfo extends AppCompatActivity {
         resetPasswdText = findViewById(R.id.resetPasswdText);
         noImage = findViewById(R.id.noImageIcon);
         backgroundAcountImg = findViewById(R.id.backgroundAccountImg);
+        changePhoneNumber = findViewById(R.id.changePhoneNumber);
+        changeAddress = findViewById(R.id.changeAddress);
+        address = findViewById(R.id.address);
+        phoneNumber = findViewById(R.id.phoneNumber);
 
         user = auth.getCurrentUser();
 
@@ -122,6 +129,57 @@ public class AccountInfo extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        changePhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (changePhoneNumber.getText().toString().equals("change")) {
+                    changePhoneNumber.setText("done");
+                    phoneNumber.setFocusableInTouchMode(true);
+                    phoneNumber.setFocusable(true);
+                    phoneNumber.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(phoneNumber, InputMethodManager.SHOW_IMPLICIT);
+                }else{
+                    changePhoneNumber.setText("change");
+                    phoneNumber.setFocusableInTouchMode(false);
+                    phoneNumber.setFocusable(false);
+                    phoneNumber.setKeyListener(null); // Vô hiệu hóa bàn phím
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(phoneNumber.getWindowToken(), 0);
+                }
+            }
+        });
+        changeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (changeAddress.getText().toString().equals("change")) {
+                    changeAddress.setText("done");
+                    address.setFocusableInTouchMode(true);
+                    address.setFocusable(true);
+                    address.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(address, InputMethodManager.SHOW_IMPLICIT);
+                } else {
+                    changeAddress.setText("change");
+                    address.setFocusableInTouchMode(false);
+                    address.setFocusable(false);
+                    address.setKeyListener(null); // Vô hiệu hóa bàn phím
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(address.getWindowToken(), 0);
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
 
 
 
