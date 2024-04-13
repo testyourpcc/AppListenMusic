@@ -32,7 +32,7 @@ public class Song {
     }
 
     public void setId(int id) {
-        id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -48,7 +48,7 @@ public class Song {
     }
 
     public void setUrl(String url) {
-        Url = url;
+        this.Url = url;
     }
 
     public String getImage() {

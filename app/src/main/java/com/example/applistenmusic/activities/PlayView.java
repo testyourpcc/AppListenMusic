@@ -87,7 +87,7 @@ public class PlayView extends AppCompatActivity {
                         for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                             Song song = songSnapshot.getValue(Song.class);
                             songList.add(song);
-                            if(songSnapshot.getKey().equals("2")) Url = song.getUrl();
+                            if(song.getId() == 2) Url = song.getUrl();
                         }
                     } else {
                         // Không có dữ liệu trong nhánh "song"
