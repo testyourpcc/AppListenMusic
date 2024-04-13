@@ -52,9 +52,8 @@ public class LoginView extends AppCompatActivity {
     TextInputEditText passwordInput, emailInput;
     TextInputLayout passwordInputLayout, emailInputLayout;
     CheckBox rememberCheckBox;
-    Button loginBtn;
+    Button loginBtn,googleBtn;
     TextView registerText,forgotPasswd;
-    ImageView googleBtn, facebookBtn;
     private FirebaseAuth mAuth;
     GoogleSignInClient googleSignInClient;
     ProgressBar progressBar;
@@ -70,7 +69,6 @@ public class LoginView extends AppCompatActivity {
         passwordInput = findViewById(R.id.editPassword);
         loginBtn = findViewById(R.id.loginBtn);
         googleBtn = findViewById(R.id.google);
-        facebookBtn = findViewById(R.id.facebook);
         registerText = findViewById(R.id.register);
         forgotPasswd = findViewById(R.id.forgot);
         progressBar = findViewById(R.id.progressBar);
