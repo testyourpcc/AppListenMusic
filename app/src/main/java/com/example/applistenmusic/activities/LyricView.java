@@ -1,5 +1,6 @@
 package com.example.applistenmusic.activities;
 
+import com.example.applistenmusic.SplashView;
 import com.example.applistenmusic.models.LyricForSync;
 
 import android.annotation.SuppressLint;
@@ -32,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -211,17 +214,40 @@ public class LyricView extends AppCompatActivity {
     }
 
     void getData(){
-        reference = FirebaseDatabase.getInstance().getReference();
+//        reference = FirebaseDatabase.getInstance().getReference();
+//
+//        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else {
+//                    String a = String.valueOf(task.getResult().getValue());
+//                    LyricLRC = a.split("/r/n");
+//                    // Khởi tạo Handler và Runnable
+//                    handler = new Handler();
+//                    runnable = new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
+//                            handler.postDelayed(this, 1000);
+//                            // Thực hiện lại sau mỗi giây
+//                        }
+//                    };
+//
+//                    // Bắt đầu việc thay đổi màu và văn bản
+//                    handler.post(runnable);
+//                   // textViewLyric.setText(stringBuilder.toString());
+//                }
+//            }
+//        });
 
-        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    String a = String.valueOf(task.getResult().getValue());
+        List<Song> songList = SplashView.getSongListData("allSong");
+        for(Song song : songList){
+            if(song.getId() == 2){
+                String a = song.getLyric();
                     LyricLRC = a.split("/r/n");
                     // Khởi tạo Handler và Runnable
                     handler = new Handler();
@@ -236,10 +262,8 @@ public class LyricView extends AppCompatActivity {
 
                     // Bắt đầu việc thay đổi màu và văn bản
                     handler.post(runnable);
-                   // textViewLyric.setText(stringBuilder.toString());
-                }
             }
-        });
+        }
     }
 
     public int getLyricHighlightIndex(long currentTime) {

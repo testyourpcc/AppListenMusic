@@ -31,7 +31,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.collection.ArraySet;
 
+import com.example.applistenmusic.SplashView;
+import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.models.Song;
+import com.example.applistenmusic.sharePreferences.SharePreference;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,7 +60,7 @@ public class PlayView extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage;
     private DatabaseReference databaseReference;
-
+    SongHelper songHelper;
 
 
     private final String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
@@ -70,35 +73,13 @@ public class PlayView extends AppCompatActivity {
         setContentView(R.layout.acivity_play);
         setcontrol();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference();
-
-        reference.child("song").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if (dataSnapshot.exists()) {
-                        songList = new ArrayList<>();
-                        for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
-                            Song song = songSnapshot.getValue(Song.class);
-                            songList.add(song);
+        songList = SplashView.getSongListData("allSong");
+        for (Song song : songList) {
                             if(song.getId() == 2) Url = song.getUrl();
                         }
-                    } else {
-                        // Không có dữ liệu trong nhánh "song"
-                    }
-                }
-            }
-        });
-
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
-                .load(imageUrl)
+                    .load(imageUrl)
                 .transform(new RoundedCornersTransformation(50, 0))
                 .into(songImage);
 

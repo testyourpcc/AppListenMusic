@@ -1,2 +1,4 @@
-package com.example.applistenmusic.fragments;public class SongFragment {
+package com.example.applistenmusic.fragments;
+
+public class SongFragment {
 }

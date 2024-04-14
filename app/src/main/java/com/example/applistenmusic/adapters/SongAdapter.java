@@ -1,2 +1,4 @@
-package com.example.applistenmusic.adapters;public class SongAdapter {
+package com.example.applistenmusic.adapters;
+
+public class SongAdapter {
 }
