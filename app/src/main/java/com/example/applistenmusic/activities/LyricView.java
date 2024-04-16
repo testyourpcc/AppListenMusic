@@ -214,40 +214,17 @@ public class LyricView extends AppCompatActivity {
     }
 
     void getData(){
-//        reference = FirebaseDatabase.getInstance().getReference();
-//
-//        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//                else {
-//                    String a = String.valueOf(task.getResult().getValue());
-//                    LyricLRC = a.split("/r/n");
-//                    // Khởi tạo Handler và Runnable
-//                    handler = new Handler();
-//                    runnable = new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-//                            handler.postDelayed(this, 1000);
-//                            // Thực hiện lại sau mỗi giây
-//                        }
-//                    };
-//
-//                    // Bắt đầu việc thay đổi màu và văn bản
-//                    handler.post(runnable);
-//                   // textViewLyric.setText(stringBuilder.toString());
-//                }
-//            }
-//        });
+        reference = FirebaseDatabase.getInstance().getReference();
 
-        List<Song> songList = SplashView.getSongListData("allSong");
-        for(Song song : songList){
-            if(song.getId() == 2){
-                String a = song.getLyric();
+        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    String a = String.valueOf(task.getResult().getValue());
                     LyricLRC = a.split("/r/n");
                     // Khởi tạo Handler và Runnable
                     handler = new Handler();
@@ -262,8 +239,11 @@ public class LyricView extends AppCompatActivity {
 
                     // Bắt đầu việc thay đổi màu và văn bản
                     handler.post(runnable);
+                   // textViewLyric.setText(stringBuilder.toString());
+                }
             }
-        }
+        });
+
     }
 
     public int getLyricHighlightIndex(long currentTime) {
@@ -339,6 +319,9 @@ public class LyricView extends AppCompatActivity {
         MediaPlayerSingleton.getInstance().setMediaPlayer(mediaPlayer);
         if(handlerSync != null) {
             handlerSync.removeCallbacks(updateSeekBarAndMediaPlayer);
+        }
+        if(handler != null) {
+            handler.removeCallbacks(updateSeekBarAndMediaPlayer);
         }
     }
 

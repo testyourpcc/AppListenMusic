@@ -163,8 +163,8 @@ public class SplashView extends AppCompatActivity {
     }
 
     public static List<Song> getSongListData(String key) {
-        String json = sharedPreferences.getString(key, null);
-        if (json != null) {
+        String json = sharedPreferences.getString(key, "");
+        if (json != "") {
             Type type = new TypeToken<List<Song>>(){}.getType();
             return gson.fromJson(json, type);
         } else {

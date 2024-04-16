@@ -20,6 +20,15 @@ public class SongHelper {
     public SongHelper() {
     }
 
+    public static Song getSongById(List<Song> songList, int id){
+        for(Song song : songList){
+            if(song.getId() == id){
+                return song;
+            }
+        }
+        return new Song();
+    }
+
     public static Song getSongById(int id){
         getALLSong(new SongDataCallback() {
             @Override

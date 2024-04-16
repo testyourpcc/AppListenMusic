@@ -74,12 +74,11 @@ public class PlayView extends AppCompatActivity {
         setcontrol();
 
         songList = SplashView.getSongListData("allSong");
-        for (Song song : songList) {
-                            if(song.getId() == 2) Url = song.getUrl();
-                        }
+        Song song  = SongHelper.getSongById(songList,2);
+        Url = song.getUrl();
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
-                    .load(imageUrl)
+                .load(imageUrl)
                 .transform(new RoundedCornersTransformation(50, 0))
                 .into(songImage);
 
