@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
+import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -60,16 +61,18 @@ public class LyricView extends AppCompatActivity {
     private Runnable runnable;
     ScrollView  scrollView;
     String[] LyricLRC;
+    List<Song> allSong;
 
-    int index = 1;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_lyric);
         setcontrol();
-        getData();
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
+        allSong = SongSingleton.getInstance().getAllSong();
+        getData();
         if(mediaPlayer.isPlaying()){
             playButton.setImageResource(R.drawable.ic_pause_40px);
         } else {
