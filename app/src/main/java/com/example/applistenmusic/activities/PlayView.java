@@ -53,7 +53,7 @@ public class PlayView extends AppCompatActivity {
     SongHelper songHelper;
 
 
-    private final String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+    private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
     private String Url;
     private List<Song> songs = new ArrayList<>();
     @Override
@@ -73,6 +73,7 @@ public class PlayView extends AppCompatActivity {
             });
         }
 
+        imageUrl = songs.get(2).getImage();
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
                 .load(imageUrl)
@@ -218,6 +219,14 @@ public class PlayView extends AppCompatActivity {
             public void onClick(View v) {
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);
+
+                imageUrl = s.getImage();
+                // Sử dụng Glide để tải và hiển thị ảnh từ URL
+                Glide.with(PlayView.this)
+                        .load(imageUrl)
+                        .transform(new RoundedCornersTransformation(50, 0))
+                        .into(songImage);
+
                 Url = s.getUrl();
 
                 // Khởi tạo FirebaseStorage
