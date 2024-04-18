@@ -37,7 +37,9 @@ public class SongSingleton {
     }
 
     public synchronized List<Song> getAllSong() {
+        List<Song> songList = new ArrayList<>();
         if (allSong == null) {
+
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference reference = database.getReference().child("song");
 
@@ -49,10 +51,9 @@ public class SongSingleton {
                         Log.e("firebase", "Error getting data", task.getException());
                     }
                     else {
-                        List<Song> songList = new ArrayList<>();
+
                         DataSnapshot dataSnapshot = task.getResult();
                         if (dataSnapshot.exists()) {
-                            songList = new ArrayList<>();
                             for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                                 Song song = songSnapshot.getValue(Song.class);
                                 songList.add(song);
