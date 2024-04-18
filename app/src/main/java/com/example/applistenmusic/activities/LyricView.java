@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
+import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,13 +56,13 @@ public class LyricView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account,playButton;
     TextView textViewLyric;
     DatabaseReference reference;
-    private Handler handler,handlerSync;
+    private Handler handler;
     private SeekBar seekBar;
     private MediaPlayer mediaPlayer;
     private Runnable runnable;
     ScrollView  scrollView;
     String[] LyricLRC;
-    List<Song> allSong;
+    Song song;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -71,7 +72,7 @@ public class LyricView extends AppCompatActivity {
         setContentView(R.layout.acivity_lyric);
         setcontrol();
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
-        allSong = SongSingleton.getInstance().getAllSong();
+
         getData();
         if(mediaPlayer.isPlaying()){
             playButton.setImageResource(R.drawable.ic_pause_40px);
@@ -157,13 +158,12 @@ public class LyricView extends AppCompatActivity {
         });
 
         handler = new Handler();
-        handlerSync = new Handler();
 
         // Set max duration for seek bar
         seekBar.setMax(mediaPlayer.getDuration());
 
         // Update seek bar and media player every 100 milliseconds
-        handlerSync.postDelayed(updateSeekBarAndMediaPlayer, 100);
+        handler.postDelayed(updateSeekBarAndMediaPlayer, 100);
 
         // Seek bar change listener
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -217,35 +217,53 @@ public class LyricView extends AppCompatActivity {
     }
 
     void getData(){
-        reference = FirebaseDatabase.getInstance().getReference();
+        song = SongSingleton.getInstance().getSong();
+        if (song == null) {
+            reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    } else {
+                        String a = String.valueOf(task.getResult().getValue());
+                        LyricLRC = a.split("/r/n");
+                        // Khởi tạo Handler và Runnable
+                        handler = new Handler();
+                        runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
+                                handler.postDelayed(this, 1000);
+                                // Thực hiện lại sau mỗi giây
+                            }
+                        };
+
+                        // Bắt đầu việc thay đổi màu và văn bản
+                        handler.post(runnable);
+                        // textViewLyric.setText(stringBuilder.toString());
+                    }
                 }
-                else {
-                    String a = String.valueOf(task.getResult().getValue());
-                    LyricLRC = a.split("/r/n");
-                    // Khởi tạo Handler và Runnable
-                    handler = new Handler();
-                    runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                            handler.postDelayed(this, 1000);
-                            // Thực hiện lại sau mỗi giây
-                        }
-                    };
-
-                    // Bắt đầu việc thay đổi màu và văn bản
-                    handler.post(runnable);
-                   // textViewLyric.setText(stringBuilder.toString());
+            });
+        } else {
+            String a = SongSingleton.getInstance().getSong().getLyric();
+            LyricLRC = a.split("/r/n");
+            // Khởi tạo Handler và Runnable
+            handler = new Handler();
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
+                    handler.postDelayed(this, 1000);
+                    // Thực hiện lại sau mỗi giây
                 }
-            }
-        });
+            };
+
+            // Bắt đầu việc thay đổi màu và văn bản
+            handler.post(runnable);
+        }
 
     }
 
@@ -282,7 +300,7 @@ public class LyricView extends AppCompatActivity {
 
             textViewLyric.setText(spannableStringBuilder);
 
-            if (!isUserInteracting) {
+            if (!isUserInteracting && LyricHighlightIndex > 0) {
                 int scrollViewHeight = scrollView.getHeight();
                 int textViewHeight = textViewLyric.getLayout().getLineTop((LyricHighlightIndex - 1) / 2);// Chiều cao của mỗi dòng trong textViewLyric
                 int scrollY = textViewHeight - scrollViewHeight / 4;
@@ -312,7 +330,7 @@ public class LyricView extends AppCompatActivity {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 seekBar.setProgress(currentPosition);
             }
-            handlerSync.postDelayed(this, 100);
+            handler.postDelayed(this, 100);
         }
     };
 
@@ -320,11 +338,9 @@ public class LyricView extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         MediaPlayerSingleton.getInstance().setMediaPlayer(mediaPlayer);
-        if(handlerSync != null) {
-            handlerSync.removeCallbacks(updateSeekBarAndMediaPlayer);
-        }
-        if(handler != null) {
+        if(handler!= null) {
             handler.removeCallbacks(updateSeekBarAndMediaPlayer);
+            handler.removeCallbacks(runnable);
         }
     }
 

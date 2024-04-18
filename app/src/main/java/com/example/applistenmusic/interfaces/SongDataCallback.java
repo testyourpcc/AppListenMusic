@@ -7,4 +7,5 @@ import java.util.List;
 public interface SongDataCallback {
     void onSongDataReceived(List<Song> songList);
     void onError(String errorMessage);
+
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class SongSingleton {
 
     private static volatile SongSingleton instance;
-    private List<Song> allSong;
+    private Song song;
 
     private SongSingleton() {
         // Private constructor to prevent instantiation outside this class.
@@ -36,46 +36,12 @@ public class SongSingleton {
         return instance;
     }
 
-    public synchronized List<Song> getAllSong() {
-        List<Song> songList = new ArrayList<>();
-        if (allSong == null) {
-
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference reference = database.getReference().child("song");
-
-            reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e("firebase", "Error getting data", task.getException());
-                    }
-                    else {
-
-                        DataSnapshot dataSnapshot = task.getResult();
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
-                                Song song = songSnapshot.getValue(Song.class);
-                                songList.add(song);
-
-                            }
-
-                        } else {
-
-                        }
-                    }
-                }
-            });
-        }
-        return songList;
+    public synchronized Song getSong() {
+       return song;
     }
 
-    public synchronized void setsongList(List<Song> songList) {
-        this.allSong = songList;
+    public synchronized void setSong(Song song) {
+        this.song = song;
     }
-    public synchronized void setAllSongList(List<Song> songList) {
-        this.allSong = songList;
-    }
-
 
 }

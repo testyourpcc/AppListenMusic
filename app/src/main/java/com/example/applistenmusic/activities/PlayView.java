@@ -1,13 +1,10 @@
 package com.example.applistenmusic.activities;
 
-import static com.google.firebase.appcheck.internal.util.Logger.TAG;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,22 +26,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.collection.ArraySet;
 
-import com.example.applistenmusic.SplashView;
 import com.example.applistenmusic.helpers.SongHelper;
+import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.models.Song;
-import com.example.applistenmusic.sharePreferences.SharePreference;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.applistenmusic.singletons.SongListSingleton;
+import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -65,17 +56,21 @@ public class PlayView extends AppCompatActivity {
 
     private final String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
     private String Url;
-    private List<Song> songList;
-
+    private List<Song> songs = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
 
-        songList = SplashView.getSongListData("allSong");
-        Song song  = SongHelper.getSongById(songList,2);
-        Url = song.getUrl();
+        SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+            @Override
+            public void onDataLoaded(List<Song> songList) {
+                songs = songList;
+            }
+        });
+
+
         // Sử dụng Glide để tải và hiển thị ảnh từ URL
         Glide.with(this)
                 .load(imageUrl)
@@ -123,6 +118,7 @@ public class PlayView extends AppCompatActivity {
                 seekBar.setMax(mediaPlayer.getDuration());
                 seekBar.setProgress(seekBarProcess);
                 mediaPlayer.seekTo(seekBarProcess);
+                updateTime();
             }
         }
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -135,79 +131,77 @@ public class PlayView extends AppCompatActivity {
                         mediaPlayer.start();
                         updateTime();
                     } else {
+                        Song s = SongHelper.getSongById(songs,2);
+                        SongSingleton.getInstance().setSong(s);
+                        Url = s.getUrl();
 
+                        // Khởi tạo FirebaseStorage
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
 
+                        // Tham chiếu đến file nhạc trên Firebase Storage
+                        StorageReference storageRef = storage.getReference().child(Url);
 
+                        // Tải file nhạc từ Firebase Storage
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                try {
 
-                    // Khởi tạo FirebaseStorage
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                                    // Reset MediaPlayer trước khi sử dụng
+                                    mediaPlayer.reset();
 
-                    // Tham chiếu đến file nhạc trên Firebase Storage
-                    StorageReference storageRef = storage.getReference().child(Url);
+                                    // Đặt AudioAttributes cho MediaPlayer
+                                    mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                                            .build());
 
-                    // Tải file nhạc từ Firebase Storage
-                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            try {
+                                    // Đặt nguồn dữ liệu cho MediaPlayer
+                                    mediaPlayer.setDataSource(PlayView.this, uri);
 
-                                // Reset MediaPlayer trước khi sử dụng
-                                mediaPlayer.reset();
+                                    // Chuẩn bị MediaPlayer
+                                    mediaPlayer.prepare();
 
-                                // Đặt AudioAttributes cho MediaPlayer
-                                mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                                        .build());
+                                    handler = new Handler();
 
-                                // Đặt nguồn dữ liệu cho MediaPlayer
-                                mediaPlayer.setDataSource(PlayView.this, uri);
+                                    // Set max duration for seek bar
+                                    seekBar.setMax(mediaPlayer.getDuration());
 
-                                // Chuẩn bị MediaPlayer
-                                mediaPlayer.prepare();
+                                    // Update seek bar every 100 milliseconds
+                                    handler.postDelayed(updateSeekBar, 100);
 
-                                handler = new Handler();
-
-                                // Set max duration for seek bar
-                                seekBar.setMax(mediaPlayer.getDuration());
-
-                                // Update seek bar every 100 milliseconds
-                                handler.postDelayed(updateSeekBar, 100);
-
-                                updateTime();
-
-                                // Seek bar change listener
-                                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                    @Override
-                                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                        if (fromUser) {
-                                            mediaPlayer.seekTo(progress);
+                                    // Seek bar change listener
+                                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                        @Override
+                                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                            if (fromUser) {
+                                                mediaPlayer.seekTo(progress);
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onStartTrackingTouch(SeekBar seekBar) {
-                                    }
+                                        @Override
+                                        public void onStartTrackingTouch(SeekBar seekBar) {
+                                        }
 
-                                    @Override
-                                    public void onStopTrackingTouch(SeekBar seekBar) {
-                                    }
-                                });
+                                        @Override
+                                        public void onStopTrackingTouch(SeekBar seekBar) {
+                                        }
+                                    });
 
-                                // Bắt đầu phát nhạc
-                                mediaPlayer.start();
-                                updateTime();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                    // Bắt đầu phát nhạc
+                                    mediaPlayer.start();
+                                    updateTime();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 } else {
                     mediaPlayer.pause();
                     playButton.setImageResource(R.drawable.play_icon);
@@ -274,7 +268,7 @@ public class PlayView extends AppCompatActivity {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
                     endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
-                    handler.postDelayed(this,300);
+                    handler1.postDelayed(this,300);
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
