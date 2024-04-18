@@ -38,6 +38,17 @@ public class SongListSingleton {
         return instance;
     }
 
+    public boolean hasSong() {
+        return allSong != null;
+    }
+
+    public synchronized List<Song> getAllSongIfExist(){
+        return allSong;
+    }
+    public synchronized void setAllSong(List<Song> songs){
+        allSong = songs;
+    }
+
     public synchronized void getAllSong(DataLoadListener listener) {
         if (isDataLoaded) {
             // If data is already loaded, return it immediately

@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SongHelper {
     static List<Song> songList = new ArrayList<>();
@@ -21,6 +22,18 @@ public class SongHelper {
     }
 
     public static Song getSongById(List<Song> songList, int id){
+        for(Song song : songList){
+            if(song.getId() == id){
+                return song;
+            }
+        }
+        return new Song();
+    }
+
+    public static Song getRandomSong(List<Song> songList){
+        Random random = new Random();
+        int id =  random.nextInt(songList.size()) + 1;
+
         for(Song song : songList){
             if(song.getId() == id){
                 return song;

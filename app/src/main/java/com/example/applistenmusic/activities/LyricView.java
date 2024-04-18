@@ -249,20 +249,23 @@ public class LyricView extends AppCompatActivity {
             });
         } else {
             String a = SongSingleton.getInstance().getSong().getLyric();
-            LyricLRC = a.split("/r/n");
-            // Khởi tạo Handler và Runnable
-            handler = new Handler();
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                    handler.postDelayed(this, 1000);
-                    // Thực hiện lại sau mỗi giây
-                }
-            };
-
-            // Bắt đầu việc thay đổi màu và văn bản
-            handler.post(runnable);
+            if (a.isEmpty()){
+                textViewLyric.setText("Chưa có lời bài hát cho bài hát này");
+            } else {
+                LyricLRC = a.split("/r/n");
+                // Khởi tạo Handler và Runnable
+                handler = new Handler();
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
+                        handler.postDelayed(this, 1000);
+                        // Thực hiện lại sau mỗi giây
+                    }
+                };
+                // Bắt đầu việc thay đổi màu và văn bản
+                handler.post(runnable);
+            }
         }
 
     }
@@ -309,13 +312,6 @@ public class LyricView extends AppCompatActivity {
         }
     }
 
-
-    String formatData(String Lyric){
-        ArrayList<String> LyricLRC = new ArrayList<>();
-
-        return Lyric;
-    }
-
     public static long convertTimeToMilliseconds(String timeString) {
         String[] parts = timeString.split(":");
         int minutes = Integer.parseInt(parts[0].trim());
@@ -340,7 +336,7 @@ public class LyricView extends AppCompatActivity {
         MediaPlayerSingleton.getInstance().setMediaPlayer(mediaPlayer);
         if(handler!= null) {
             handler.removeCallbacks(updateSeekBarAndMediaPlayer);
-            handler.removeCallbacks(runnable);
+            handler.removeCallbacksAndMessages(null);
         }
     }
 
