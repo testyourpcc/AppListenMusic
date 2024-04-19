@@ -73,13 +73,21 @@ public class PlayView extends AppCompatActivity {
             });
         }
 
-        imageUrl = songs.get(2).getImage();
-        // Sử dụng Glide để tải và hiển thị ảnh từ URL
-        Glide.with(this)
-                .load(imageUrl)
-                .transform(new RoundedCornersTransformation(50, 0))
-                .into(songImage);
-
+        if (SongSingleton.getInstance().getSong() == null) {
+            imageUrl = songs.get(2).getImage();
+            // Sử dụng Glide để tải và hiển thị ảnh từ URL
+            Glide.with(this)
+                    .load(imageUrl)
+                    .transform(new RoundedCornersTransformation(50, 0))
+                    .into(songImage);
+        } else {
+            imageUrl = SongSingleton.getInstance().getSong().getImage();
+            // Sử dụng Glide để tải và hiển thị ảnh từ URL
+            Glide.with(this)
+                    .load(imageUrl)
+                    .transform(new RoundedCornersTransformation(50, 0))
+                    .into(songImage);
+        }
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
 
         // Nếu có bài hát đang chạy khi khởi tạo view thì đồng bộ hóa với seek bar
@@ -134,8 +142,8 @@ public class PlayView extends AppCompatActivity {
                         mediaPlayer.start();
                         updateTime();
                     } else {
-                        //Song s = SongHelper.getSongById(songs,2);
-                        Song s = SongHelper.getRandomSong(songs);
+                        Song s = SongHelper.getSongById(songs,2);
+//                      Song s = SongHelper.getRandomSong(songs);
                         SongSingleton.getInstance().setSong(s);
                         Url = s.getUrl();
 
@@ -172,7 +180,7 @@ public class PlayView extends AppCompatActivity {
                                     seekBar.setMax(mediaPlayer.getDuration());
 
                                     // Update seek bar every 100 milliseconds
-                                    handler.postDelayed(updateSeekBar, 100);
+                                    handler.postDelayed(updateSeekBar, 250);
 
                                     // Seek bar change listener
                                     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

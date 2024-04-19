@@ -236,7 +236,7 @@ public class LyricView extends AppCompatActivity {
                             @Override
                             public void run() {
                                 changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                                handler.postDelayed(this, 1000);
+                                handler.postDelayed(this, 250);
                                 // Thực hiện lại sau mỗi giây
                             }
                         };
@@ -259,7 +259,7 @@ public class LyricView extends AppCompatActivity {
                     @Override
                     public void run() {
                         changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                        handler.postDelayed(this, 1000);
+                        handler.postDelayed(this, 250);
                         // Thực hiện lại sau mỗi giây
                     }
                 };
@@ -326,7 +326,7 @@ public class LyricView extends AppCompatActivity {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 seekBar.setProgress(currentPosition);
             }
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, 250);
         }
     };
 
