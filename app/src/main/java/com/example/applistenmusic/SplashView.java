@@ -4,9 +4,7 @@ package com.example.applistenmusic;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,10 +12,17 @@ import android.util.Log;
 import com.example.applistenmusic.activities.Home;
 import com.example.applistenmusic.activities.HomeAdmin;
 import com.example.applistenmusic.activities.LoginAndRegister;
-import com.example.applistenmusic.activities.LoginView;
+import com.example.applistenmusic.interfaces.AlbumLoadListener;
+import com.example.applistenmusic.interfaces.ArtistLoadListener;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.interfaces.PlayListLoadListener;
+import com.example.applistenmusic.models.Album;
+import com.example.applistenmusic.models.Artist;
+import com.example.applistenmusic.models.PlayList;
 import com.example.applistenmusic.models.Song;
-import com.example.applistenmusic.sharePreferences.SharePreference;
+import com.example.applistenmusic.singletons.AlbumSingleton;
+import com.example.applistenmusic.singletons.ArtistSingleton;
+import com.example.applistenmusic.singletons.PlayListSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,16 +31,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SplashView extends AppCompatActivity {
     private FirebaseAuth mAuth;
     List<Song> songs;
+    List<Artist> allArtist;
+    List<Album> allAlbum;
+    List<PlayList> allUserPlayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,24 @@ public class SplashView extends AppCompatActivity {
             public void onDataLoaded(List<Song> songList) {
                 songs = songList;
             }
+        });
+
+        ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener(){
+            @Override
+            public void onArtistLoaded(List<Artist> artists) {
+                allArtist = artists;}
+        });
+
+        PlayListSingleton.getInstance().getAllPlayList(new PlayListLoadListener(){
+            @Override
+            public void onPlayListLoaded(List<PlayList> playLists) {
+                allUserPlayList = playLists;}
+        });
+
+        AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener(){
+            @Override
+            public void onAlbumLoaded(List<Album> albums) {
+                allAlbum = albums;}
         });
 
 
@@ -87,5 +109,8 @@ public class SplashView extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SongListSingleton.getInstance().setAllSong(songs);
+        ArtistSingleton.getInstance().setAllArtist(allArtist);
+        AlbumSingleton.getInstance().setAllAlbum(allAlbum);
+        PlayListSingleton.getInstance().setAllPlayList(allUserPlayList);
     }
 }

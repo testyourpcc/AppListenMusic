@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,18 +54,18 @@ public class PlayView extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage, playNext , Home,Search,Play,Account;
     private DatabaseReference databaseReference;
-    SongHelper songHelper;
 
-
-    private String imageUrl = "https://www.thenews.com.pk/assets/uploads/updates/2023-02-19/1042261_2435611_haerin2_updates.jpg";
+    private String imageUrl;
     private String Url;
     private List<Song> songs = new ArrayList<>();
+    Animation animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
-
+        animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
         if (SongListSingleton.getInstance().hasSong()){
             songs = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -76,19 +80,26 @@ public class PlayView extends AppCompatActivity {
         if (SongSingleton.getInstance().getSong() == null) {
             imageUrl = songs.get(2).getImage();
 
-            // Sử dụng Glide để tải và hiển thị ảnh từ URL
+            int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
             Glide.with(this)
                     .load(imageUrl)
+                    .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
                     .transform(new RoundedCornersTransformation(50, 0))
+                    .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                     .into(songImage);
+
         } else {
             imageUrl = SongSingleton.getInstance().getSong().getImage();
             songName.setText(SongSingleton.getInstance().getSong().getName());
             // Sử dụng Glide để tải và hiển thị ảnh từ URL
+            int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
             Glide.with(this)
                     .load(imageUrl)
+                    .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
                     .transform(new RoundedCornersTransformation(50, 0))
+                    .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                     .into(songImage);
+
         }
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
 
@@ -149,6 +160,7 @@ public class PlayView extends AppCompatActivity {
                         SongSingleton.getInstance().setSong(s);
                         Url = s.getUrl();
                         songName.setText(s.getName());
+
 
                         // Khởi tạo FirebaseStorage
                         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -220,7 +232,6 @@ public class PlayView extends AppCompatActivity {
                 } else {
                     mediaPlayer.pause();
                     playButton.setImageResource(R.drawable.play_icon);
-                    updateTime();
                 }
             }
         });
@@ -232,11 +243,14 @@ public class PlayView extends AppCompatActivity {
                 SongSingleton.getInstance().setSong(s);
 
                 imageUrl = s.getImage();
-                // Sử dụng Glide để tải và hiển thị ảnh từ URL
+                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
                 Glide.with(PlayView.this)
                         .load(imageUrl)
+                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
                         .transform(new RoundedCornersTransformation(50, 0))
+                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                         .into(songImage);
+
 
                 Url = s.getUrl();
                 songName.setText(s.getName());

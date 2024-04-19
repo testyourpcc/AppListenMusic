@@ -5,17 +5,19 @@ import java.util.List;
 public class PlayList {
     private int Id;
     private String name;
-    private List<Song> Songs;
+    private List<Song> songList;
+    private List<Long> songIdList;
     private String image;
     private String user;
 
     public PlayList() {
     }
 
-    public PlayList(int id, String name, List<Song> songs, String image, String user) {
+    public PlayList(int id, String name, List<Song> songList, List<Long> songIdList, String image, String user) {
         Id = id;
         this.name = name;
-        Songs = songs;
+        this.songList = songList;
+        this.songIdList = songIdList;
         this.image = image;
         this.user = user;
     }
@@ -36,12 +38,20 @@ public class PlayList {
         this.name = name;
     }
 
-    public List<Song> getSongs() {
-        return Songs;
+    public List<Song> getSongList() {
+        return songList;
     }
 
-    public void setSongs(List<Song> songs) {
-        Songs = songs;
+    public void setSongList(List<Song> songList) {
+        this.songList = songList;
+    }
+
+    public List<Long> getSongIdList() {
+        return songIdList;
+    }
+
+    public void setSongIdList(List<Long> songIdList) {
+        this.songIdList = songIdList;
     }
 
     public String getImage() {

@@ -1,15 +1,13 @@
 package com.example.applistenmusic.models;
 
-import java.util.List;
-
-public class Artis {
+public class Artist {
     private int Id;
     private String name;
 
-    public Artis() {
+    public Artist() {
     }
 
-    public Artis(int id, String name) {
+    public Artist(int id, String name) {
         Id = id;
         this.name = name;
     }
