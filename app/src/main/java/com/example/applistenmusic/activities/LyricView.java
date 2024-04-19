@@ -303,9 +303,14 @@ public class LyricView extends AppCompatActivity {
 
             textViewLyric.setText(spannableStringBuilder);
 
-            if (!isUserInteracting && LyricHighlightIndex > 0) {
+            if (!isUserInteracting && textViewLyric != null && scrollView != null) {
                 int scrollViewHeight = scrollView.getHeight();
-                int textViewHeight = textViewLyric.getLayout().getLineTop((LyricHighlightIndex - 1) / 2);// Chiều cao của mỗi dòng trong textViewLyric
+                int textViewHeight;
+                if(textViewLyric.getLayout() != null) {
+                    textViewHeight = textViewLyric.getLayout().getLineTop((LyricHighlightIndex - 1) / 2);// Chiều cao của mỗi dòng trong textViewLyric
+                } else {
+                    textViewHeight = 0;
+                }
                 int scrollY = textViewHeight - scrollViewHeight / 4;
                 scrollView.smoothScrollTo(0, scrollY);
             }

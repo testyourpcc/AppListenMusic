@@ -43,7 +43,7 @@ public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
     private SeekBar seekBar;
-    TextView startTime, endTime;
+    TextView startTime, endTime , songName;
     private Handler handler,handler1;
 
     ImageView repeatImg, shuffleImg;
@@ -75,6 +75,7 @@ public class PlayView extends AppCompatActivity {
 
         if (SongSingleton.getInstance().getSong() == null) {
             imageUrl = songs.get(2).getImage();
+
             // Sử dụng Glide để tải và hiển thị ảnh từ URL
             Glide.with(this)
                     .load(imageUrl)
@@ -82,6 +83,7 @@ public class PlayView extends AppCompatActivity {
                     .into(songImage);
         } else {
             imageUrl = SongSingleton.getInstance().getSong().getImage();
+            songName.setText(SongSingleton.getInstance().getSong().getName());
             // Sử dụng Glide để tải và hiển thị ảnh từ URL
             Glide.with(this)
                     .load(imageUrl)
@@ -146,6 +148,7 @@ public class PlayView extends AppCompatActivity {
 //                      Song s = SongHelper.getRandomSong(songs);
                         SongSingleton.getInstance().setSong(s);
                         Url = s.getUrl();
+                        songName.setText(s.getName());
 
                         // Khởi tạo FirebaseStorage
                         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -236,6 +239,7 @@ public class PlayView extends AppCompatActivity {
                         .into(songImage);
 
                 Url = s.getUrl();
+                songName.setText(s.getName());
 
                 // Khởi tạo FirebaseStorage
                 FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -439,7 +443,7 @@ public class PlayView extends AppCompatActivity {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
                     endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
-                    handler1.postDelayed(this,300);
+                    handler1.postDelayed(this,100);
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -470,6 +474,7 @@ public class PlayView extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         playNext = findViewById(R.id.nextImg);
         songImage = findViewById(R.id.discImageView);
+        songName = findViewById(R.id.songNameTextView);
         mainView = findViewById(R.id.PlayView);
         gestureDetector = new GestureDetector(this, new GestureListener());
         seekBar = findViewById(R.id.seekBar);

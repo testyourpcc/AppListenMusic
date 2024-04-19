@@ -43,6 +43,17 @@
                     android:src="@drawable/back_icon" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/songNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:text="Tên bài hát"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                />
 
             <ImageView
                 android:id="@+id/navigationButton"
