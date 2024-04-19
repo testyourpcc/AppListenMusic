@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.models.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,8 +35,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -54,6 +57,7 @@ public class AccountInfo extends AppCompatActivity {
     TextView nameText, emailText, uploadText, logoutText, resetPasswdText, changePhoneNumber,changeAddress;
     FirebaseAuth auth;
     FirebaseUser user;
+    DatabaseReference reference;
     ImageView Home, Search, Play, Account, noImage, backgroundAcountImg;
     EditText address,phoneNumber;
 
@@ -111,6 +115,21 @@ public class AccountInfo extends AppCompatActivity {
             nameText.setText(user.getDisplayName());
             emailText.setText(user.getEmail());
         }
+
+        reference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserInfo userInfo = snapshot.getValue(UserInfo.class);
+                phoneNumber.setText(userInfo.getPhone());
+                address.setText(userInfo.getAddress());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         logoutText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,9 +157,12 @@ public class AccountInfo extends AppCompatActivity {
                     phoneNumber.setFocusableInTouchMode(true);
                     phoneNumber.setFocusable(true);
                     phoneNumber.requestFocus();
+                    phoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(phoneNumber, InputMethodManager.SHOW_IMPLICIT);
                 }else{
+                    String phoneChanged = phoneNumber.getText().toString();
+                    reference.child("phone").setValue(phoneChanged);
                     changePhoneNumber.setText("change");
                     phoneNumber.setFocusableInTouchMode(false);
                     phoneNumber.setFocusable(false);
@@ -161,6 +183,8 @@ public class AccountInfo extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(address, InputMethodManager.SHOW_IMPLICIT);
                 } else {
+                    String addressChanged = address.getText().toString();
+                    reference.child("address").setValue(addressChanged);
                     changeAddress.setText("change");
                     address.setFocusableInTouchMode(false);
                     address.setFocusable(false);
@@ -213,5 +237,7 @@ public class AccountInfo extends AppCompatActivity {
             }
         });
     }
+
+
 
 }
