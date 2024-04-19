@@ -239,9 +239,9 @@ public class PlayView extends AppCompatActivity {
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mediaPlayer.reset();
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);
-
                 imageUrl = s.getImage();
                 int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
                 Glide.with(PlayView.this)
@@ -266,9 +266,6 @@ public class PlayView extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         try {
-
-                            // Reset MediaPlayer trước khi sử dụng
-                            mediaPlayer.reset();
 
                             // Đặt AudioAttributes cho MediaPlayer
                             mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
