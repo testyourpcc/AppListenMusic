@@ -311,7 +311,7 @@ public class LyricView extends AppCompatActivity {
                 } else {
                     textViewHeight = 0;
                 }
-                int scrollY = textViewHeight - scrollViewHeight / 4;
+                int scrollY = textViewHeight - scrollViewHeight / 5 ;
                 scrollView.smoothScrollTo(0, scrollY);
             }
         }

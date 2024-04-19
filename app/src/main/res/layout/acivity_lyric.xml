@@ -21,31 +21,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <!-- Nút trở về -->
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back_icon"
                 android:background="?android:attr/selectableItemBackground"
-                android:onClick="onBackPressed"
                 android:contentDescription="Go back to previous screen"
-                android:padding="16dp" />
+                android:onClick="onBackPressed"
+                android:padding="16dp"
+                android:src="@drawable/back_icon" />
 
             <!-- TextView -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Lời bài hát"
-                android:textSize="22sp"
-                android:textColor="@color/white"
                 android:gravity="center"
-                />
+                android:text="Lời bài hát"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
 
             <!-- Nút menu -->
             <ImageButton
@@ -59,25 +58,55 @@
                 android:src="@drawable/ic_menu" />
 
         </LinearLayout>
-
-        <!-- Icon nhỏ -->
-        <ImageView
-            android:id="@+id/tabInfoIcon"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_password_24"
-            />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <Space
+                android:layout_width="7dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5" />
+            <ImageView
+                android:id="@+id/tabSongInfor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/short_line"
+                android:layout_weight="0.1" />
+
+            <ImageView
+                android:id="@+id/tabPlayNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/short_line"
+                android:layout_weight="0.1"
+               />
+
+            <ImageView
+                android:id="@+id/tabLyricView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/long_line"
+                android:layout_weight="0.1" />
+            <Space
+                android:layout_width="7dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
 
+    <!-- SeekBar -->
     <ScrollView
         android:id="@+id/ScrollLyric"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:padding="7dp"
+        android:layout_height="500dp"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="35dp">
+        android:layout_marginTop="20dp"
+        android:padding="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,8 +117,8 @@
                 android:id="@+id/textViewLyric"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lời bài hát sẽ được hiển thị ở đây"
                 android:gravity="center"
+                android:text="Lời bài hát sẽ được hiển thị ở đây"
                 android:textSize="22sp" />
             <!-- TextView hiển thị lời bài hát -->
 
@@ -97,7 +126,6 @@
 
     </ScrollView>
 
-    <!-- SeekBar -->
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"

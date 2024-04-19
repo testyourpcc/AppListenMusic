@@ -21,31 +21,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <!-- Nút trở về -->
             <ImageButton
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back_icon"
                 android:background="?android:attr/selectableItemBackground"
-                android:onClick="onBackPressed"
                 android:contentDescription="Go back to previous screen"
-                android:padding="16dp" />
+                android:onClick="onBackPressed"
+                android:padding="16dp"
+                android:src="@drawable/back_icon" />
 
             <!-- TextView -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="Thông tin"
                 android:textColor="@color/white"
-                android:textSize="22sp"
-                android:gravity="center"
-                />
+                android:textSize="22sp" />
 
             <!-- Nút menu -->
             <ImageButton
@@ -61,38 +60,42 @@
         </LinearLayout>
 
         <!-- Icon nhỏ -->
-        <ImageView
-            android:id="@+id/tabInfoIcon"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_password_24"
-            />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <Space
+                android:layout_width="7dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5" />
+            <ImageView
+                android:id="@+id/tabSongInfor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/long_line"
+                android:layout_weight="0.1" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/tabPlayNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/short_line"
+                android:layout_weight="0.1"
+                />
 
+            <ImageView
+                android:id="@+id/tabLyricView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/short_line"
+                android:layout_weight="0.1" />
+            <Space
+                android:layout_width="7dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5" />
 
-
-    <LinearLayout
-        android:id="@+id/SongInfo"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:orientation="horizontal">
-
-
-    <LinearLayout
-        android:id="@+id/SongInfoTag1"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:orientation="horizontal">
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/SongInfoTag2"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:orientation="horizontal">
-    </LinearLayout>
-
+        </LinearLayout>
     </LinearLayout>
 
     <!-- TextView hiển thị lời bài hát -->
@@ -105,12 +108,16 @@
         android:gravity="left"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"/>
+
+    <!-- SeekBar -->
+
     <ListView
         android:id="@+id/ListOfSong"
         android:layout_width="wrap_content"
-        android:layout_height="270dp"/>
-    <!-- SeekBar -->
+        android:layout_height="270dp" />
+
     <SeekBar
 
         android:id="@+id/seekBar"
