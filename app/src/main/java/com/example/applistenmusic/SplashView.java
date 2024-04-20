@@ -15,13 +15,16 @@ import com.example.applistenmusic.activities.LoginAndRegister;
 import com.example.applistenmusic.interfaces.AlbumLoadListener;
 import com.example.applistenmusic.interfaces.ArtistLoadListener;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.interfaces.GenresLoadListener;
 import com.example.applistenmusic.interfaces.PlayListLoadListener;
 import com.example.applistenmusic.models.Album;
 import com.example.applistenmusic.models.Artist;
+import com.example.applistenmusic.models.Genres;
 import com.example.applistenmusic.models.PlayList;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.AlbumSingleton;
 import com.example.applistenmusic.singletons.ArtistSingleton;
+import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.PlayListSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +43,8 @@ public class SplashView extends AppCompatActivity {
     List<Artist> allArtist;
     List<Album> allAlbum;
     List<PlayList> allUserPlayList;
+    List<Genres> allGenres;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,12 @@ public class SplashView extends AppCompatActivity {
             public void onAlbumLoaded(List<Album> albums) {
                 allAlbum = albums;}
         });
-
+        GenresSingleton.getInstance().getAllGenres(new GenresLoadListener(){
+            @Override
+            public void onGenresLoaded(List<Genres> GenresList) {
+                allGenres = GenresList;
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         new Handler().postDelayed(new Runnable() {
@@ -112,5 +122,6 @@ public class SplashView extends AppCompatActivity {
         ArtistSingleton.getInstance().setAllArtist(allArtist);
         AlbumSingleton.getInstance().setAllAlbum(allAlbum);
         PlayListSingleton.getInstance().setAllPlayList(allUserPlayList);
+        GenresSingleton.getInstance().setAllGenres(allGenres);
     }
 }

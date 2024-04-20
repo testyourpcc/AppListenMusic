@@ -34,253 +34,253 @@
     null,
     {
       "id": 1,
-      "name": "NewJeans",
-      "image": ""
+      "image": "",
+      "name": "NewJeans"
     },
     {
       "id": 2,
-      "name": "Babymonster",
-      "image": ""
+      "image": "",
+      "name": "Babymonster"
     },
     {
       "id": 3,
-      "name": "IVE",
-      "image": ""
+      "image": "",
+      "name": "IVE"
     },
     {
       "id": 4,
-      "name": "LEESERAFIM",
-      "image": ""
+      "image": "",
+      "name": "LEESERAFIM"
     },
     {
       "id": 5,
-      "name": "BTS",
-      "image": ""
+      "image": "",
+      "name": "BTS"
     },
     {
       "id": 6,
-      "name": "Blackpink",
-      "image": ""
+      "image": "",
+      "name": "Blackpink"
     },
     {
       "id": 7,
-      "name": "EXO",
-      "image": ""
+      "image": "",
+      "name": "EXO"
     },
     {
       "id": 8,
-      "name": "TWICE",
-      "image": ""
+      "image": "",
+      "name": "TWICE"
     },
     {
       "id": 9,
-      "name": "Red Velvet",
-      "image": ""
+      "image": "",
+      "name": "Red Velvet"
     },
     {
       "id": 10,
-      "name": "Taylor Swift",
-      "image": ""
+      "image": "",
+      "name": "Taylor Swift"
     },
     {
       "id": 11,
-      "name": "Ed Sheeran",
-      "image": ""
+      "image": "",
+      "name": "Ed Sheeran"
     },
     {
       "id": 12,
-      "name": "Beyoncé",
-      "image": ""
+      "image": "",
+      "name": "Beyoncé"
     },
     {
       "id": 13,
-      "name": "Ariana Grande",
-      "image": ""
+      "image": "",
+      "name": "Ariana Grande"
     },
     {
       "id": 14,
-      "name": "Justin Bieber",
-      "image": ""
+      "image": "",
+      "name": "Justin Bieber"
     },
     {
       "id": 15,
-      "name": "Sơn Tùng M-TP",
-      "image": ""
+      "image": "",
+      "name": "Sơn Tùng M-TP"
     },
     {
       "id": 16,
-      "name": "HIEUTHUHAI",
-      "image": ""
+      "image": "",
+      "name": "HIEUTHUHAI"
     },
     {
       "id": 17,
-      "name": "Erik",
-      "image": ""
+      "image": "",
+      "name": "Erik"
     },
     {
       "id": 18,
-      "name": "Hương Tràm",
-      "image": ""
+      "image": "",
+      "name": "Hương Tràm"
     },
     {
       "id": 19,
-      "name": "Soobin Hoàng Sơn",
-      "image": ""
+      "image": "",
+      "name": "Soobin Hoàng Sơn"
     },
     {
       "id": 20,
-      "name": "ATEEZ",
-      "image": ""
+      "image": "",
+      "name": "ATEEZ"
     },
     {
       "id": 21,
-      "name": "Mamamoo",
-      "image": ""
+      "image": "",
+      "name": "Mamamoo"
     },
     {
       "id": 22,
-      "name": "GOT7",
-      "image": ""
+      "image": "",
+      "name": "GOT7"
     },
     {
       "id": 23,
-      "name": "NCT",
-      "image": ""
+      "image": "",
+      "name": "NCT"
     },
     {
       "id": 24,
-      "name": "Billie Eilish",
-      "image": ""
+      "image": "",
+      "name": "Billie Eilish"
     },
     {
       "id": 25,
-      "name": "Drake",
-      "image": ""
+      "image": "",
+      "name": "Drake"
     },
     {
       "id": 26,
-      "name": "Adele",
-      "image": ""
+      "image": "",
+      "name": "Adele"
     },
     {
       "id": 27,
-      "name": "Bruno Mars",
-      "image": ""
+      "image": "",
+      "name": "Bruno Mars"
     },
     {
       "id": 28,
-      "name": "Dua Lipa",
-      "image": ""
+      "image": "",
+      "name": "Dua Lipa"
     },
     {
       "id": 29,
-      "name": "Lorde",
-      "image": ""
+      "image": "",
+      "name": "Lorde"
     },
     {
       "id": 30,
-      "name": "Niall Horan",
-      "image": ""
+      "image": "",
+      "name": "Niall Horan"
     },
     {
       "id": 31,
-      "name": "Đen Vâu",
-      "image": ""
+      "image": "",
+      "name": "Đen Vâu"
     },
     {
       "id": 32,
-      "name": "Hồ Ngọc Hà",
-      "image": ""
+      "image": "",
+      "name": "Hồ Ngọc Hà"
     },
     {
       "id": 33,
-      "name": "Đàm Vĩnh Hưng",
-      "image": ""
+      "image": "",
+      "name": "Đàm Vĩnh Hưng"
     },
     {
       "id": 34,
-      "name": "Tóc Tiên",
-      "image": ""
+      "image": "",
+      "name": "Tóc Tiên"
     },
     {
       "id": 35,
-      "name": "JUSTATEE",
-      "image": ""
+      "image": "",
+      "name": "JUSTATEE"
     },
     {
       "id": 36,
-      "name": "Eminem",
-      "image": ""
+      "image": "",
+      "name": "Eminem"
     },
     {
       "id": 37,
-      "name": "Kanye West",
-      "image": ""
+      "image": "",
+      "name": "Kanye West"
     },
     {
       "id": 38,
-      "name": "Rihanna",
-      "image": ""
+      "image": "",
+      "name": "Rihanna"
     },
     {
       "id": 39,
-      "name": "Lady Gaga",
-      "image": ""
+      "image": "",
+      "name": "Lady Gaga"
     },
     {
       "id": 40,
-      "name": "Shawn Mendes",
-      "image": ""
+      "image": "",
+      "name": "Shawn Mendes"
     },
     {
       "id": 41,
-      "name": "Selena Gomez",
-      "image": ""
+      "image": "",
+      "name": "Selena Gomez"
     },
     {
       "id": 42,
-      "name": "Camila Cabello",
-      "image": ""
+      "image": "",
+      "name": "Camila Cabello"
     },
     {
       "id": 43,
-      "name": "Lưu Hương Giang",
-      "image": ""
+      "image": "",
+      "name": "Lưu Hương Giang"
     },
     {
       "id": 44,
-      "name": "Sơn Tùng M-TP",
-      "image": ""
+      "image": "",
+      "name": "Sơn Tùng M-TP"
     },
     {
       "id": 45,
-      "name": "TXT",
-      "image": ""
+      "image": "",
+      "name": "TXT"
     },
     {
       "id": 46,
-      "name": "Minh Hằng",
-      "image": ""
+      "image": "",
+      "name": "Minh Hằng"
     },
     {
       "id": 47,
-      "name": "Wanna One",
-      "image": ""
+      "image": "",
+      "name": "Wanna One"
     },
     {
       "id": 48,
-      "name": "I.O.I",
-      "image": ""
+      "image": "",
+      "name": "I.O.I"
     },
     {
       "id": 49,
-      "name": "The Weeknd",
-      "image": ""
+      "image": "",
+      "name": "The Weeknd"
     },
     {
       "id": 50,
-      "name": "Văn Mai Hương",
-      "image": ""
+      "image": "",
+      "name": "Văn Mai Hương"
     }
   ],
   "genres": [
@@ -552,7 +552,7 @@
       "genres": 31,
       "id": 10,
       "image": "https://i1.sndcdn.com/artworks-m719uD390107CLKp-zQC9dA-t500x500.jpg",
-      "lyric":"0:22/r/nNo one can change the past.../r/n0:32/r/n… but someone gotta try!/r/n0:51/r/nLiệu mai sau phai vội mau không bước bên cạnh nhau/r/n0:55/r/nthì ta có đau/r/n0:57/r/nĐôi mi nhoè phai ai sẽ lau/r/n1:00/r/nAi sẽ đến lau nỗi đau này/r/n1:03/r/nVô tâm quay lưng ta thờ ơ lạnh lùng băng giá như vậy sao/r/n1:08/r/nVờ không biết nhau/r/n1:10/r/nLặng im băng qua chẳng nói một lời/r/n1:17/r/nRồi niềm đau có chóng quên/r/n1:21/r/nHay càng quên càng nhớ thêm/r/n1:23/r/nvấn vương vết thương lòng xót xa/r/n1:28/r/nĐừng như con nít/r/n1:30/r/nTừng mặn nồng say đắm say/r/n1:35/r/nCớ sao khi chia tay/r/n1:37/r/nTa xa lạ đến kì lạ/r/n1:40/r/nAi dám nói trước sau này/r/n1:44/r/nChẳng ai biết trước tương lai sau này/r/n1:47/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n1:50/r/ncòn nguyên như lời ta đã hứa trước đây/r/n1:53/r/nDẫu cho giông tố xô xa rời/r/n1:57/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n2:00/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n2:03/r/nNhìn lại về phía mặt trời/r/n2:07/r/n(Nhìn lại về phía mặt trời)/r/n2:12/r/nTương lai ngày mai ai nào hay/r/n2:13/r/nYêu thương rồi buông đôi bàn tay/r/n2:15/r/nMong manh đường duyên như vận may/r/n2:16/r/nChia ly hợp tan nhanh còn hơn mây trời bay/r/n2:18/r/nQuên nhau vờ như chưa từng quen/r/n2:20/r/n(sao quên)/r/n2:20/r/nQuên luôn mặt quên luôn cả tên/r/n2:21/r/n(sao quên)/r/n2:22/r/nQuên đi làm sao mà đòi quên/r/n2:23/r/nkhi câu thề xưa vẫn vẹn nguyên nên đừng cố quên/r/n2:25/r/nVấn vương cũng chẳng sao mà/r/n2:26/r/nNhớ nhung cũng chẳng sao mà/r/n2:28/r/nĐớn đau cũng chẳng sao mà/r/n2:30/r/nDù có đắng cay ta cũng chẳng sao đâu/r/n2:32/r/nChân thành khi còn bên nhau/r/n2:33/r/nvà trân trọng hơn mỗi phút giây/r/n2:35/r/nHơn mỗi phút giây,/r/n2:37/r/nthành thật bên nhau mỗi phút giây/r/n2:39/r/nRồi niềm đau có chóng quên/r/n2:43/r/nHay càng quên càng nhớ thêm/r/n2:45/r/nvấn vương vết thương lòng xót xa/r/n2:50/r/nĐừng như con nít/r/n2:52/r/nTừng mặn nồng say đắm say/r/n2:57/r/nCớ sao khi chia tay/r/n2:59/r/nTa xa lạ đến kì lạ/r/n3:03/r/nAi dám nói trước sau này/r/n3:06/r/nChẳng ai biết trước tương lai sau này/r/n3:09/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n3:12/r/ncòn nguyên như lời ta đã hứa trước đây/r/n3:15/r/nDẫu cho giông tố xô xa rời/r/n3:19/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n3:22/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n3:25/r/nNhìn lại về phía mặt trời/r/n3:59/r/nAi dám nói trước sau này/r/n4:02/r/nChẳng ai biết trước tương lai sau này/r/n4:05/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n4:08/r/ncòn nguyên như lời ta đã hứa trước đây/r/n4:11/r/nDẫu cho giông tố xô xa rời/r/n4:15/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n4:18/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n4:21/r/nNhìn lại về phía mặt trời/r/n4:26/r/nNhìn lại về phía mặt trời…",
+      "lyric": "0:22/r/nNo one can change the past.../r/n0:32/r/n… but someone gotta try!/r/n0:51/r/nLiệu mai sau phai vội mau không bước bên cạnh nhau/r/n0:55/r/nthì ta có đau/r/n0:57/r/nĐôi mi nhoè phai ai sẽ lau/r/n1:00/r/nAi sẽ đến lau nỗi đau này/r/n1:03/r/nVô tâm quay lưng ta thờ ơ lạnh lùng băng giá như vậy sao/r/n1:08/r/nVờ không biết nhau/r/n1:10/r/nLặng im băng qua chẳng nói một lời/r/n1:17/r/nRồi niềm đau có chóng quên/r/n1:21/r/nHay càng quên càng nhớ thêm/r/n1:23/r/nvấn vương vết thương lòng xót xa/r/n1:28/r/nĐừng như con nít/r/n1:30/r/nTừng mặn nồng say đắm say/r/n1:35/r/nCớ sao khi chia tay/r/n1:37/r/nTa xa lạ đến kì lạ/r/n1:40/r/nAi dám nói trước sau này/r/n1:44/r/nChẳng ai biết trước tương lai sau này/r/n1:47/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n1:50/r/ncòn nguyên như lời ta đã hứa trước đây/r/n1:53/r/nDẫu cho giông tố xô xa rời/r/n1:57/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n2:00/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n2:03/r/nNhìn lại về phía mặt trời/r/n2:07/r/n(Nhìn lại về phía mặt trời)/r/n2:12/r/nTương lai ngày mai ai nào hay/r/n2:13/r/nYêu thương rồi buông đôi bàn tay/r/n2:15/r/nMong manh đường duyên như vận may/r/n2:16/r/nChia ly hợp tan nhanh còn hơn mây trời bay/r/n2:18/r/nQuên nhau vờ như chưa từng quen/r/n2:20/r/n(sao quên)/r/n2:20/r/nQuên luôn mặt quên luôn cả tên/r/n2:21/r/n(sao quên)/r/n2:22/r/nQuên đi làm sao mà đòi quên/r/n2:23/r/nkhi câu thề xưa vẫn vẹn nguyên nên đừng cố quên/r/n2:25/r/nVấn vương cũng chẳng sao mà/r/n2:26/r/nNhớ nhung cũng chẳng sao mà/r/n2:28/r/nĐớn đau cũng chẳng sao mà/r/n2:30/r/nDù có đắng cay ta cũng chẳng sao đâu/r/n2:32/r/nChân thành khi còn bên nhau/r/n2:33/r/nvà trân trọng hơn mỗi phút giây/r/n2:35/r/nHơn mỗi phút giây,/r/n2:37/r/nthành thật bên nhau mỗi phút giây/r/n2:39/r/nRồi niềm đau có chóng quên/r/n2:43/r/nHay càng quên càng nhớ thêm/r/n2:45/r/nvấn vương vết thương lòng xót xa/r/n2:50/r/nĐừng như con nít/r/n2:52/r/nTừng mặn nồng say đắm say/r/n2:57/r/nCớ sao khi chia tay/r/n2:59/r/nTa xa lạ đến kì lạ/r/n3:03/r/nAi dám nói trước sau này/r/n3:06/r/nChẳng ai biết trước tương lai sau này/r/n3:09/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n3:12/r/ncòn nguyên như lời ta đã hứa trước đây/r/n3:15/r/nDẫu cho giông tố xô xa rời/r/n3:19/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n3:22/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n3:25/r/nNhìn lại về phía mặt trời/r/n3:59/r/nAi dám nói trước sau này/r/n4:02/r/nChẳng ai biết trước tương lai sau này/r/n4:05/r/nTình yêu đâu biết mai này có vẹn nguyên/r/n4:08/r/ncòn nguyên như lời ta đã hứa trước đây/r/n4:11/r/nDẫu cho giông tố xô xa rời/r/n4:15/r/nCòn mãi những điều đẹp đẽ say đắm một thời/r/n4:18/r/nNụ cười và giọt nước mắt rơi từng trao cùng ta/r/n4:21/r/nNhìn lại về phía mặt trời/r/n4:26/r/nNhìn lại về phía mặt trời…",
       "name": "Chúng ta của tương lai",
       "view": 1
     },
@@ -563,7 +563,7 @@
       "genres": 31,
       "id": 11,
       "image": "https://upload.wikimedia.org/wikipedia/vi/9/93/S%C6%A1n_T%C3%B9ng_M-TP_-_Mu%E1%BB%99n_r%E1%BB%93i_m%C3%A0_sao_c%C3%B2n.png",
-      "lyric":"0:38/r/nMuộn rồi mà sao còn/r/n0:40/r/nNhìn lên trần nhà rồi quay ra/r/n0:42/r/nLại quay vào/r/n0:44/r/nNằm trằn trọc vậy đến sáng mai/r/n0:46/r/nÔm tương tư nụ cười của ai đó/r/n0:48/r/nLàm con tim ngô nghê như muốn khóc oà/r/n0:50/r/nVắt tay lên trên trán mơ mộng/r/n0:52/r/nĐược đứng bên em trong nắng xuân hồng/r/n0:53/r/n1 giờ sáng/r/n0:55/r/nTrôi qua trôi nhanh kéo theo ưu phiền miên man/r/n0:59/r/nÂm thầm gieo tên em vẽ lên hi vọng/r/n1:01/r/nĐúng là yêu thật rồi/r/n1:03/r/nCòn không thì hơi phí này/r/n1:05/r/nCứ thế loanh quanh loanh quanh loanh quanh/r/n1:07/r/nLật qua lật lại 2 giờ/r/n1:09/r/nNhững ngôi sao trên cao/r/n1:11/r/nLà người bạn tâm giao/r/n1:13/r/nLắng nghe anh luyên thuyên về một tình đầu đẹp tựa chiêm bao/r/n1:16/r/nCó nghe thôi đã thấy ngọt ngào/r/n1:18/r/nĐủ biết anh si mê em nhường nào/r/n1:20/r/nÍt khi văn thơ anh dạt dào/r/n1:22/r/nBụng đói nhưng vui quên luôn cồn cào/r/n1:24/r/nNắm đôi tay kiêu sa/r/n1:26/r/nĐược một lần không ta/r/n1:28/r/nNghĩ qua thôi con tim trong anh đập tung lên rung nóc rung nhà/r/n1:31/r/nHoá ra yêu đơn phương một người/r/n1:33/r/nHoá ra khi tơ vương một người/r/n1:35/r/n3 giờ đêm vẫn ngồi cười/r/n1:38/r/nCứ ôm anh đi/r/n1:40/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n1:42/r/nÔm trong cơn mơ/r/n1:43/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n1:46/r/nCó thế cũng khiến anh vui điên lên/r/n1:48/r/nNgỡ như em đang bên/r/n1:50/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n1:52/r/nMuốn em đặt tên/r/n1:54/r/nCứ ôm anh đi/r/n1:55/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n1:57/r/nÔm trong giấc mơ/r/n1:59/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n2:02/r/nYêu đến vậy thôi/r/n2:03/r/nPhát điên rồi làm sao giờ/r/n2:08/r/nChịu/r/n2:10/r/nĐêm nay không ngủ/r/n2:12/r/nTay kê lên tủ/r/n2:14/r/nMiên man anh tranh thủ/r/n2:15/r/nChơi vơi suy tư bao nhiêu cho đủ/r/n2:17/r/nYêu em ngu ngơ mình tôi/r/n2:19/r/nYêu không quan tâm ngày trôi/r/n2:21/r/nYêu ánh mắt bờ môi/r/n2:23/r/nYêu đơn phương vậy thôi/r/n2:25/r/nLại còn chối/r/n2:26/r/nCon tim thẹn thùng đập lạc lối liên hồi/r/n2:29/r/nĐừng chày cối/r/n2:30/r/nMiệng cười cả ngày vậy là chết toi rồi/r/n2:33/r/nNgày càng nhiều thêm/r/n2:34/r/nTình yêu cho em ngày càng nhiều thêm/r/n2:36/r/nMuốn nắm đôi bàn tay đó một lần/r/n2:37/r/nDu dương chìm sâu trong từng câu ca dịu êm/r/n2:40/r/nNhững ngôi sao trên cao/r/n2:41/r/nLà người bạn tâm giao/r/n2:43/r/nLắng nghe anh luyên thuyên về một tình đầu đẹp tựa chiêm bao/r/n2:47/r/nCó nghe thôi đã thấy ngọt ngào/r/n2:49/r/nĐủ biết anh si mê em nhường nào/r/n2:51/r/nÍt khi văn thơ anh dạt dào/r/n2:53/r/nBụng đói nhưng vui quên luôn cồn cào/r/n2:55/r/nNắm đôi tay kiêu sa/r/n2:57/r/nĐược một lần không ta/r/n2:58/r/nNghĩ qua thôi con tim trong anh đập tung lên rung nóc rung nhà/r/n3:02/r/nHoá ra yêu đơn phương một người/r/n3:04/r/nHoá ra khi tơ vương một người/r/n3:06/r/n3 giờ đêm vẫn ngồi cười/r/n3:09/r/nCứ ôm anh đi/r/n3:10/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n3:13/r/nÔm trong cơn mơ/r/n3:14/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n3:17/r/nCó thế cũng khiến anh vui điên lên/r/n3:19/r/nNgỡ như em đang bên/r/n3:21/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n3:23/r/nMuốn em đặt tên/r/n3:24/r/nCứ ôm anh đi/r/n3:25/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n3:28/r/nÔm trong giấc mơ/r/n3:29/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n3:32/r/nYêu đến vậy thôi/r/n3:34/r/nPhát điên rồi làm sao giờ/r/n3:40/r/nEm xinh như một thiên thần/r/n3:42/r/nNhư một thiên thần/r/n3:44/r/nNhư một thiên thần/r/n3:45/r/nNgỡ như em là thiên thần/r/n3:47/r/nXinh như một thiên thần/r/n3:49/r/nNhư một thiên thần/r/n3:55/r/nEm xinh như một thiên thần/r/n3:57/r/nNhư một thiên thần/r/n3:59/r/nNhư một thiên thần/r/n4:00/r/nNgỡ như em là thiên thần/r/n4:02/r/nNgỡ như, ngỡ như, ngỡ như, ngỡ như, ngỡ như .../r/n4:10/r/nCứ ôm anh đi/r/n4:11/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n4:13/r/nÔm trong cơn mơ/r/n4:15/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n4:17/r/nCó thế cũng khiến anh vui điên lên/r/n4:20/r/nNgỡ như em đang bên/r/n4:21/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n4:24/r/nMuốn em đặt tên/r/n4:25/r/nCứ ôm anh đi/r/n4:26/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n4:29/r/nÔm trong giấc mơ/r/n4:30/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n4:33/r/nYêu đến vậy thôi/r/n4:35/r/nPhát điên rồi làm sao giờ",
+      "lyric": "0:38/r/nMuộn rồi mà sao còn/r/n0:40/r/nNhìn lên trần nhà rồi quay ra/r/n0:42/r/nLại quay vào/r/n0:44/r/nNằm trằn trọc vậy đến sáng mai/r/n0:46/r/nÔm tương tư nụ cười của ai đó/r/n0:48/r/nLàm con tim ngô nghê như muốn khóc oà/r/n0:50/r/nVắt tay lên trên trán mơ mộng/r/n0:52/r/nĐược đứng bên em trong nắng xuân hồng/r/n0:53/r/n1 giờ sáng/r/n0:55/r/nTrôi qua trôi nhanh kéo theo ưu phiền miên man/r/n0:59/r/nÂm thầm gieo tên em vẽ lên hi vọng/r/n1:01/r/nĐúng là yêu thật rồi/r/n1:03/r/nCòn không thì hơi phí này/r/n1:05/r/nCứ thế loanh quanh loanh quanh loanh quanh/r/n1:07/r/nLật qua lật lại 2 giờ/r/n1:09/r/nNhững ngôi sao trên cao/r/n1:11/r/nLà người bạn tâm giao/r/n1:13/r/nLắng nghe anh luyên thuyên về một tình đầu đẹp tựa chiêm bao/r/n1:16/r/nCó nghe thôi đã thấy ngọt ngào/r/n1:18/r/nĐủ biết anh si mê em nhường nào/r/n1:20/r/nÍt khi văn thơ anh dạt dào/r/n1:22/r/nBụng đói nhưng vui quên luôn cồn cào/r/n1:24/r/nNắm đôi tay kiêu sa/r/n1:26/r/nĐược một lần không ta/r/n1:28/r/nNghĩ qua thôi con tim trong anh đập tung lên rung nóc rung nhà/r/n1:31/r/nHoá ra yêu đơn phương một người/r/n1:33/r/nHoá ra khi tơ vương một người/r/n1:35/r/n3 giờ đêm vẫn ngồi cười/r/n1:38/r/nCứ ôm anh đi/r/n1:40/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n1:42/r/nÔm trong cơn mơ/r/n1:43/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n1:46/r/nCó thế cũng khiến anh vui điên lên/r/n1:48/r/nNgỡ như em đang bên/r/n1:50/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n1:52/r/nMuốn em đặt tên/r/n1:54/r/nCứ ôm anh đi/r/n1:55/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n1:57/r/nÔm trong giấc mơ/r/n1:59/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n2:02/r/nYêu đến vậy thôi/r/n2:03/r/nPhát điên rồi làm sao giờ/r/n2:08/r/nChịu/r/n2:10/r/nĐêm nay không ngủ/r/n2:12/r/nTay kê lên tủ/r/n2:14/r/nMiên man anh tranh thủ/r/n2:15/r/nChơi vơi suy tư bao nhiêu cho đủ/r/n2:17/r/nYêu em ngu ngơ mình tôi/r/n2:19/r/nYêu không quan tâm ngày trôi/r/n2:21/r/nYêu ánh mắt bờ môi/r/n2:23/r/nYêu đơn phương vậy thôi/r/n2:25/r/nLại còn chối/r/n2:26/r/nCon tim thẹn thùng đập lạc lối liên hồi/r/n2:29/r/nĐừng chày cối/r/n2:30/r/nMiệng cười cả ngày vậy là chết toi rồi/r/n2:33/r/nNgày càng nhiều thêm/r/n2:34/r/nTình yêu cho em ngày càng nhiều thêm/r/n2:36/r/nMuốn nắm đôi bàn tay đó một lần/r/n2:37/r/nDu dương chìm sâu trong từng câu ca dịu êm/r/n2:40/r/nNhững ngôi sao trên cao/r/n2:41/r/nLà người bạn tâm giao/r/n2:43/r/nLắng nghe anh luyên thuyên về một tình đầu đẹp tựa chiêm bao/r/n2:47/r/nCó nghe thôi đã thấy ngọt ngào/r/n2:49/r/nĐủ biết anh si mê em nhường nào/r/n2:51/r/nÍt khi văn thơ anh dạt dào/r/n2:53/r/nBụng đói nhưng vui quên luôn cồn cào/r/n2:55/r/nNắm đôi tay kiêu sa/r/n2:57/r/nĐược một lần không ta/r/n2:58/r/nNghĩ qua thôi con tim trong anh đập tung lên rung nóc rung nhà/r/n3:02/r/nHoá ra yêu đơn phương một người/r/n3:04/r/nHoá ra khi tơ vương một người/r/n3:06/r/n3 giờ đêm vẫn ngồi cười/r/n3:09/r/nCứ ôm anh đi/r/n3:10/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n3:13/r/nÔm trong cơn mơ/r/n3:14/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n3:17/r/nCó thế cũng khiến anh vui điên lên/r/n3:19/r/nNgỡ như em đang bên/r/n3:21/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n3:23/r/nMuốn em đặt tên/r/n3:24/r/nCứ ôm anh đi/r/n3:25/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n3:28/r/nÔm trong giấc mơ/r/n3:29/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n3:32/r/nYêu đến vậy thôi/r/n3:34/r/nPhát điên rồi làm sao giờ/r/n3:40/r/nEm xinh như một thiên thần/r/n3:42/r/nNhư một thiên thần/r/n3:44/r/nNhư một thiên thần/r/n3:45/r/nNgỡ như em là thiên thần/r/n3:47/r/nXinh như một thiên thần/r/n3:49/r/nNhư một thiên thần/r/n3:55/r/nEm xinh như một thiên thần/r/n3:57/r/nNhư một thiên thần/r/n3:59/r/nNhư một thiên thần/r/n4:00/r/nNgỡ như em là thiên thần/r/n4:02/r/nNgỡ như, ngỡ như, ngỡ như, ngỡ như, ngỡ như .../r/n4:10/r/nCứ ôm anh đi/r/n4:11/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n4:13/r/nÔm trong cơn mơ/r/n4:15/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n4:17/r/nCó thế cũng khiến anh vui điên lên/r/n4:20/r/nNgỡ như em đang bên/r/n4:21/r/nChấp bút đôi ba câu thơ ngọt ngào/r/n4:24/r/nMuốn em đặt tên/r/n4:25/r/nCứ ôm anh đi/r/n4:26/r/nÔm anh đi, ôm anh đi, ôm anh đi/r/n4:29/r/nÔm trong giấc mơ/r/n4:30/r/nTrong cơn mơ, trong cơn mơ, trong cơn mơ/r/n4:33/r/nYêu đến vậy thôi/r/n4:35/r/nPhát điên rồi làm sao giờ",
       "name": "Muộn rồi mà sao còn",
       "view": 1
     },
@@ -584,8 +584,8 @@
       "artis": 35,
       "genres": 31,
       "id": 13,
-      "lyric": "0:20/r/nRồi tôi lại lang thang,/r/n0:21/r/nTình yêu thì miên man/r/n0:23/r/nNgày xanh cùng mây tung tăng tựa mình bên phím đàn/r/n0:26/r/nNhìn em mình ngơ ngác/r/n0:28/r/nLòng anh chợt hơi khác/r/n0:30/r/nTình yêu này đến đúng lúc thấy ánh sáng vụt qua/r/n0:33/r/nNụ cười tỏa hương nắng/r/n0:35/r/nBình minh và mây trắng/r/n0:37/r/nHình như đầu kêu tôi/r/n0:38/r/n\"Ôi thôi tình yêu đến rồi!\"/r/n0:40/r/nChẳng ai phải thắc mắc/r/n0:42/r/nCòn tôi thì đã chắc/r/n0:44/r/nNàng ơi nàng hãy đến chiếm lấy tâm hồn tôi/r/n0:48/r/nMỉm cười lòng chợt bâng khuâng/r/n0:51/r/nTôi chẳng biết mơ hay thật/r/n0:55/r/nĐợi chờ dù ngày hay đêm/r/n0:58/r/nAnh chỉ cần nghĩ cũng thấy vui/r/n1:01/r/nI'm in love/r/n1:02/r/nMàu nắng khuất lấp chân mây mờ xa/r/n1:04/r/nI'm in love/r/n1:05/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n1:07/r/nI'm in love/r/n1:09/r/nTựa đầu bên tình yêu mới thiết tha/r/n1:11/r/nChỉ crazy man fall in love/r/n1:14/r/nI'm in love/r/n1:16/r/nHạnh phúc chỉ hết khi anh ngừng mơ/r/n1:17/r/nI'm in love/r/n1:19/r/nCuộc sống vốn dĩ trôi như vần thơ/r/n1:21/r/nI'm in love/r/n1:23/r/nNgả lưng bên cạnh cây lá xác xơ/r/n1:25/r/nMờ sương đưa tay anh ôm lấy em/r/n1:28/r/nDẫu biết chỉ là mơ/r/n1:31/r/nDẫu biết chỉ là mơ/r/n1:35/r/nDẫu biết chỉ là mơ/r/n1:39/r/n\"Crazy man fall in love\" (Just, just, just)/r/n1:41/r/nJust, just, just/r/n1:42/r/nChơi vơi nơi mà loài người nhìn anh phiêu/r/n1:45/r/nNhư thằng điên/r/n1:46/r/nỜ thì đâu ai muốn làm người bình thường khi yêu/r/n1:48/r/nYêu thằng điên/r/n1:49/r/nAnh đang mơ màng về bầu trời đầy trăng với sao em như cô tiên/r/n1:52/r/nMình ca múa như hai con điên trên đồi thảo nguyên/r/n1:55/r/nLà la lá/r/n1:56/r/nHere we are.../r/n1:58/r/nEm như Beyonces hát hát/r/n2:00/r/nHere we are.../r/n2:02/r/nAnh như Jay-Z đang rap/r/n2:03/r/nRap về từng ngày nắng, về từng ngày gió, về từng ngày tháng có em/r/n2:08/r/nBut i don't know who you are/r/n2:11/r/nMỉm cười lòng chợt bâng khuâng tôi chẳng biết mơ hay thật/r/n2:18/r/nĐợi chờ dù ngày hay đêm/r/n2:20/r/nAnh chỉ cần nghĩ cũng thấy vui/r/n2:23/r/nI'm in love/r/n2:25/r/nMàu nắng cuốn lấp chân mây mờ xa/r/n2:27/r/nI'm in love/r/n2:28/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n2:30/r/nI'm in love/r/n2:31/r/nTựa đầu bên tình yêu mới thiết tha/r/n2:34/r/nChỉ Crazy man fall in love/r/n2:37/r/nI'm in love/r/n2:38/r/nHạnh phúc chỉ hết khi anh ngừng mơ/r/n2:40/r/nI'm in love/r/n2:41/r/nCuộc sống vốn dĩ trôi như vần thơ/r/n2:43/r/nI'm in love/r/n2:45/r/nNgả lưng bên cành cây lá xác xơ/r/n2:47/r/nMờ sương đưa tay anh ôm lấy em/r/n2:50/r/nDẫu biết chỉ là mơ.../r/n2:51/r/nWake up, I wake up/r/n2:54/r/nThu sang rồi, em thấy không/r/n2:56/r/nEm đi rồi, anh cứ mong chờ/r/n2:58/r/nWake up, and wake up/r/n3:01/r/nTiếng vỡ tan cơn mê màng/r/n3:03/r/nĐánh thức nơi thiên đàng anh mơ.../r/n3:07/r/nNơi thiên đàng anh mơ.../r/n3:12/r/nNơi có em là yên bình, anh mãi như thằng si tình/r/n3:15/r/nDù đôi chân anh đi mòn lối vẫn mãi không về nơi em.../r/n3:18/r/nI'm in love/r/n3:19/r/nMàu nắng cuốn lấp chân mây mờ xa/r/n3:21/r/nI'm in love/r/n3:23/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n3:25/r/nI'm in love/r/n3:26/r/nTựa đầu bên tình yêu mới thiết tha/r/n3:29/r/nChỉ Crazy man fall in love/r/n3:31/r/n(Chỉ Crazy man fall in love) I'm in love/r/n3:33/r/n\uD83C\uDFBC Hạnh phúc chỉ hết khi anh ngừng mơ \uD83C\uDFBC/r/n3:35/r/nI'm in love/r/n3:36/r/nCuộc sống vốn dĩ trôi như vần thơ.../r/n3:38/r/nI'm in love/r/n3:40/r/nNgả lưng bên cành cây lá xác xơ/r/n3:42/r/nMờ sương đưa tay anh ôm lấy em/r/n3:45/r/nDẫu biết chỉ là mơ.../r/n3:48/r/nNhư thằng điên/r/n3:51/r/nNhư thằng điên/r/n3:55/r/nNhư thằng điên/r/n3:59/r/nYêu thằng điên/r/n4:08/r/nBỏ quên thế giới/r/n4:10/r/nMặc chiếc áo mới/r/n4:12/r/nNgồi chờ em tới/r/n4:14/r/nMưa/r/n4:15/r/nRơi.. rơi.. rơi.. rơi../r/n4:23/r/nBỏ quên thế giới/r/n4:25/r/nMặc chiếc áo mới/r/n4:27/r/nNgồi chờ em tới/r/n4:29/r/nMưa/r/n4:30/r/n♫ Rơi.. rơi.. rơi.. ♫/r/n4:33/r/n♫ ..Chỉ crazy man fall in love.. ♫",
       "image": "https://cdn-petrotimes.mastercms.vn/stores/news_dataimages/huyenanh/102018/22/15/in_article/0402_photo1539400655450-1539400655450454787566.jpg",
+      "lyric": "0:20/r/nRồi tôi lại lang thang,/r/n0:21/r/nTình yêu thì miên man/r/n0:23/r/nNgày xanh cùng mây tung tăng tựa mình bên phím đàn/r/n0:26/r/nNhìn em mình ngơ ngác/r/n0:28/r/nLòng anh chợt hơi khác/r/n0:30/r/nTình yêu này đến đúng lúc thấy ánh sáng vụt qua/r/n0:33/r/nNụ cười tỏa hương nắng/r/n0:35/r/nBình minh và mây trắng/r/n0:37/r/nHình như đầu kêu tôi/r/n0:38/r/n\"Ôi thôi tình yêu đến rồi!\"/r/n0:40/r/nChẳng ai phải thắc mắc/r/n0:42/r/nCòn tôi thì đã chắc/r/n0:44/r/nNàng ơi nàng hãy đến chiếm lấy tâm hồn tôi/r/n0:48/r/nMỉm cười lòng chợt bâng khuâng/r/n0:51/r/nTôi chẳng biết mơ hay thật/r/n0:55/r/nĐợi chờ dù ngày hay đêm/r/n0:58/r/nAnh chỉ cần nghĩ cũng thấy vui/r/n1:01/r/nI'm in love/r/n1:02/r/nMàu nắng khuất lấp chân mây mờ xa/r/n1:04/r/nI'm in love/r/n1:05/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n1:07/r/nI'm in love/r/n1:09/r/nTựa đầu bên tình yêu mới thiết tha/r/n1:11/r/nChỉ crazy man fall in love/r/n1:14/r/nI'm in love/r/n1:16/r/nHạnh phúc chỉ hết khi anh ngừng mơ/r/n1:17/r/nI'm in love/r/n1:19/r/nCuộc sống vốn dĩ trôi như vần thơ/r/n1:21/r/nI'm in love/r/n1:23/r/nNgả lưng bên cạnh cây lá xác xơ/r/n1:25/r/nMờ sương đưa tay anh ôm lấy em/r/n1:28/r/nDẫu biết chỉ là mơ/r/n1:31/r/nDẫu biết chỉ là mơ/r/n1:35/r/nDẫu biết chỉ là mơ/r/n1:39/r/n\"Crazy man fall in love\" (Just, just, just)/r/n1:41/r/nJust, just, just/r/n1:42/r/nChơi vơi nơi mà loài người nhìn anh phiêu/r/n1:45/r/nNhư thằng điên/r/n1:46/r/nỜ thì đâu ai muốn làm người bình thường khi yêu/r/n1:48/r/nYêu thằng điên/r/n1:49/r/nAnh đang mơ màng về bầu trời đầy trăng với sao em như cô tiên/r/n1:52/r/nMình ca múa như hai con điên trên đồi thảo nguyên/r/n1:55/r/nLà la lá/r/n1:56/r/nHere we are.../r/n1:58/r/nEm như Beyonces hát hát/r/n2:00/r/nHere we are.../r/n2:02/r/nAnh như Jay-Z đang rap/r/n2:03/r/nRap về từng ngày nắng, về từng ngày gió, về từng ngày tháng có em/r/n2:08/r/nBut i don't know who you are/r/n2:11/r/nMỉm cười lòng chợt bâng khuâng tôi chẳng biết mơ hay thật/r/n2:18/r/nĐợi chờ dù ngày hay đêm/r/n2:20/r/nAnh chỉ cần nghĩ cũng thấy vui/r/n2:23/r/nI'm in love/r/n2:25/r/nMàu nắng cuốn lấp chân mây mờ xa/r/n2:27/r/nI'm in love/r/n2:28/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n2:30/r/nI'm in love/r/n2:31/r/nTựa đầu bên tình yêu mới thiết tha/r/n2:34/r/nChỉ Crazy man fall in love/r/n2:37/r/nI'm in love/r/n2:38/r/nHạnh phúc chỉ hết khi anh ngừng mơ/r/n2:40/r/nI'm in love/r/n2:41/r/nCuộc sống vốn dĩ trôi như vần thơ/r/n2:43/r/nI'm in love/r/n2:45/r/nNgả lưng bên cành cây lá xác xơ/r/n2:47/r/nMờ sương đưa tay anh ôm lấy em/r/n2:50/r/nDẫu biết chỉ là mơ.../r/n2:51/r/nWake up, I wake up/r/n2:54/r/nThu sang rồi, em thấy không/r/n2:56/r/nEm đi rồi, anh cứ mong chờ/r/n2:58/r/nWake up, and wake up/r/n3:01/r/nTiếng vỡ tan cơn mê màng/r/n3:03/r/nĐánh thức nơi thiên đàng anh mơ.../r/n3:07/r/nNơi thiên đàng anh mơ.../r/n3:12/r/nNơi có em là yên bình, anh mãi như thằng si tình/r/n3:15/r/nDù đôi chân anh đi mòn lối vẫn mãi không về nơi em.../r/n3:18/r/nI'm in love/r/n3:19/r/nMàu nắng cuốn lấp chân mây mờ xa/r/n3:21/r/nI'm in love/r/n3:23/r/nThành phố chỉ thấy mỗi riêng mình ta/r/n3:25/r/nI'm in love/r/n3:26/r/nTựa đầu bên tình yêu mới thiết tha/r/n3:29/r/nChỉ Crazy man fall in love/r/n3:31/r/n(Chỉ Crazy man fall in love) I'm in love/r/n3:33/r/n🎼 Hạnh phúc chỉ hết khi anh ngừng mơ 🎼/r/n3:35/r/nI'm in love/r/n3:36/r/nCuộc sống vốn dĩ trôi như vần thơ.../r/n3:38/r/nI'm in love/r/n3:40/r/nNgả lưng bên cành cây lá xác xơ/r/n3:42/r/nMờ sương đưa tay anh ôm lấy em/r/n3:45/r/nDẫu biết chỉ là mơ.../r/n3:48/r/nNhư thằng điên/r/n3:51/r/nNhư thằng điên/r/n3:55/r/nNhư thằng điên/r/n3:59/r/nYêu thằng điên/r/n4:08/r/nBỏ quên thế giới/r/n4:10/r/nMặc chiếc áo mới/r/n4:12/r/nNgồi chờ em tới/r/n4:14/r/nMưa/r/n4:15/r/nRơi.. rơi.. rơi.. rơi../r/n4:23/r/nBỏ quên thế giới/r/n4:25/r/nMặc chiếc áo mới/r/n4:27/r/nNgồi chờ em tới/r/n4:29/r/nMưa/r/n4:30/r/n♫ Rơi.. rơi.. rơi.. ♫/r/n4:33/r/n♫ ..Chỉ crazy man fall in love.. ♫",
       "name": "Thằng điên",
       "view": 1
     },
@@ -610,7 +610,17 @@
       "lyric": "0:13/r/nNếu anh nhắn lần đầu là do anh ấn tượng/r/n0:15/r/nVà sau đó nếu có lần 2 là do không sai gu/r/n0:17/r/nNếu anh nhắn cho em lần 3 là anh đang vấn vương/r/n0:20/r/nCòn nếu mà có nhắn lần 4 so then I like you/r/n0:22/r/n3 câu đầu đủ làm em đổ như là Haiku (thơ Haiku)/r/n0:25/r/nPhải lặp lại câu cuối 2 lần em ơi I like you/r/n0:27/r/nNgười như em thì chỉ có 1, I'm loosing my cool/r/n0:30/r/nQuay trở về số 0, anh ngại ngùng bên my boo/r/n0:32/r/nEm làm tim rơi mất một nhịp nên anh đâm đơn kiện/r/n0:35/r/nNói về em toàn lời hoa mỹ là do anh thơm miệng/r/n0:37/r/nĐoạn này là anh đang flow nhanh cho nó mau đó/r/n0:40/r/nBởi vì em chính là Nàng Xuân, anh nồi cơm điện/r/n0:42/r/nNếu còn lo là anh đào hoa thì em ơi có bao giờ/r/n0:45/r/nHãy ở bên cạnh anh, baby one more hour/r/n0:47/r/nGhim điện rồi đợi tiếng bíp bíp/r/n0:49/r/nGửi bài hát anh viết viết/r/n0:50/r/nĐể nấu cho tình yêu hai ta sẽ nở ra cùng/r/n0:53/r/n1 2 3 lời nói của anh có lời nào là lời thật không?/r/n0:58/r/nEm liệu có thể tin hay đó chỉ toàn lời đường mật?/r/n1:03/r/nOh oh oh/r/n1:04/r/nMới gặp vài ba hôm Chắc mình cần nhiều thời gian hơn/r/n1:08/r/nĐể em biết anh biết anh muốn đến với em bằng cả tấm lòng/r/n1:14/r/nTake it slow bởi vì em là con gái/r/n1:16/r/nNên phải suy nghĩ hơi lâu đấy/r/n1:18/r/nPlease, đừng vội vàng chỉ nói lời ngoài tai/r/n1:21/r/nEm sợ ong bướm sẽ vây lấy anh/r/n1:24/r/nLấy anh, lấy anh/r/n1:27/r/nOh oh oh/r/n1:28/r/nNày, lời ngọt ngào chỉ em nghe thối đấy/r/n1:31/r/nAnh đừng đi nói lung tung cả ngày/r/n1:36/r/nAnh đừng đi nói lung tung cả ngày/r/n1:43/r/nNếu em muốn coi bói, thì cho anh xem tay/r/n1:45/r/nEm sẽ ngã vào lòng của anh ngay đêm nay/r/n1:48/r/nNếu anh là Thịnh Suy em là 1 Đêm Say/r/n1:50/r/nVì anh như là cân đẩu vân còn em thì trên mây/r/n1:52/r/nMang hình ảnh anh đang tìm kiếm em như là Google/r/n1:54/r/nKiệt tác không phải là doodle/r/n1:56/r/nỨng cử bên Juliet thì anh nặng kí gọi anh Romeo/r/n1:58/r/nVới nụ cười đó thì phải lưu giữ trong viện bảo tàng/r/n2:01/r/nCư xử như vị hảo hán, và lịch sự thuộc diện lão làng/r/n2:03/r/nRồi bước đến bên em, anh không có đi sai đâu/r/n2:05/r/nBảo vệ em khỏi đêm buồn chán, anh thuộc đội G.I Joe/r/n2:08/r/nAnh có một ý là uống hết ly này rồi ta lên ban công/r/n2:11/r/nHai đôi môi quấn chặt cho đến khi mai sau/r/n2:13/r/nDù không phải là Peter Pan, em làm anh yêu hết lớn/r/n2:16/r/nCứ yên tâm là sẽ vừa lòng, vì tim anh đây có size/r/n2:18/r/nEm chính là lý do khiến anh đây rap love/r/n2:20/r/nLý do duy nhất làm em sẽ yêu anh tên là HIEUTHUHAI/r/n2:23/r/nGet It/r/n2:24/r/nTake it slow vì em là con gái/r/n2:26/r/nNên phải suy nghĩ hơi lâu đấy/r/n2:28/r/nPlease, đừng vội vàng chỉ nói lời ngoài tai/r/n2:31/r/nEm sợ ong bướm sẽ vây lấy anh/r/n2:34/r/nLấy anh lấy anh/r/n2:37/r/nOh oh oh/r/n2:38/r/nNày, lời ngọt ngào chỉ em nghe thôi đấy/r/n2:41/r/nAnh đừng đi nói lung tung cả ngày/r/n2:44/r/nCó trái tim nhảy khỏi lồng ngực và đi theo em thôi/r/n2:48/r/nSẽ cứ mãi ở đây nếu đặt nụ hôn anh lên môi/r/n2:54/r/nLiều thuốc tình yêu này sẽ không làm hại ta đâu em ơi/r/n2:59/r/nCó trái tim nhảy khỏi lồng ngực và đi theo em thôi",
       "name": "Lời đường mật",
       "view": 1
+    },
+    {
+      "Url": "songs/The Weeknd JENNIE LilyRose Depp-One Of The Girls.mp3",
+      "album": 1,
+      "artis": 49,
+      "genres": 32,
+      "id": 16,
+      "image": "https://images.genius.com/55e1d2b5376243566e951f899768cd3e.1000x1000x1.jpg",
+      "lyric": "0:14/r/n♪ [JENNIE KIM] LOCK ME UP AND THROW AWAY THE KEY ♪/r/n0:17/r/n♪ HE KNOWS HOW TO GET THE BEST OUT OF ME ♪/r/n0:19/r/n♪ I'M NO FORCE FOR THE WORLD TO SEE ♪/r/n0:22/r/n♪ TRADE MY WHOLE LIFE JUST TO BE ♪/r/n0:37/r/n♪ [ABEL] TELL NOBODY I CONTROL YOU ♪/r/n0:39/r/n♪ I BROKE YOU JUST TO OWN YOU ♪/r/n0:42/r/n♪ THEY CAN'T TELL THAT I LOVE YOU ♪/r/n0:46/r/n♪ 'CAUSE YOU'RE LOYAL, BABY ♪/r/n0:47/r/n♪ I LOVE WHEN YOU'RE SUBMISSIVE ♪/r/n0:50/r/n♪ YOU LOVE IT WHEN I BREAK SKIN ♪/r/n0:53/r/n♪ YOU FEEL PAIN WITHOUT FLINCHIN' ♪/r/n0:56/r/n♪ SO SAY IT ♪/r/n0:58/r/n♪ [LILY ROSE] GIVE ME TOUGH LOVE ♪/r/n1:04/r/n♪ LEAVE ME WITH NOTHIN' WHEN I COME DOWN ♪/r/n1:09/r/n♪ MY KIND OF LOVE ♪/r/n1:15/r/n♪ PUSH ME AND CHOKE ME 'TIL I PASS OUT ♪/r/n1:20/r/n♪ WE DON'T GOTTA BE IN LOVE, NO ♪/r/n1:23/r/n♪ I DON'T GOTTA BE THE ONE, NO ♪/r/n1:26/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT ♪/r/n1:32/r/n♪ WE DON'T GOTTA BE IN LOVE, NO ♪/r/n1:34/r/n♪ I DON'T GOTTA BE THE ONE, NO ♪/r/n1:37/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT, OH ♪/r/n1:56/r/n♪ PUSH ME DOWN, HOLD ME DOWN ♪/r/n1:58/r/n♪ SPIT IN MY MOUTH WHILE YOU TURN ME OUT ♪/r/n2:02/r/n♪ I WANNA TAKE YOUR LIGHT INSIDE ♪/r/n2:07/r/n♪ TEAR ME DOWN, SNUFF ME OUT ♪/r/n2:09/r/n♪ HANDS ON MY NECK WHILE YOU PUSH IT UP ♪/r/n2:13/r/n♪ AND I'M SCREAMIN' NOW ♪/r/n2:15/r/n♪ [ABEL] GIVE ME TOUGH LOVE ♪/r/n2:21/r/n♪ LEAVE ME WITH NOTHIN' WHEN I COME DOWN ♪/r/n2:26/r/n♪ MY KIND OF LOVE ♪/r/n2:32/r/n♪ FORCE ME AND CHOKE ME 'TIL I PASS OUT ♪/r/n2:38/r/n♪ [LILY ROSE] WE DON'T GOTTA BE IN LOVE, NO ♪/r/n2:40/r/n♪ I DON'T GOTTA BE THE ONE, NO ♪/r/n2:43/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT (TONIGHT) ♪/r/n2:49/r/n♪ WE DON'T GOTTA BE IN LOVE, NO ♪/r/n2:51/r/n♪ I DON'T GOTTA BE THE ONE, NO (OH) ♪/r/n2:54/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT, OH ♪/r/n3:02/r/n♪ [JENNIE KIM] LOCK ME UP AND THROW AWAY THE KEY ♪/r/n3:04/r/n♪ HE KNOWS HOW TO GET THE BEST OUT OF ME ♪/r/n3:07/r/n♪ I'M NO FORCE FOR THE WORLD TO SEE ♪/r/n3:10/r/n♪ TRADE MY WHOLE LIFE JUST TO BE ♪/r/n3:12/r/n♪ TOP OF THE WORLD, BUT I'M STILL NOT FREE ♪/r/n3:15/r/n♪ THIS IS A SECRET THAT I KEEP ♪/r/n3:18/r/n♪ UNTIL IT'S GONE, I CAN NEVER FIND PEACE ♪/r/n3:20/r/n♪ WASTE MY WHOLE LIFE JUST TO BE ♪/r/n3:27/r/n♪ [LILY ROSE] WE DON'T GOTTA BE IN LOVE, NO ♪/r/n3:30/r/n♪ I DON'T GOTTA BE THE ONE, NO ♪/r/n3:32/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT (TONIGHT) ♪/r/n3:38/r/n♪ WE DON'T GOTTA BE IN LOVE, NO ♪/r/n3:41/r/n♪ I DON'T GOTTA BE THE ONE, NO (OH) ♪/r/n3:43/r/n♪ I JUST WANNA BE ONE OF YOUR GIRLS TONIGHT (OH), OH ♪/r/n3:51/r/n♪♪♪",
+      "name": "One of the girl",
+      "view": 1
     }
-
   ]
 }

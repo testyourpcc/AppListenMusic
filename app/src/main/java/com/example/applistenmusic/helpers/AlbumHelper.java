@@ -14,6 +14,26 @@ public class AlbumHelper {
     static List<Album> allAlbum;
     static Album album;
 
+    public static boolean containKeyWord(String keyWord) {
+        if (AlbumSingleton.getInstance().hasAlbum()) {
+            allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
+        } else {
+            AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener(){
+                @Override
+                public void onAlbumLoaded(List<Album> AlbumList) {
+                    allAlbum = AlbumList;
+                }
+            });
+        }
+
+        for(Album a : allAlbum){
+            if (a.getName().toLowerCase().contains(keyWord.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Album> getAlbumByArtis() {
         return new ArrayList<>();
     }

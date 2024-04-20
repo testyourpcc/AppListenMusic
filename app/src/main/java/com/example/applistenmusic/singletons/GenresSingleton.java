@@ -62,7 +62,7 @@ public class GenresSingleton {
         }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference().child("Genres");
+        DatabaseReference reference = database.getReference().child("genres");
 
         reference.get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {

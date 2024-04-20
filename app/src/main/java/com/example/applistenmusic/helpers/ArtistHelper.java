@@ -12,8 +12,24 @@ public class ArtistHelper {
     static List<Artist> allArtist;
     Artist artist;
 
-    public static boolean containKeyWord() {
-        return true;
+    public static boolean containKeyWord(String keyWork) {
+        if (ArtistSingleton.getInstance().hasArtist()) {
+            allArtist = ArtistSingleton.getInstance().getAllArtistIfExist();
+        } else {
+            ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener(){
+                @Override
+                public void onArtistLoaded(List<Artist> ArtistList) {
+                    allArtist = ArtistList;
+                }
+            });
+        }
+
+        for(Artist a : allArtist){
+            if (a.getName().toLowerCase().contains(keyWork.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Artist> getArtistByArtis() {
