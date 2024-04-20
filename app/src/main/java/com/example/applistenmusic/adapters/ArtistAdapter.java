@@ -11,16 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
-import com.example.applistenmusic.activities.Home;
-import com.example.applistenmusic.models.Album;
+import com.example.applistenmusic.models.Artist;
 
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ViewHolder> {
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
-
-    private List<Album> mData;
+    private List<Artist> mData;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -31,7 +28,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         mListener = listener;
     }
 
-    public AlbumAdapter(List<Album> data) {
+    public ArtistAdapter(List<Artist> data) {
         mData = data;
     }
 
@@ -39,13 +36,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_album_layout, parent, false);
+                .inflate(R.layout.list_artist_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Album item = mData.get(position);
+        Artist item = mData.get(position);
         holder.textView.setText(item.getName());
         Glide.with(holder.itemView)
                 .load(item.getImage())
@@ -65,8 +62,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textViewAlbumName);
-            imageView = itemView.findViewById(R.id.imageViewAlbum);
+            textView = itemView.findViewById(R.id.textViewArtistName);
+            imageView = itemView.findViewById(R.id.imageViewArtist);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,7 +71,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            Album item = mData.get(position);
+                            Artist item = mData.get(position);
                             mListener.onItemClick(item.getId());
                         }
                     }
@@ -83,4 +80,3 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         }
     }
 }
-

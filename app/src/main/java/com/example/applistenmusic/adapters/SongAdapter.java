@@ -58,7 +58,10 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
     public int getItemCount() {
         return mData.size();
     }
-
+    public void setmData(List<Song> filteredList) {
+        this.mData = filteredList;
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ImageView imageView;

@@ -34,203 +34,253 @@
     null,
     {
       "id": 1,
-      "name": "NewJeans"
+      "name": "NewJeans",
+      "image": ""
     },
     {
       "id": 2,
-      "name": "Babymonster"
+      "name": "Babymonster",
+      "image": ""
     },
     {
       "id": 3,
-      "name": "IVE"
+      "name": "IVE",
+      "image": ""
     },
     {
       "id": 4,
-      "name": "LEESERAFIM"
+      "name": "LEESERAFIM",
+      "image": ""
     },
     {
       "id": 5,
-      "name": "BTS"
+      "name": "BTS",
+      "image": ""
     },
     {
       "id": 6,
-      "name": "Blackpink"
+      "name": "Blackpink",
+      "image": ""
     },
     {
       "id": 7,
-      "name": "EXO"
+      "name": "EXO",
+      "image": ""
     },
     {
       "id": 8,
-      "name": "TWICE"
+      "name": "TWICE",
+      "image": ""
     },
     {
       "id": 9,
-      "name": "Red Velvet"
+      "name": "Red Velvet",
+      "image": ""
     },
     {
       "id": 10,
-      "name": "Taylor Swift"
+      "name": "Taylor Swift",
+      "image": ""
     },
     {
       "id": 11,
-      "name": "Ed Sheeran"
+      "name": "Ed Sheeran",
+      "image": ""
     },
     {
       "id": 12,
-      "name": "Beyoncé"
+      "name": "Beyoncé",
+      "image": ""
     },
     {
       "id": 13,
-      "name": "Ariana Grande"
+      "name": "Ariana Grande",
+      "image": ""
     },
     {
       "id": 14,
-      "name": "Justin Bieber"
+      "name": "Justin Bieber",
+      "image": ""
     },
     {
       "id": 15,
-      "name": "Sơn Tùng M-TP"
+      "name": "Sơn Tùng M-TP",
+      "image": ""
     },
     {
       "id": 16,
-      "name": "HIEUTHUHAI"
+      "name": "HIEUTHUHAI",
+      "image": ""
     },
     {
       "id": 17,
-      "name": "Erik"
+      "name": "Erik",
+      "image": ""
     },
     {
       "id": 18,
-      "name": "Hương Tràm"
+      "name": "Hương Tràm",
+      "image": ""
     },
     {
       "id": 19,
-      "name": "Soobin Hoàng Sơn"
+      "name": "Soobin Hoàng Sơn",
+      "image": ""
     },
     {
       "id": 20,
-      "name": "ATEEZ"
+      "name": "ATEEZ",
+      "image": ""
     },
     {
       "id": 21,
-      "name": "Mamamoo"
+      "name": "Mamamoo",
+      "image": ""
     },
     {
       "id": 22,
-      "name": "GOT7"
+      "name": "GOT7",
+      "image": ""
     },
     {
       "id": 23,
-      "name": "NCT"
+      "name": "NCT",
+      "image": ""
     },
     {
       "id": 24,
-      "name": "Billie Eilish"
+      "name": "Billie Eilish",
+      "image": ""
     },
     {
       "id": 25,
-      "name": "Drake"
+      "name": "Drake",
+      "image": ""
     },
     {
       "id": 26,
-      "name": "Adele"
+      "name": "Adele",
+      "image": ""
     },
     {
       "id": 27,
-      "name": "Bruno Mars"
+      "name": "Bruno Mars",
+      "image": ""
     },
     {
       "id": 28,
-      "name": "Dua Lipa"
+      "name": "Dua Lipa",
+      "image": ""
     },
     {
       "id": 29,
-      "name": "Lorde"
+      "name": "Lorde",
+      "image": ""
     },
     {
       "id": 30,
-      "name": "Niall Horan"
+      "name": "Niall Horan",
+      "image": ""
     },
     {
       "id": 31,
-      "name": "Đen Vâu"
+      "name": "Đen Vâu",
+      "image": ""
     },
     {
       "id": 32,
-      "name": "Hồ Ngọc Hà"
+      "name": "Hồ Ngọc Hà",
+      "image": ""
     },
     {
       "id": 33,
-      "name": "Đàm Vĩnh Hưng"
+      "name": "Đàm Vĩnh Hưng",
+      "image": ""
     },
     {
       "id": 34,
-      "name": "Tóc Tiên"
+      "name": "Tóc Tiên",
+      "image": ""
     },
     {
       "id": 35,
-      "name": "JUSTATEE"
+      "name": "JUSTATEE",
+      "image": ""
     },
     {
       "id": 36,
-      "name": "Eminem"
+      "name": "Eminem",
+      "image": ""
     },
     {
       "id": 37,
-      "name": "Kanye West"
+      "name": "Kanye West",
+      "image": ""
     },
     {
       "id": 38,
-      "name": "Rihanna"
+      "name": "Rihanna",
+      "image": ""
     },
     {
       "id": 39,
-      "name": "Lady Gaga"
+      "name": "Lady Gaga",
+      "image": ""
     },
     {
       "id": 40,
-      "name": "Shawn Mendes"
+      "name": "Shawn Mendes",
+      "image": ""
     },
     {
       "id": 41,
-      "name": "Selena Gomez"
+      "name": "Selena Gomez",
+      "image": ""
     },
     {
       "id": 42,
-      "name": "Camila Cabello"
+      "name": "Camila Cabello",
+      "image": ""
     },
     {
       "id": 43,
-      "name": "Lưu Hương Giang"
+      "name": "Lưu Hương Giang",
+      "image": ""
     },
     {
       "id": 44,
-      "name": "Sơn Tùng M-TP"
+      "name": "Sơn Tùng M-TP",
+      "image": ""
     },
     {
       "id": 45,
-      "name": "TXT"
+      "name": "TXT",
+      "image": ""
     },
     {
       "id": 46,
-      "name": "Minh Hằng"
+      "name": "Minh Hằng",
+      "image": ""
     },
     {
       "id": 47,
-      "name": "Wanna One"
+      "name": "Wanna One",
+      "image": ""
     },
     {
       "id": 48,
-      "name": "I.O.I"
+      "name": "I.O.I",
+      "image": ""
     },
     {
       "id": 49,
-      "name": "The Weeknd"
+      "name": "The Weeknd",
+      "image": ""
     },
     {
       "id": 50,
-      "name": "Văn Mai Hương"
+      "name": "Văn Mai Hương",
+      "image": ""
     }
   ],
   "genres": [

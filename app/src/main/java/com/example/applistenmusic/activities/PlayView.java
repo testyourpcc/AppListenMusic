@@ -174,6 +174,7 @@ public class PlayView extends AppCompatActivity {
                     } else {
                         if (!SongSingleton.getInstance().hasSong()) {
                             AlertDialogManager.showAlert(PlayView.this, "Cảnh báo", "Bạn phải chọn bài hát trước khi phát");
+                            SongSingleton.getInstance().clearSong();
                         } else {
                             playButton.setImageResource(R.drawable.ic_pause_40px);
                             Url = SongSingleton.getInstance().getSong().getUrl();
@@ -190,6 +191,27 @@ public class PlayView extends AppCompatActivity {
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mediaPlayer.reset();
+                Song s = SongHelper.getRandomSong(songs);
+                SongSingleton.getInstance().setSong(s);
+                imageUrl = s.getImage();
+                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
+                Glide.with(PlayView.this)
+                        .load(imageUrl)
+                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
+                        .transform(new RoundedCornersTransformation(50, 0))
+                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
+                        .into(songImage);
+                Url = s.getUrl();
+                songName.setText(s.getName());
+                getAndPlaySong(Url);
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                playButton.setImageResource(R.drawable.ic_pause_40px);
                 mediaPlayer.reset();
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);
@@ -264,12 +286,6 @@ public class PlayView extends AppCompatActivity {
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
                     endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
                     handler1.postDelayed(this, 100);
-                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-
-                        }
-                    });
                 }
             }
         }, 300);

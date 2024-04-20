@@ -3,8 +3,8 @@ package com.example.applistenmusic.singletons;
 
 import android.util.Log;
 
-import com.example.applistenmusic.interfaces.ArtistLoadListener;
-import com.example.applistenmusic.models.Artist;
+import com.example.applistenmusic.interfaces.GenresLoadListener;
+import com.example.applistenmusic.models.Genres;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -12,57 +12,57 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtistSingleton {
+public class GenresSingleton {
 
-    private static volatile ArtistSingleton instance;
-    private List<Artist> allArtist;
-    private boolean isArtistLoaded = false;
-    private ArtistLoadListener ArtistLoadListener;
+    private static volatile GenresSingleton instance;
+    private List<Genres> allGenres;
+    private boolean isGenresLoaded = false;
+    private GenresLoadListener GenresLoadListener;
 
-    private ArtistSingleton() {
+    private GenresSingleton() {
         // Private constructor to prevent instantiation outside this class.
     }
 
-    public static ArtistSingleton getInstance() {
+    public static GenresSingleton getInstance() {
         if (instance == null) {
-            synchronized (ArtistSingleton.class) {
+            synchronized (GenresSingleton.class) {
                 if (instance == null) {
-                    instance = new ArtistSingleton();
+                    instance = new GenresSingleton();
                 }
             }
         }
         return instance;
     }
 
-    public boolean hasArtist() {
-        return allArtist != null;
+    public boolean hasGenres() {
+        return allGenres != null;
     }
 
-    public synchronized List<Artist> getAllArtistIfExist(){
-        return allArtist;
+    public synchronized List<Genres> getAllGenresIfExist(){
+        return allGenres;
     }
-    public synchronized void setAllArtist(List<Artist> artists){
-        allArtist = artists;
+    public synchronized void setAllGenres(List<Genres> Genress){
+        allGenres = Genress;
     }
 
-    public synchronized void getAllArtist(ArtistLoadListener listener) {
-        if (isArtistLoaded) {
+    public synchronized void getAllGenres(GenresLoadListener listener) {
+        if (isGenresLoaded) {
             // If data is already loaded, return it immediately
-            listener.onArtistLoaded(allArtist);
+            listener.onGenresLoaded(allGenres);
         } else {
             // Data is not loaded, fetch it asynchronously
-            this.ArtistLoadListener = listener;
+            this.GenresLoadListener = listener;
             fetchDataFromFirebase();
         }
     }
 
     private void fetchDataFromFirebase() {
-        if (allArtist == null) {
-            allArtist = new ArrayList<>();
+        if (allGenres == null) {
+            allGenres = new ArrayList<>();
         }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference().child("artist");
+        DatabaseReference reference = database.getReference().child("Genres");
 
         reference.get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -71,11 +71,11 @@ public class ArtistSingleton {
                 DataSnapshot dataSnapshot = task.getResult();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
-                        Artist artist = songSnapshot.getValue(Artist.class);
-                        allArtist.add(artist);
+                        Genres genres = songSnapshot.getValue(Genres.class);
+                        allGenres.add(genres);
                     }
-                    isArtistLoaded = true;
-                    ArtistLoadListener.onArtistLoaded(allArtist); // Notify listener when data is loaded
+                    isGenresLoaded = true;
+                    GenresLoadListener.onGenresLoaded(allGenres); // Notify listener when data is loaded
                 } else {
                     Log.e("firebase", "No data found");
                 }
