@@ -64,6 +64,8 @@ public class PlayView extends AppCompatActivity {
 
     boolean repeatSong = false;
 
+    boolean shufferSong = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,23 +192,76 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+//        playNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mediaPlayer.reset();
+//                Song s = SongHelper.getRandomSong(songs);
+//                SongSingleton.getInstance().setSong(s);
+//                imageUrl = s.getImage();
+//                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
+//                Glide.with(PlayView.this)
+//                        .load(imageUrl)
+//                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
+//                        .transform(new RoundedCornersTransformation(50, 0))
+//                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
+//                        .into(songImage);
+//                Url = s.getUrl();
+//                songName.setText(s.getName());
+//                getAndPlaySong(Url);
+//            }
+//        });
+
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.reset();
-                Song s = SongHelper.getRandomSong(songs);
-                SongSingleton.getInstance().setSong(s);
-                imageUrl = s.getImage();
-                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-                Glide.with(PlayView.this)
-                        .load(imageUrl)
-                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-                        .transform(new RoundedCornersTransformation(50, 0))
-                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-                        .into(songImage);
-                Url = s.getUrl();
-                songName.setText(s.getName());
-                getAndPlaySong(Url);
+                // Lấy danh sách bài hát
+                List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+
+                // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+                if (songs != null && !songs.isEmpty()) {
+                    // Nếu shuffle không được bật
+                    if (!shufferSong) {
+                        // Lấy vị trí hiện tại của bài hát
+                        int currentIndex = SongListSingleton.getInstance().getCurrentIndex();
+
+                        // Tăng vị trí lên 1 để lấy bài hát tiếp theo
+                        currentIndex++;
+                        // Kiểm tra nếu đã đến cuối danh sách thì quay lại bài đầu tiên
+                        if (currentIndex >= songs.size()) {
+                            currentIndex = 0;
+                        }
+                        // Lấy bài hát tiếp theo từ danh sách
+                        Song nextSong = songs.get(currentIndex);
+
+                        // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                        SongListSingleton.getInstance().setCurrentIndex(currentIndex);
+
+                        // Cập nhật thông tin bài hát và phát bài hát tiếp theo
+                        updateAndPlayNextSong(nextSong);
+                    } else {
+                        // Nếu shuffle được bật
+                        // Lấy một bài hát ngẫu nhiên từ danh sách
+                        Song nextSong = SongHelper.getRandomSong(songs);
+
+                        // Cập nhật thông tin và phát bài hát tiếp theo
+                        updateAndPlayNextSong(nextSong);
+                    }
+                }
+            }
+        });
+
+
+        shuffleImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!shufferSong){
+                    shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                    shufferSong =true;
+                } else {
+                    shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                    shufferSong =false;
+                }
             }
         });
 
@@ -226,29 +281,48 @@ public class PlayView extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-
-                if(repeatSong){
+                if (repeatSong) {
+                    // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
                     mediaPlayer.seekTo(0);
                     mediaPlayer.start();
                 } else {
-                    playButton.setImageResource(R.drawable.ic_pause_40px);
-                    mediaPlayer.reset();
-                    Song s = SongHelper.getRandomSong(songs);
-                    SongSingleton.getInstance().setSong(s);
-                    imageUrl = s.getImage();
-                    int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-                    Glide.with(PlayView.this)
-                            .load(imageUrl)
-                            .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-                            .transform(new RoundedCornersTransformation(50, 0))
-                            .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-                            .into(songImage);
-                    Url = s.getUrl();
-                    songName.setText(s.getName());
-                    getAndPlaySong(Url);
+                    // Lấy danh sách bài hát
+                    List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+
+                    // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+                    if (songs != null && !songs.isEmpty()) {
+                        // Nếu shuffle không được bật
+                        if (!shufferSong) {
+                            // Lấy vị trí hiện tại của bài hát
+                            int currentIndex = SongListSingleton.getInstance().getCurrentIndex();
+
+                            // Tăng vị trí lên 1 để lấy bài hát tiếp theo
+                            currentIndex++;
+                            // Kiểm tra nếu đã đến cuối danh sách thì quay lại bài đầu tiên
+                            if (currentIndex >= songs.size()) {
+                                currentIndex = 0;
+                            }
+                            // Lấy bài hát tiếp theo từ danh sách
+                            Song nextSong = songs.get(currentIndex);
+
+                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                            SongListSingleton.getInstance().setCurrentIndex(currentIndex);
+
+                            // Cập nhật thông tin bài hát và phát bài hát tiếp theo
+                            updateAndPlayNextSong(nextSong);
+                        } else {
+                            // Nếu shuffle được bật
+                            // Lấy một bài hát ngẫu nhiên từ danh sách
+                            Song nextSong = SongHelper.getRandomSong(songs);
+
+                            // Cập nhật thông tin và phát bài hát tiếp theo
+                            updateAndPlayNextSong(nextSong);
+                        }
+                    }
                 }
             }
         });
+
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +359,25 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    // Phương thức để cập nhật thông tin bài hát và phát bài hát tiếp theo
+    private void updateAndPlayNextSong(Song nextSong) {
+        // Cập nhật thông tin bài hát mới
+        SongSingleton.getInstance().setSong(nextSong);
+        imageUrl = nextSong.getImage();
+        int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size);
+        Glide.with(PlayView.this)
+                .load(imageUrl)
+                .override(sizeInPixels, sizeInPixels)
+                .transform(new RoundedCornersTransformation(50, 0))
+                .circleCrop()
+                .into(songImage);
+        songName.setText(nextSong.getName());
+        // Lấy URL của bài hát mới và phát nó
+        String nextSongUrl = nextSong.getUrl();
+        getAndPlaySong(nextSongUrl);
     }
 
     private Runnable updateSeekBar = new Runnable() {

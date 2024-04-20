@@ -23,6 +23,9 @@ public class SongListSingleton {
     private boolean isDataLoaded = false;
     private DataLoadListener dataLoadListener;
 
+    private int currentIndex = 0; // Vị trí bài hát hiện tại trong danh sách
+
+
     private SongListSingleton() {
         // Private constructor to prevent instantiation outside this class.
     }
@@ -86,4 +89,15 @@ public class SongListSingleton {
             }
         });
     }
+
+    // Trả về vị trí hiện tại của bài hát trong danh sách
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    // Thiết lập vị trí hiện tại của bài hát trong danh sách
+    public void setCurrentIndex(int index) {
+        currentIndex = index;
+    }
+
 }

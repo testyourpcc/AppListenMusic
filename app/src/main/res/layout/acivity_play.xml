@@ -161,7 +161,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/shuffle_icon" /> <!-- Hình ảnh nút trộn bài -->
+                android:src="@drawable/ic_shuffer_off" /> <!-- Hình ảnh nút trộn bài -->
 
             <ImageView
                 android:id="@+id/previousImg"
