@@ -62,6 +62,8 @@ public class PlayView extends AppCompatActivity {
     Animation animation;
     Song song;
 
+    boolean repeatSong = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,24 +210,43 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+        repeatImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!repeatSong){
+                    repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                    repeatSong =true;
+                } else {
+                    repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                    repeatSong =false;
+                }
+            }
+        });
+
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                playButton.setImageResource(R.drawable.ic_pause_40px);
-                mediaPlayer.reset();
-                Song s = SongHelper.getRandomSong(songs);
-                SongSingleton.getInstance().setSong(s);
-                imageUrl = s.getImage();
-                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-                Glide.with(PlayView.this)
-                        .load(imageUrl)
-                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-                        .transform(new RoundedCornersTransformation(50, 0))
-                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-                        .into(songImage);
-                Url = s.getUrl();
-                songName.setText(s.getName());
-                getAndPlaySong(Url);
+
+                if(repeatSong){
+                    mediaPlayer.seekTo(0);
+                    mediaPlayer.start();
+                } else {
+                    playButton.setImageResource(R.drawable.ic_pause_40px);
+                    mediaPlayer.reset();
+                    Song s = SongHelper.getRandomSong(songs);
+                    SongSingleton.getInstance().setSong(s);
+                    imageUrl = s.getImage();
+                    int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
+                    Glide.with(PlayView.this)
+                            .load(imageUrl)
+                            .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
+                            .transform(new RoundedCornersTransformation(50, 0))
+                            .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
+                            .into(songImage);
+                    Url = s.getUrl();
+                    songName.setText(s.getName());
+                    getAndPlaySong(Url);
+                }
             }
         });
 
