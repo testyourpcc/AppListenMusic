@@ -192,30 +192,10 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
-//        playNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mediaPlayer.reset();
-//                Song s = SongHelper.getRandomSong(songs);
-//                SongSingleton.getInstance().setSong(s);
-//                imageUrl = s.getImage();
-//                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-//                Glide.with(PlayView.this)
-//                        .load(imageUrl)
-//                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-//                        .transform(new RoundedCornersTransformation(50, 0))
-//                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-//                        .into(songImage);
-//                Url = s.getUrl();
-//                songName.setText(s.getName());
-//                getAndPlaySong(Url);
-//            }
-//        });
-
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-<<<<<<< HEAD
+
                 // Lấy danh sách bài hát
                 List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
 
@@ -263,7 +243,7 @@ public class PlayView extends AppCompatActivity {
                     shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
                     shufferSong =false;
                 }
-=======
+
                 playButton.setImageResource(R.drawable.ic_pause_40px);
                 mediaPlayer.reset();
                 Song s = SongHelper.getRandomSong(songs);
@@ -279,7 +259,7 @@ public class PlayView extends AppCompatActivity {
                 Url = s.getUrl();
                 songName.setText(s.getName());
                 getAndPlaySong(Url);
->>>>>>> 855776e2da15e711ad7fe497e84cf93f097ad213
+
             }
         });
 
