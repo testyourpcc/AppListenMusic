@@ -1,6 +1,8 @@
 package com.example.applistenmusic.activities;
 
 import com.example.applistenmusic.SplashView;
+import com.example.applistenmusic.helpers.SongHelper;
+import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.models.LyricForSync;
 
 import android.annotation.SuppressLint;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -27,6 +30,7 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,10 +42,14 @@ import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +61,7 @@ public class LyricView extends AppCompatActivity {
     boolean isUserInteracting = false;
     private GestureDetector gestureDetector;
     View mainView;
-    ImageView Feature, Home,Search,Play,Account,playButton;
+    ImageView Feature, Home,Search,Play,Account,playButton, playNext;
     TextView textViewLyric;
     DatabaseReference reference;
     private Handler handler;
@@ -63,7 +71,8 @@ public class LyricView extends AppCompatActivity {
     ScrollView  scrollView;
     String[] LyricLRC;
     Song song;
-
+    private String Url;
+    private List<Song> songs = new ArrayList<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -85,7 +94,17 @@ public class LyricView extends AppCompatActivity {
                 mediaPlayer.seekTo(seekBarProcess);
             }
         }
-        
+
+        if (SongListSingleton.getInstance().hasSong()) {
+            songs = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> songList) {
+                    songs = songList;
+                }
+            });
+        }
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -182,6 +201,17 @@ public class LyricView extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+        playNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.reset();
+                Song s = SongHelper.getRandomSong(songs);
+                SongSingleton.getInstance().setSong(s);
+                Url = s.getUrl();
+                getAndPlaySong(Url);
+                getData();
+            }
+        });
 
     }
 
@@ -276,7 +306,7 @@ public class LyricView extends AppCompatActivity {
 
             textViewLyric.setText(spannableStringBuilder);
 
-            if (!isUserInteracting && textViewLyric != null && scrollView != null) {
+            if (!isUserInteracting) {
                 int scrollViewHeight = scrollView.getHeight();
                 int textViewHeight;
                 if(textViewLyric.getLayout() != null) {
@@ -284,7 +314,7 @@ public class LyricView extends AppCompatActivity {
                 } else {
                     textViewHeight = 0;
                 }
-                int scrollY = textViewHeight - scrollViewHeight / 5 ;
+                int scrollY = textViewHeight - scrollViewHeight / 15 ;
                 scrollView.smoothScrollTo(0, scrollY);
             }
         }
@@ -317,11 +347,80 @@ public class LyricView extends AppCompatActivity {
             handler.removeCallbacksAndMessages(null);
         }
     }
+    public void getAndPlaySong(String Url) {
+        // Khởi tạo FirebaseStorage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        // Tham chiếu đến file nhạc trên Firebase Storage
+        StorageReference storageRef = storage.getReference().child(Url);
+
+        // Tải file nhạc từ Firebase Storage
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess (Uri uri){
+                try {
+
+                    // Reset MediaPlayer trước khi sử dụng
+                    mediaPlayer.reset();
+
+                    // Đặt AudioAttributes cho MediaPlayer
+                    mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build());
+
+                    // Đặt nguồn dữ liệu cho MediaPlayer
+                    mediaPlayer.setDataSource(LyricView.this, uri);
+
+                    // Chuẩn bị MediaPlayer
+                    mediaPlayer.prepare();
+
+                    handler = new Handler();
+
+                    // Set max duration for seek bar
+                    seekBar.setMax(mediaPlayer.getDuration());
+
+                    // Update seek bar and media player every 100 milliseconds
+                    handler.postDelayed(updateSeekBarAndMediaPlayer, 100);
+
+                    // Seek bar change listener
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            if (fromUser) {
+                                mediaPlayer.seekTo(progress);
+                            }
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                        }
+                    });
+
+                    // Bắt đầu phát nhạc
+                    mediaPlayer.start();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure (@NonNull Exception e){
+                Toast.makeText(LyricView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
+        playNext = findViewById(R.id.nextButton);
         Account = findViewById(R.id.imageViewAccount);
         mainView = findViewById(R.id.LyricView);
         scrollView = findViewById(R.id.ScrollLyric);

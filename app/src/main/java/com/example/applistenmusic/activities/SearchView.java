@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,10 +33,11 @@ import java.util.List;
 public class SearchView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     EditText searchEditText;
+    TextView textViewSearchResult;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
-    RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong;
+    RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong, recyclerViewSearchResult;
 
-    SongAdapter adapterKpopSong, adapterVpopSong, adapterUSUKSong,adapterTrendingSong;
+    SongAdapter adapterKpopSong, adapterVpopSong, adapterUSUKSong,adapterTrendingSong, adapterSearchResult;
  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +78,33 @@ public class SearchView extends AppCompatActivity {
         }
 
         adapterKpopSong = new SongAdapter(KpopSong);
-        adapterVpopSong = new SongAdapter(VpopSong);
-        adapterUSUKSong = new SongAdapter(USUKSong);
-        adapterTrendingSong = new SongAdapter(allSong);
         LinearLayoutManager layoutManagerKpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewKpopSong.setLayoutManager(layoutManagerKpop);
         recyclerViewKpopSong.setAdapter(adapterKpopSong);
+
+        adapterVpopSong = new SongAdapter(VpopSong);
         LinearLayoutManager layoutManagerVpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewVpopSong.setLayoutManager(layoutManagerVpop);
         recyclerViewVpopSong.setAdapter(adapterVpopSong);
+
+        adapterUSUKSong = new SongAdapter(USUKSong);
         LinearLayoutManager layoutManagerUSUK = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewUSUKSong.setLayoutManager(layoutManagerUSUK);
         recyclerViewUSUKSong.setAdapter(adapterUSUKSong);
+
+        adapterTrendingSong = new SongAdapter(allSong);
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
         recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
+
+        adapterSearchResult = new SongAdapter(USUKSong);
+        LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
+        recyclerViewSearchResult.setAdapter(adapterSearchResult);
+
+
+
+
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +182,17 @@ public class SearchView extends AppCompatActivity {
                 finish();
             }
         });
+        adapterSearchResult.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int id) {
+                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -190,25 +215,28 @@ public class SearchView extends AppCompatActivity {
     private void performSearch(String keyword, List<Song> allSong) {
         List<Song> result = new ArrayList<>();
         for(Song song : allSong){
-            if(song.getName().toLowerCase().contains(keyword.toLowerCase())){
+            if(song.getName().toLowerCase().contains(keyword.trim().toLowerCase())){
                 result.add(song);
-                //continue;
+                continue;
             }
 
-            if(ArtistHelper.containKeyWord()){
-                result.add(song);
-                continue;
-            }
-            if(AlbumHelper.getAlbumNameByID((int) Long.parseLong(keyword)) != ""){
-                result.add(song);
-                continue;
-            }
-            if(GenresHelper.getGenresNameByID((int) Long.parseLong(keyword)) != ""){
-                result.add(song);
-            }
+//            if(ArtistHelper.containKeyWord(keyword.trim())){
+//                result.add(song);
+//                continue;
+//            }
+//            if(AlbumHelper.containKeyWord(keyword.trim())){
+//                result.add(song);
+//                continue;
+//            }
+//            if(GenresHelper.containKeyWord(keyword.trim())){
+//                result.add(song);
+//            }
 
         }
-        adapterTrendingSong.setmData(result);
+        textViewSearchResult.setVisibility(View.VISIBLE);
+        recyclerViewSearchResult.setVisibility(View.VISIBLE);
+        adapterSearchResult.setmData(result);
+
 
     }
     public static boolean canParseLong(String str) {
@@ -224,6 +252,8 @@ public class SearchView extends AppCompatActivity {
         recyclerViewVpopSong = findViewById(R.id.recyclerViewInVpop);
         recyclerViewUSUKSong = findViewById(R.id.recyclerViewInUSUK);
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
+        recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
+        textViewSearchResult = findViewById(R.id.textViewSearchResult);
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);

@@ -191,6 +191,7 @@ public class PlayView extends AppCompatActivity {
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playButton.setImageResource(R.drawable.ic_pause_40px);
                 mediaPlayer.reset();
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);

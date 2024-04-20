@@ -48,21 +48,42 @@
         android:layout_below="@id/textViewSearch"
         android:layout_marginTop="20dp"
         android:hint="Artist, Songs, Lyrics, ...."
-        android:background="@android:color/white"
+        android:background="@drawable/edit_text_rounded_corner"
         android:textColor="@android:color/black"
         android:layout_marginLeft="20dp"
         android:padding="10dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp" />
+    <TextView
+        android:id="@+id/textViewSearchResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="Search Result"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:visibility="gone"/>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewInSearchResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewSearchResult"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/textViewTrendingNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/searchEditText"
+        android:layout_alignTop="@id/recyclerViewInSearchResult"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="71dp"
+        android:layout_marginTop="120dp"
         android:text="Trending now"
         android:textColor="@color/white"
         android:textSize="24sp" />

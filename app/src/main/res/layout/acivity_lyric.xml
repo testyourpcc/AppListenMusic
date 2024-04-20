@@ -103,9 +103,9 @@
     <ScrollView
         android:id="@+id/ScrollLyric"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="550dp"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:padding="7dp">
 
         <LinearLayout
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Lời bài hát sẽ được hiển thị ở đây"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
             <!-- TextView hiển thị lời bài hát -->
 
         </LinearLayout>
@@ -131,7 +131,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ScrollLyric"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="10dp" />
 
     <!-- Nút điều khiển -->
     <LinearLayout

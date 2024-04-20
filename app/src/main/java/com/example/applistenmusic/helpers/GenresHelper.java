@@ -11,6 +11,26 @@ public class GenresHelper {
     static List<Genres> allGenres;
     static Genres genres;
 
+    public static boolean containKeyWord(String keyWord) {
+        if (GenresSingleton.getInstance().hasGenres()) {
+            allGenres = GenresSingleton.getInstance().getAllGenresIfExist();
+        } else {
+            GenresSingleton.getInstance().getAllGenres(new GenresLoadListener(){
+                @Override
+                public void onGenresLoaded(List<Genres> GenresList) {
+                    allGenres = GenresList;
+                }
+            });
+        }
+
+        for(Genres a : allGenres){
+            if (a.getName().toLowerCase().contains(keyWord.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Genres> getGenresByArtis() {
         return new ArrayList<>();
     }
