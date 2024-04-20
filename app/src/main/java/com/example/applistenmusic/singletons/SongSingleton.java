@@ -43,5 +43,11 @@ public class SongSingleton {
     public synchronized void setSong(Song song) {
         this.song = song;
     }
+    public synchronized void clearSong() {
+        this.song = null;
+    }
 
+    public boolean hasSong() {
+        return song != null;
+    }
 }

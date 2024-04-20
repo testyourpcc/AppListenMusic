@@ -219,36 +219,9 @@ public class LyricView extends AppCompatActivity {
     void getData(){
         song = SongSingleton.getInstance().getSong();
         if (song == null) {
-            reference = FirebaseDatabase.getInstance().getReference();
-
-            reference.child("song").child("2").child("lyric").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e("firebase", "Error getting data", task.getException());
-                    } else {
-                        String a = String.valueOf(task.getResult().getValue());
-                        LyricLRC = a.split("/r/n");
-                        // Khởi tạo Handler và Runnable
-                        handler = new Handler();
-                        runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                                handler.postDelayed(this, 250);
-                                // Thực hiện lại sau mỗi giây
-                            }
-                        };
-
-                        // Bắt đầu việc thay đổi màu và văn bản
-                        handler.post(runnable);
-                        // textViewLyric.setText(stringBuilder.toString());
-                    }
-                }
-            });
+            textViewLyric.setText("Không có bài hát nào đang được phát");
         } else {
-            String a = SongSingleton.getInstance().getSong().getLyric();
+            String a = song.getLyric();
             if (a.isEmpty()){
                 textViewLyric.setText("Chưa có lời bài hát cho bài hát này");
             } else {

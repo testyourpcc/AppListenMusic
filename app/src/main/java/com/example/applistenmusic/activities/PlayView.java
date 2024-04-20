@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 
+import com.example.applistenmusic.dialogs.AlertDialogManager;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.models.Song;
@@ -47,26 +48,29 @@ public class PlayView extends AppCompatActivity {
     private GestureDetector gestureDetector;
     View mainView;
     private SeekBar seekBar;
-    TextView startTime, endTime , songName;
-    private Handler handler,handler1;
+    TextView startTime, endTime, songName;
+    private Handler handler, handler1;
 
     ImageView repeatImg, shuffleImg;
     private MediaPlayer mediaPlayer;
-    private ImageView playButton, songImage, playNext , Home,Search,Play,Account;
+    private ImageView playButton, songImage, playNext, Home, Search, Play, Account;
     private DatabaseReference databaseReference;
 
     private String imageUrl;
     private String Url;
     private List<Song> songs = new ArrayList<>();
     Animation animation;
+    Song song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
+
+        mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
         animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        if (SongListSingleton.getInstance().hasSong()){
+        if (SongListSingleton.getInstance().hasSong()) {
             songs = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
             SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
@@ -76,21 +80,17 @@ public class PlayView extends AppCompatActivity {
                 }
             });
         }
+        Intent intent = getIntent();
+        boolean playNow = intent.getBooleanExtra("playNow", false);
 
-        if (SongSingleton.getInstance().getSong() == null) {
-            imageUrl = songs.get(2).getImage();
-
-            int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-            Glide.with(this)
-                    .load(imageUrl)
-                    .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-                    .transform(new RoundedCornersTransformation(50, 0))
-                    .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-                    .into(songImage);
-
-        } else {
-            imageUrl = SongSingleton.getInstance().getSong().getImage();
-            songName.setText(SongSingleton.getInstance().getSong().getName());
+        if (SongSingleton.getInstance().getSong() != null && playNow) {
+            if (mediaPlayer != null) {
+                mediaPlayer.reset();
+            }
+            Song song = SongSingleton.getInstance().getSong();
+            imageUrl = song.getImage();
+            songName.setText(song.getName());
+            playButton.setImageResource(R.drawable.ic_pause_40px);
             // Sử dụng Glide để tải và hiển thị ảnh từ URL
             int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
             Glide.with(this)
@@ -100,11 +100,28 @@ public class PlayView extends AppCompatActivity {
                     .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                     .into(songImage);
 
+            Url = song.getUrl();
+            SongSingleton.getInstance().setSong(song);
+            getAndPlaySong(Url);
+
+        } else {
+            if (SongSingleton.getInstance().getSong() != null) {
+                imageUrl = SongSingleton.getInstance().getSong().getImage();
+                songName.setText(SongSingleton.getInstance().getSong().getName());
+                // Sử dụng Glide để tải và hiển thị ảnh từ URL
+                int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
+                Glide.with(this)
+                        .load(imageUrl)
+                        .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
+                        .transform(new RoundedCornersTransformation(50, 0))
+                        .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
+                        .into(songImage);
+            }
         }
-        mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
+
 
         // Nếu có bài hát đang chạy khi khởi tạo view thì đồng bộ hóa với seek bar
-        if( mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             playButton.setImageResource(R.drawable.ic_pause_40px);
 
             handler = new Handler();
@@ -136,9 +153,9 @@ public class PlayView extends AppCompatActivity {
 
         } else {
             // đồng bộ thanh seek bar khi nhạc đang pause
-            Intent intent = getIntent();
-            int seekBarProcess = intent.getIntExtra("seekBarProcess", 0);
-            if (seekBarProcess != 0){
+            Intent LyricIntent = getIntent();
+            int seekBarProcess = LyricIntent.getIntExtra("seekBarProcess", 0);
+            if (seekBarProcess != 0) {
                 seekBar.setMax(mediaPlayer.getDuration());
                 seekBar.setProgress(seekBarProcess);
                 mediaPlayer.seekTo(seekBarProcess);
@@ -149,85 +166,19 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!mediaPlayer.isPlaying()) {
-                    playButton.setImageResource(R.drawable.ic_pause_40px);
                     if (mediaPlayer.getCurrentPosition() > 0) {
+                        playButton.setImageResource(R.drawable.ic_pause_40px);
                         mediaPlayer.seekTo(seekBar.getProgress());
                         mediaPlayer.start();
                         updateTime();
                     } else {
-                        Song s = SongHelper.getSongById(songs,2);
-//                      Song s = SongHelper.getRandomSong(songs);
-                        SongSingleton.getInstance().setSong(s);
-                        Url = s.getUrl();
-                        songName.setText(s.getName());
-
-
-                        // Khởi tạo FirebaseStorage
-                        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-                        // Tham chiếu đến file nhạc trên Firebase Storage
-                        StorageReference storageRef = storage.getReference().child(Url);
-
-                        // Tải file nhạc từ Firebase Storage
-                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                try {
-
-                                    // Reset MediaPlayer trước khi sử dụng
-                                    mediaPlayer.reset();
-
-                                    // Đặt AudioAttributes cho MediaPlayer
-                                    mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                            .setUsage(AudioAttributes.USAGE_MEDIA)
-                                            .build());
-
-                                    // Đặt nguồn dữ liệu cho MediaPlayer
-                                    mediaPlayer.setDataSource(PlayView.this, uri);
-
-                                    // Chuẩn bị MediaPlayer
-                                    mediaPlayer.prepare();
-
-                                    handler = new Handler();
-
-                                    // Set max duration for seek bar
-                                    seekBar.setMax(mediaPlayer.getDuration());
-
-                                    // Update seek bar every 100 milliseconds
-                                    handler.postDelayed(updateSeekBar, 250);
-
-                                    // Seek bar change listener
-                                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                        @Override
-                                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                            if (fromUser) {
-                                                mediaPlayer.seekTo(progress);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onStartTrackingTouch(SeekBar seekBar) {
-                                        }
-
-                                        @Override
-                                        public void onStopTrackingTouch(SeekBar seekBar) {
-                                        }
-                                    });
-
-                                    // Bắt đầu phát nhạc
-                                    mediaPlayer.start();
-                                    updateTime();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        if (!SongSingleton.getInstance().hasSong()) {
+                            AlertDialogManager.showAlert(PlayView.this, "Cảnh báo", "Bạn phải chọn bài hát trước khi phát");
+                        } else {
+                            playButton.setImageResource(R.drawable.ic_pause_40px);
+                            Url = SongSingleton.getInstance().getSong().getUrl();
+                            getAndPlaySong(Url);
+                        }
                     }
                 } else {
                     mediaPlayer.pause();
@@ -250,150 +201,9 @@ public class PlayView extends AppCompatActivity {
                         .transform(new RoundedCornersTransformation(50, 0))
                         .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                         .into(songImage);
-
-
                 Url = s.getUrl();
                 songName.setText(s.getName());
-
-                // Khởi tạo FirebaseStorage
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-
-                // Tham chiếu đến file nhạc trên Firebase Storage
-                StorageReference storageRef = storage.getReference().child(Url);
-
-                // Tải file nhạc từ Firebase Storage
-                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        try {
-
-                            // Đặt AudioAttributes cho MediaPlayer
-                            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                                    .build());
-
-                            // Đặt nguồn dữ liệu cho MediaPlayer
-                            mediaPlayer.setDataSource(PlayView.this, uri);
-
-                            // Chuẩn bị MediaPlayer
-                            mediaPlayer.prepare();
-
-                            handler = new Handler();
-
-                            // Set max duration for seek bar
-                            seekBar.setMax(mediaPlayer.getDuration());
-
-                            // Update seek bar every 100 milliseconds
-                            handler.postDelayed(updateSeekBar, 100);
-
-                            // Seek bar change listener
-                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                @Override
-                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                    if (fromUser) {
-                                        mediaPlayer.seekTo(progress);
-                                    }
-                                }
-
-                                @Override
-                                public void onStartTrackingTouch(SeekBar seekBar) {
-                                }
-
-                                @Override
-                                public void onStopTrackingTouch(SeekBar seekBar) {
-                                }
-                            });
-
-                            // Bắt đầu phát nhạc
-                            mediaPlayer.start();
-                            updateTime();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Song s = SongHelper.getRandomSong(songs);
-                SongSingleton.getInstance().setSong(s);
-                Url = s.getUrl();
-
-                // Khởi tạo FirebaseStorage
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-
-                // Tham chiếu đến file nhạc trên Firebase Storage
-                StorageReference storageRef = storage.getReference().child(Url);
-
-                // Tải file nhạc từ Firebase Storage
-                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        try {
-
-                            // Reset MediaPlayer trước khi sử dụng
-                            mediaPlayer.reset();
-
-                            // Đặt AudioAttributes cho MediaPlayer
-                            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                                    .build());
-
-                            // Đặt nguồn dữ liệu cho MediaPlayer
-                            mediaPlayer.setDataSource(PlayView.this, uri);
-
-                            // Chuẩn bị MediaPlayer
-                            mediaPlayer.prepare();
-
-                            handler = new Handler();
-
-                            // Set max duration for seek bar
-                            seekBar.setMax(mediaPlayer.getDuration());
-
-                            // Update seek bar every 100 milliseconds
-                            handler.postDelayed(updateSeekBar, 100);
-
-                            // Seek bar change listener
-                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                                @Override
-                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                    if (fromUser) {
-                                        mediaPlayer.seekTo(progress);
-                                    }
-                                }
-
-                                @Override
-                                public void onStartTrackingTouch(SeekBar seekBar) {
-                                }
-
-                                @Override
-                                public void onStopTrackingTouch(SeekBar seekBar) {
-                                }
-                            });
-
-                            // Bắt đầu phát nhạc
-                            mediaPlayer.start();
-                            updateTime();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                getAndPlaySong(Url);
             }
         });
 
@@ -434,7 +244,6 @@ public class PlayView extends AppCompatActivity {
 
     }
 
-
     private Runnable updateSeekBar = new Runnable() {
         @Override
         public void run() {
@@ -444,17 +253,17 @@ public class PlayView extends AppCompatActivity {
         }
     };
 
-    private void updateTime(){
+    private void updateTime() {
         handler1 = new Handler();
         handler1.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(mediaPlayer!=null){
+                if (mediaPlayer != null) {
                     seekBar.setProgress(mediaPlayer.getCurrentPosition());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
                     endTime.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
-                    handler1.postDelayed(this,100);
+                    handler1.postDelayed(this, 100);
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
@@ -463,20 +272,87 @@ public class PlayView extends AppCompatActivity {
                     });
                 }
             }
-        },300);
+        }, 300);
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(handler != null){
-        handler.removeCallbacks(updateSeekBar);
+        if (handler != null) {
+            handler.removeCallbacks(updateSeekBar);
         }
-        if(handler1 != null){
+        if (handler1 != null) {
             handler1.removeCallbacksAndMessages(null);
         }
     }
+    public void getAndPlaySong(String Url) {
+    // Khởi tạo FirebaseStorage
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    // Tham chiếu đến file nhạc trên Firebase Storage
+    StorageReference storageRef = storage.getReference().child(Url);
+
+    // Tải file nhạc từ Firebase Storage
+    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        @Override
+        public void onSuccess (Uri uri){
+            try {
+
+                // Reset MediaPlayer trước khi sử dụng
+                mediaPlayer.reset();
+
+                // Đặt AudioAttributes cho MediaPlayer
+                mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build());
+
+                // Đặt nguồn dữ liệu cho MediaPlayer
+                mediaPlayer.setDataSource(PlayView.this, uri);
+
+                // Chuẩn bị MediaPlayer
+                mediaPlayer.prepare();
+
+                handler = new Handler();
+
+                // Set max duration for seek bar
+                seekBar.setMax(mediaPlayer.getDuration());
+
+                // Update seek bar every 100 milliseconds
+                handler.postDelayed(updateSeekBar, 250);
+
+                // Seek bar change listener
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (fromUser) {
+                            mediaPlayer.seekTo(progress);
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    }
+                });
+
+                // Bắt đầu phát nhạc
+                mediaPlayer.start();
+                updateTime();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure (@NonNull Exception e){
+            Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+        }
+    });
+}
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);

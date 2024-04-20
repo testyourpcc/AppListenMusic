@@ -66,24 +66,28 @@ public class PlayListSingleton {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference().child("playList").child(currentUser.getUid());
+        if (currentUser != null) {
+            DatabaseReference reference = database.getReference().child("playList").child(currentUser.getUid());
 
-        reference.get().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.e("firebase", "Error getting data", task.getException());
-            } else {
-                DataSnapshot dataSnapshot = task.getResult();
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
-                        PlayList p = songSnapshot.getValue(PlayList.class);
-                        playList.add(p);
-                    }
-                    isPlayListLoaded = true;
-                    PlayListLoadListener.onPlayListLoaded(playList); // Notify listener when data is loaded
+            reference.get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
                 } else {
-                    Log.e("firebase", "No data found");
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                            PlayList p = songSnapshot.getValue(PlayList.class);
+                            playList.add(p);
+                        }
+                        isPlayListLoaded = true;
+                        PlayListLoadListener.onPlayListLoaded(playList); // Notify listener when data is loaded
+                    } else {
+                        Log.e("firebase", "No data found");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            PlayListLoadListener.onPlayListLoaded(new ArrayList<PlayList>());
+        }
     }
 }
