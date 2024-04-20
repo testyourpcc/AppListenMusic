@@ -189,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/repeat_icon" /> <!-- Hình ảnh nút lặp bài -->
+                android:src="@drawable/ic_repeat_off" /> <!-- Hình ảnh nút lặp bài -->
 
         </LinearLayout>
 
