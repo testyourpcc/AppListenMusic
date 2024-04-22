@@ -10,14 +10,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.models.PlayList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class RegisterSuccess extends AppCompatActivity {
     FirebaseAuth auth;
     Button continueBtn;
     FirebaseUser user;
     TextView userInfo;
+
+    PlayList defaultPlaylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,7 @@ public class RegisterSuccess extends AppCompatActivity {
             finish();
         }else{
             userInfo.setText(user.getDisplayName());
+            createDefaultPlaylist(); // Gọi phương thức để tạo playlist mặc định
         }
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,5 +54,19 @@ public class RegisterSuccess extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void createDefaultPlaylist() {
+        DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference("playList");
+
+        // Tạo một đối tượng Playlist mới
+        defaultPlaylist = new PlayList();
+        defaultPlaylist.setName("Favorite");
+        defaultPlaylist.setImage("link"); // Thay link bằng đường dẫn hình ảnh mặc định cho playlist
+        defaultPlaylist.setSongIdList(new ArrayList<Integer>()); // Tạo danh sách trống cho các ID bài hát
+
+        // Lưu playlist vào Firebase Realtime Database
+        String userId = user.getUid();
+        playlistRef.child(userId).child("0").setValue(defaultPlaylist);
     }
 }

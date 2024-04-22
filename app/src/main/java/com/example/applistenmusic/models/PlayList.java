@@ -1,19 +1,20 @@
 package com.example.applistenmusic.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayList {
     private int Id;
     private String name;
     private List<Song> songList;
-    private List<Long> songIdList;
+    private ArrayList<Integer> songIdList;
     private String image;
     private String user;
 
     public PlayList() {
     }
 
-    public PlayList(int id, String name, List<Song> songList, List<Long> songIdList, String image, String user) {
+    public PlayList(int id, String name, List<Song> songList, ArrayList<Integer> songIdList, String image, String user) {
         Id = id;
         this.name = name;
         this.songList = songList;
@@ -46,11 +47,11 @@ public class PlayList {
         this.songList = songList;
     }
 
-    public List<Long> getSongIdList() {
+    public List<Integer> getSongIdList() {
         return songIdList;
     }
 
-    public void setSongIdList(List<Long> songIdList) {
+    public void setSongIdList(ArrayList<Integer> songIdList) {
         this.songIdList = songIdList;
     }
 
