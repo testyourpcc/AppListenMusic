@@ -1,7 +1,10 @@
 package com.example.applistenmusic.helpers;
 
 import com.example.applistenmusic.interfaces.GenresLoadListener;
+import com.example.applistenmusic.interfaces.GenresLoadListener;
 import com.example.applistenmusic.models.Genres;
+import com.example.applistenmusic.models.Genres;
+import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.GenresSingleton;
 
 import java.util.ArrayList;
@@ -29,6 +32,26 @@ public class GenresHelper {
             }
         }
         return false;
+    }
+
+    public static List<Integer> getGenresIDByGenresName(String name) {
+        if (GenresSingleton.getInstance().hasGenres()) {
+            allGenres = GenresSingleton.getInstance().getAllGenresIfExist();
+        } else {
+            GenresSingleton.getInstance().getAllGenres(new GenresLoadListener(){
+                @Override
+                public void onGenresLoaded(List<Genres> GenresList) {
+                    allGenres = GenresList;
+                }
+            });
+        }
+        List<Integer> aristIDList = new ArrayList<>();
+        for(Genres a : allGenres){
+            if (a.getName().toLowerCase().contains(name.toLowerCase())){
+                aristIDList.add(a.getId());
+            }
+        }
+        return aristIDList;
     }
 
     public List<Genres> getGenresByArtis() {

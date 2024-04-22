@@ -333,59 +333,59 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                if (repeatSong) {
-                    // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
-                    mediaPlayer.seekTo(0);
-                    mediaPlayer.start();
-                } else {
-                    // Lấy danh sách bài hát
-                    List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
-
-                    // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
-                    if (songs != null && !songs.isEmpty()) {
-                        // Kiểm tra xem shuffle có được bật hay không
-                        if (!shufferSong) {
-                            // Lấy ID của bài hát hiện tại
-                            int currentSongId = SongSingleton.getInstance().getSong().getId();
-
-                            // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
-                            int nextSongIndex = -1;
-                            for (int i = 0; i < songs.size(); i++) {
-                                if (songs.get(i).getId() == currentSongId + 1) {
-                                    nextSongIndex = i;
-                                    break;
-                                }
-                            }
-
-                            // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
-                            if (nextSongIndex == -1) {
-                                nextSongIndex = 0;
-                            }
-
-                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
-                            SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
-
-                            // Lấy bài hát tiếp theo từ danh sách
-                            Song nextSong = songs.get(nextSongIndex);
-
-                            // Cập nhật thông tin và phát bài hát tiếp theo
-                            updateAndPlayNextSong(nextSong);
-                        } else {
-                            // Nếu shuffle được bật
-                            // Chọn một bài hát ngẫu nhiên từ danh sách
-                            Song nextSong = SongHelper.getRandomSong(songs);
-
-                            // Cập nhật thông tin và phát bài hát tiếp theo
-                            updateAndPlayNextSong(nextSong);
-                        }
-                    }
-
-                }
-            }
-        });
+//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mediaPlayer) {
+//                if (repeatSong) {
+//                    // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
+//                    mediaPlayer.seekTo(0);
+//                    mediaPlayer.start();
+//                } else {
+//                    // Lấy danh sách bài hát
+//                    List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+//
+//                    // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+//                    if (songs != null && !songs.isEmpty()) {
+//                        // Kiểm tra xem shuffle có được bật hay không
+//                        if (!shufferSong) {
+//                            // Lấy ID của bài hát hiện tại
+//                            int currentSongId = SongSingleton.getInstance().getSong().getId();
+//
+//                            // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
+//                            int nextSongIndex = -1;
+//                            for (int i = 0; i < songs.size(); i++) {
+//                                if (songs.get(i).getId() == currentSongId + 1) {
+//                                    nextSongIndex = i;
+//                                    break;
+//                                }
+//                            }
+//
+//                            // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
+//                            if (nextSongIndex == -1) {
+//                                nextSongIndex = 0;
+//                            }
+//
+//                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
+//                            SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
+//
+//                            // Lấy bài hát tiếp theo từ danh sách
+//                            Song nextSong = songs.get(nextSongIndex);
+//
+//                            // Cập nhật thông tin và phát bài hát tiếp theo
+//                            updateAndPlayNextSong(nextSong);
+//                        } else {
+//                            // Nếu shuffle được bật
+//                            // Chọn một bài hát ngẫu nhiên từ danh sách
+//                            Song nextSong = SongHelper.getRandomSong(songs);
+//
+//                            // Cập nhật thông tin và phát bài hát tiếp theo
+//                            updateAndPlayNextSong(nextSong);
+//                        }
+//                    }
+//
+//                }
+//            }
+//        });
 
 
         Home.setOnClickListener(new View.OnClickListener() {

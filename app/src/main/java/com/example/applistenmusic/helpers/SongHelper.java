@@ -100,25 +100,78 @@ public class SongHelper {
         return songList;
     }
 
-    public static List<Song> getSongByGenres(int genres){
-        List<Song> songList = new ArrayList<>();
-        for (Song song : songList){
-            if(song.getGenres() == genres){
-                songList.add(song);
+    public static List<Song> getSongByGenres(List<Integer> genres){
+        if (SongListSingleton.getInstance().hasSong()) {
+            songList = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> List) {
+                    songList = List;
+                }
+            });
+        }
+        List<Song> result = new ArrayList<>();
+        if(genres.size()>0){
+            for (Song song : songList){
+                for(Integer i : genres){
+                    if(song.getGenres() == i){
+                        result.add(song);
+                    }
+                }
             }
         }
-        return songList;
+        return result;
     }
 
-    public static List<Song> getSongByArtist(int artist){
-        List<Song> songList = new ArrayList<>();
-        for (Song song : songList){
-            if(song.getGenres() == artist){
-                songList.add(song);
+    public static List<Song> getSongByArtist(List<Integer> artist){
+        if (SongListSingleton.getInstance().hasSong()) {
+            songList = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> List) {
+                    songList = List;
+                }
+            });
+        }
+        List<Song> result = new ArrayList<>();
+        if(artist.size()>0){
+            for (Song song : songList){
+                for(Integer i : artist){
+                    if(song.getArtis() == i){
+                        result.add(song);
+                    }
+                }
             }
         }
-        return songList;
+        return result;
     }
+
+    public static List<Song> getSongByAlbum(List<Integer> album){
+        if (SongListSingleton.getInstance().hasSong()) {
+            songList = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> List) {
+                    songList = List;
+                }
+            });
+        }
+        List<Song> result = new ArrayList<>();
+        if(album.size()>0){
+            for (Song song : songList){
+                for(Integer i : album){
+                    if(song.getAlbum() == i){
+                        result.add(song);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
 
 
 }
