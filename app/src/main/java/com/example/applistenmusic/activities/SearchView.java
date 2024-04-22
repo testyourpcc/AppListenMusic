@@ -227,11 +227,11 @@ public class SearchView extends AppCompatActivity {
                 continue;
             }
             if(!AlbumHelper.getAlbumIDByAlbumName(keyword).isEmpty()){
-                set.addAll(SongHelper.getSongByArtist(AlbumHelper.getAlbumIDByAlbumName(keyword)));
+                set.addAll(SongHelper.getSongByAlbum(AlbumHelper.getAlbumIDByAlbumName(keyword)));
                 continue;
             }
             if(!GenresHelper.getGenresIDByGenresName(keyword).isEmpty()){
-                set.addAll(SongHelper.getSongByArtist(GenresHelper.getGenresIDByGenresName(keyword)));
+                set.addAll(SongHelper.getSongByGenres(GenresHelper.getGenresIDByGenresName(keyword)));
             }
 
         }
