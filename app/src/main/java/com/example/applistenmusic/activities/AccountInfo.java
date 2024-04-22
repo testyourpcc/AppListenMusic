@@ -121,8 +121,10 @@ public class AccountInfo extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserInfo userInfo = snapshot.getValue(UserInfo.class);
-                phoneNumber.setText(userInfo.getPhone());
-                address.setText(userInfo.getAddress());
+                if(userInfo!=null) {
+                    phoneNumber.setText(userInfo.getPhone());
+                    address.setText(userInfo.getAddress());
+                }
             }
 
             @Override
