@@ -4,8 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.interfaces.SongDataCallback;
 import com.example.applistenmusic.models.Song;
+import com.example.applistenmusic.singletons.SongListSingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -43,17 +45,16 @@ public class SongHelper {
     }
 
     public static Song getSongById(int id){
-        getALLSong(new SongDataCallback() {
-            @Override
-            public void onSongDataReceived(List<Song> List) {
-                songList = List;
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // Xử lý lỗi ở đây
-            }
-        });
+        if (SongListSingleton.getInstance().hasSong()) {
+            songList = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> List) {
+                    songList = List;
+                }
+            });
+        }
 
         for(Song song : songList){
             if(song.getId() ==  id){
