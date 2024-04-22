@@ -15,11 +15,14 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.media.AudioAttributes;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+
 import android.view.GestureDetector;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.example.applistenmusic.dialogs.AlertDialogManager;
@@ -44,6 +48,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -68,7 +73,7 @@ public class PlayView extends AppCompatActivity {
     Animation animation;
     Song song;
 
-    boolean repeatSong = false;
+    boolean repeatSong;
     boolean shufferSong = false;
     boolean favorite = false;
 
@@ -77,6 +82,9 @@ public class PlayView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_play);
         setcontrol();
+
+        // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
+        checkRepeatFromFirebase();
 
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
         animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -296,12 +304,12 @@ public class PlayView extends AppCompatActivity {
         shuffleImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!shufferSong){
+                if (!shufferSong) {
                     shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
-                    shufferSong =true;
+                    shufferSong = true;
                 } else {
                     shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
-                    shufferSong =false;
+                    shufferSong = false;
                 }
             }
         });
@@ -309,24 +317,43 @@ public class PlayView extends AppCompatActivity {
         repeatImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!repeatSong){
-                    repeatImg.setImageResource(R.drawable.ic_repeat_on);
-                    repeatSong =true;
-                } else {
-                    repeatImg.setImageResource(R.drawable.ic_repeat_off);
-                    repeatSong =false;
-                }
+                DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("repeat");
+
+                repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            int repeatValue = dataSnapshot.getValue(Integer.class);
+
+                            // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                            if (repeatValue == 0) {
+                                repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                                repeatRef.setValue(1);
+                                repeatSong = true;
+                            } else {
+                                repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                                repeatRef.setValue(0);
+                                repeatSong = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                    }
+                });
             }
         });
+
 
         ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!favorite){
+                if (!favorite) {
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
-                } else
-                {
+                } else {
                     ivFavorite.setImageResource(R.drawable.ic_heart_off);
                     favorite = false;
                 }
@@ -425,6 +452,34 @@ public class PlayView extends AppCompatActivity {
 
     }
 
+    private void checkRepeatFromFirebase() {
+        DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("repeat");
+
+        repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int repeatValue = dataSnapshot.getValue(Integer.class);
+
+                    // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                    if (repeatValue == 1) {
+                        repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                        repeatSong = true;
+                    } else {
+                        repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                        repeatSong = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                Log.e("FirebaseError", "Error reading repeat value: " + databaseError.getMessage());
+            }
+        });
+    }
+
 
     // Phương thức để cập nhật thông tin bài hát và phát bài hát tiếp theo
     private void updateAndPlayNextSong(Song nextSong) {
@@ -479,74 +534,76 @@ public class PlayView extends AppCompatActivity {
             handler1.removeCallbacksAndMessages(null);
         }
     }
+
     public void getAndPlaySong(String Url) {
-    // Khởi tạo FirebaseStorage
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Khởi tạo FirebaseStorage
+        FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    // Tham chiếu đến file nhạc trên Firebase Storage
-    StorageReference storageRef = storage.getReference().child(Url);
+        // Tham chiếu đến file nhạc trên Firebase Storage
+        StorageReference storageRef = storage.getReference().child(Url);
 
-    // Tải file nhạc từ Firebase Storage
-    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-        @Override
-        public void onSuccess (Uri uri){
-            try {
+        // Tải file nhạc từ Firebase Storage
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
 
-                // Reset MediaPlayer trước khi sử dụng
-                mediaPlayer.reset();
+                    // Reset MediaPlayer trước khi sử dụng
+                    mediaPlayer.reset();
 
-                // Đặt AudioAttributes cho MediaPlayer
-                mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
-                        .build());
+                    // Đặt AudioAttributes cho MediaPlayer
+                    mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .build());
 
-                // Đặt nguồn dữ liệu cho MediaPlayer
-                mediaPlayer.setDataSource(PlayView.this, uri);
+                    // Đặt nguồn dữ liệu cho MediaPlayer
+                    mediaPlayer.setDataSource(PlayView.this, uri);
 
-                // Chuẩn bị MediaPlayer
-                mediaPlayer.prepare();
+                    // Chuẩn bị MediaPlayer
+                    mediaPlayer.prepare();
 
-                handler = new Handler();
+                    handler = new Handler();
 
-                // Set max duration for seek bar
-                seekBar.setMax(mediaPlayer.getDuration());
+                    // Set max duration for seek bar
+                    seekBar.setMax(mediaPlayer.getDuration());
 
-                // Update seek bar every 100 milliseconds
-                handler.postDelayed(updateSeekBar, 250);
+                    // Update seek bar every 100 milliseconds
+                    handler.postDelayed(updateSeekBar, 250);
 
-                // Seek bar change listener
-                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        if (fromUser) {
-                            mediaPlayer.seekTo(progress);
+                    // Seek bar change listener
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            if (fromUser) {
+                                mediaPlayer.seekTo(progress);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                        }
 
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
-                });
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                        }
+                    });
 
-                // Bắt đầu phát nhạc
-                mediaPlayer.start();
-                updateTime();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    // Bắt đầu phát nhạc
+                    mediaPlayer.start();
+                    updateTime();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure (@NonNull Exception e){
-            Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
-        }
-    });
-}
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void setcontrol() {
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
@@ -592,7 +649,7 @@ public class PlayView extends AppCompatActivity {
                         intent.putExtra("seekBarProcess", seekBar.getProgress());
                         startActivity(intent);
                         result = true;
-                    }  else {
+                    } else {
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         // Vuốt sang phải, chuyển sang activity khác
                         Intent intent = new Intent(PlayView.this, SongDetailView.class);
