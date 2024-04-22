@@ -93,11 +93,13 @@
             app:layout_constraintTop_toBottomOf="@id/discImageView">
 
             <ImageView
-                android:id="@+id/heartIcon"
+                android:id="@+id/ivFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/heart_icon" />
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_heart_off" />
         </LinearLayout>
 
         <LinearLayout
