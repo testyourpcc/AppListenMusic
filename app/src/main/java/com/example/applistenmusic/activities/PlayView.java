@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -40,7 +41,10 @@ import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -55,7 +59,7 @@ public class PlayView extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage, Home, Search, Play, Account;
 
-    private ImageView playPrevious, playNext;
+    private ImageView playPrevious, playNext, ivFavorite;
     private DatabaseReference databaseReference;
 
     private String imageUrl;
@@ -65,8 +69,8 @@ public class PlayView extends AppCompatActivity {
     Song song;
 
     boolean repeatSong = false;
-
     boolean shufferSong = false;
+    boolean favorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +319,20 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+        ivFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!favorite){
+                    ivFavorite.setImageResource(R.drawable.ic_heart_on);
+                    favorite = true;
+                } else
+                {
+                    ivFavorite.setImageResource(R.drawable.ic_heart_off);
+                    favorite = false;
+                }
+            }
+        });
+
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -546,7 +564,7 @@ public class PlayView extends AppCompatActivity {
         endTime = findViewById(R.id.endTime);
         shuffleImg = findViewById(R.id.shuffleImg);
         repeatImg = findViewById(R.id.repeatImg);
-
+        ivFavorite = findViewById(R.id.ivFavorite);
 
 
     }

@@ -11,6 +11,7 @@ public class Song {
     private int album;
     private int view;
 
+
     public Song() {
     }
 
