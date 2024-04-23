@@ -74,7 +74,7 @@ public class PlayView extends AppCompatActivity {
     Song song;
 
     boolean repeatSong;
-    boolean shufferSong = false;
+    boolean shufferSong ;
     boolean favorite = false;
 
     @Override
@@ -85,6 +85,9 @@ public class PlayView extends AppCompatActivity {
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
+
+        // Kiểm tra giá trị của shuffle trên Firebase và cập nhật nút shuffleImg
+        checkShuffleFromFirebase();
 
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
         animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -301,16 +304,48 @@ public class PlayView extends AppCompatActivity {
         });
 
 
+//        shuffleImg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!shufferSong) {
+//                    shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+//                    shufferSong = true;
+//                } else {
+//                    shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+//                    shufferSong = false;
+//                }
+//            }
+//        });
+
         shuffleImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!shufferSong) {
-                    shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
-                    shufferSong = true;
-                } else {
-                    shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
-                    shufferSong = false;
-                }
+                DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("shuffle");
+
+                shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            int shuffleValue = dataSnapshot.getValue(Integer.class);
+
+                            // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                            if ( shuffleValue== 0) {
+                                shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                                shuffleRef.setValue(1);
+                                shufferSong = true;
+                            } else {
+                                shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                                shuffleRef.setValue(0);
+                                shufferSong = false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                    }
+                });
             }
         });
 
@@ -450,6 +485,34 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkShuffleFromFirebase() {
+        DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("shuffle");
+
+        shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    int shuffleValue = dataSnapshot.getValue(Integer.class);
+
+                    // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                    if (shuffleValue == 1) {
+                        shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                        shufferSong = true;
+                    } else {
+                        shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                        shufferSong = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                Log.e("FirebaseError", "Error reading repeat value: " + databaseError.getMessage());
+            }
+        });
     }
 
     private void checkRepeatFromFirebase() {
