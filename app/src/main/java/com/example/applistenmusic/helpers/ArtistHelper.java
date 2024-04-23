@@ -32,8 +32,24 @@ public class ArtistHelper {
         return false;
     }
 
-    public List<Artist> getArtistByArtis() {
-        return new ArrayList<>();
+    public static List<Integer> getArtistIDByArtistName(String name) {
+        if (ArtistSingleton.getInstance().hasArtist()) {
+            allArtist = ArtistSingleton.getInstance().getAllArtistIfExist();
+        } else {
+            ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener(){
+                @Override
+                public void onArtistLoaded(List<Artist> ArtistList) {
+                    allArtist = ArtistList;
+                }
+            });
+        }
+        List<Integer> aristIDList = new ArrayList<>();
+        for(Artist a : allArtist){
+            if (a.getName().toLowerCase().contains(name.toLowerCase())){
+                aristIDList.add(a.getId());
+            }
+        }
+        return aristIDList;
     }
     public static String getArtistNameByID(int id) {
         if (ArtistSingleton.getInstance().hasArtist()) {

@@ -262,7 +262,7 @@ public class LyricView extends AppCompatActivity {
                     @Override
                     public void run() {
                         changeColorAndText(LyricLRC, getLyricHighlightIndex(mediaPlayer.getCurrentPosition()));
-                        handler.postDelayed(this, 250);
+                        handler.postDelayed(this, 150);
                         // Thực hiện lại sau mỗi giây
                     }
                 };

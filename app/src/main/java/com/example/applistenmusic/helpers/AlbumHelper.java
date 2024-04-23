@@ -1,9 +1,12 @@
 package com.example.applistenmusic.helpers;
 
 import com.example.applistenmusic.interfaces.AlbumLoadListener;
+import com.example.applistenmusic.interfaces.AlbumLoadListener;
+import com.example.applistenmusic.models.Album;
 import com.example.applistenmusic.models.Album;
 import com.example.applistenmusic.models.Album;
 import com.example.applistenmusic.models.Song;
+import com.example.applistenmusic.singletons.AlbumSingleton;
 import com.example.applistenmusic.singletons.AlbumSingleton;
 import com.example.applistenmusic.singletons.AlbumSingleton;
 
@@ -34,6 +37,26 @@ public class AlbumHelper {
         return false;
     }
 
+    public static List<Integer> getAlbumIDByAlbumName(String name) {
+        if (AlbumSingleton.getInstance().hasAlbum()) {
+            allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
+        } else {
+            AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener(){
+                @Override
+                public void onAlbumLoaded(List<Album> AlbumList) {
+                    allAlbum = AlbumList;
+                }
+            });
+        }
+        List<Integer> aristIDList = new ArrayList<>();
+        for(Album a : allAlbum){
+            if (a.getName().toLowerCase().contains(name.toLowerCase())){
+                aristIDList.add(a.getId());
+            }
+        }
+        return aristIDList;
+    }
+    
     public List<Album> getAlbumByArtis() {
         return new ArrayList<>();
     }

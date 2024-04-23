@@ -27,8 +27,10 @@ import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class SearchView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
@@ -213,26 +215,31 @@ public class SearchView extends AppCompatActivity {
 
     }
     private void performSearch(String keyword, List<Song> allSong) {
-        List<Song> result = new ArrayList<>();
+        Set<Song> set = new HashSet<>();
         for(Song song : allSong){
             if(song.getName().toLowerCase().contains(keyword.trim().toLowerCase())){
-                result.add(song);
+                set.add(song);
                 continue;
             }
 
-//            if(ArtistHelper.containKeyWord(keyword.trim())){
-//                result.add(song);
-//                continue;
-//            }
-//            if(AlbumHelper.containKeyWord(keyword.trim())){
-//                result.add(song);
-//                continue;
-//            }
-//            if(GenresHelper.containKeyWord(keyword.trim())){
-//                result.add(song);
-//            }
+            if(!ArtistHelper.getArtistIDByArtistName(keyword).isEmpty()){
+                set.addAll(SongHelper.getSongByArtist(ArtistHelper.getArtistIDByArtistName(keyword)));
+                continue;
+            }
+            if(!AlbumHelper.getAlbumIDByAlbumName(keyword).isEmpty()){
+                set.addAll(SongHelper.getSongByAlbum(AlbumHelper.getAlbumIDByAlbumName(keyword)));
+                continue;
+            }
+            if(!GenresHelper.getGenresIDByGenresName(keyword).isEmpty()){
+                set.addAll(SongHelper.getSongByGenres(GenresHelper.getGenresIDByGenresName(keyword)));
+            }
 
         }
+
+
+        List<Song> result = new ArrayList<>(set);
+
+
         textViewSearchResult.setVisibility(View.VISIBLE);
         recyclerViewSearchResult.setVisibility(View.VISIBLE);
         adapterSearchResult.setmData(result);
