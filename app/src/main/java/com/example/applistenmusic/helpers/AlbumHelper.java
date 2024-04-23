@@ -12,6 +12,8 @@ import com.example.applistenmusic.singletons.AlbumSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AlbumHelper {
     static List<Album> allAlbum;
@@ -37,7 +39,7 @@ public class AlbumHelper {
         return false;
     }
 
-    public static List<Integer> getAlbumIDByAlbumName(String name) {
+    public static List<Long> getAlbumIDByAlbumName(String name) {
         if (AlbumSingleton.getInstance().hasAlbum()) {
             allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
         } else {
@@ -48,10 +50,15 @@ public class AlbumHelper {
                 }
             });
         }
-        List<Integer> aristIDList = new ArrayList<>();
+        List<Long> aristIDList = new ArrayList<>();
         for(Album a : allAlbum){
             if (a.getName().toLowerCase().contains(name.toLowerCase())){
-                aristIDList.add(a.getId());
+                if(a.getSongIdList() != null) {
+                    List<Long> result = a.getSongIdList().stream()
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toList());
+                    aristIDList.addAll(result);
+                }
             }
         }
         return aristIDList;

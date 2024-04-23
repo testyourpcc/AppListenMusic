@@ -9,7 +9,7 @@
     {
       "artis": 1,
       "id": 1,
-      "name": "abc",
+      "name": "NJWMX",
       "songIdList": [
         null,
         2,
@@ -21,7 +21,7 @@
     {
       "artis": 3,
       "id": 2,
-      "name": "abc",
+      "name": "I've Ive",
       "songIdList": [
         null,
         6,
@@ -90,7 +90,7 @@
     {
       "id": 12,
       "image": "",
-      "name": "Beyoncé"
+      "name": "ILLIT"
     },
     {
       "id": 13,
@@ -407,7 +407,7 @@
     },
     {
       "id": 31,
-      "name": "V-POP"
+      "name": "VPOP"
     },
     {
       "id": 32,
@@ -442,8 +442,16 @@
           7
         ]
       }
+    ],
+    "UP9dbAc2GDayeaSwp4n3ldlXpIB3": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
     ]
   },
+  "repeat": "1",
   "song": [
     null,
     {
@@ -453,19 +461,19 @@
       "genres": 1,
       "id": 1,
       "image": "https://www.billboard.com/wp-content/uploads/2023/11/newjeans-press-credit-Colin-Young-Wolff-Riot-Games-2023-billboard-1-1548.jpg",
-      "lyric":"0:02/r/nGA-GA-GA-GA-GA-GODS/r/n0:09/r/nGA-GA-GA-GA-GA-GODS/r/n0:15/r/n(’ey) This is what you came for/r/n0:17/r/nBlood on the game ball/r/n0:19/r/nEverybody dropping like rainfall/r/n0:22/r/n(‘uh’) This is your moment/r/n0:24/r/nEyes on the pulpit, kid/r/n0:26/r/n(I) think Church just opened/r/n0:28/r/nAnd they’re singing your praises la-la-la/r/n0:32/r/nScreaming your name out la-la-loud/r/n0:35/r/nOne more step, you’re Immortal now, ‘cause/r/n0:40/r/nOnce you play GOD/r/n0:42/r/nOnce you play GOD/r/n0:44/r/nThey’re gonna’ crumble one by one/r/n0:47/r/nThen we gonna ride right into the Sun/r/n0:50/r/nlike it’s the day my kingdom come/r/n0:53/r/nBaby we’re/r/n0:55/r/nGA-GA-GA-GA-GA-GODS/r/n1:00/r/nYeah we’re/r/n1:02/r/nGA-GA-GA-GA-GA-GODS/r/n1:08/r/n(’ey) Welcome to the big show/r/n1:10/r/nNext on the ladder/r/n1:11/r/nIs it your name in the rafters?/r/n1:14/r/nBrief moment of silence/r/n1:18/r/nBad girl woke up chose violence/r/n1:21/r/nAnd they’re singing my praises la-la-la/r/n1:25/r/nScreaming my name out la-la-loud/r/n1:28/r/nThis is why we’re Immortal now, ‘cause/r/n1:33/r/nOnce you play GOD/r/n1:34/r/nOnce you play GOD/r/n1:36/r/nThey’re gonna’ crumble one by one/r/n1:40/r/nThen we gonna ride right into the Sun/r/n1:42/r/nlike it’s the day my kingdom come/r/n1:46/r/nBaby we’re/r/n1:48/r/nGA-GA-GA-GA-GA-GODS/r/n1:53/r/nYeah we’re/r/n1:54/r/nGA-GA-GA-GA-GA-GODS/r/n2:12/r/nI’m on my knees/r/n2:14/r/nPray for glory/r/n2:16/r/nAnyone read this underdog story?/r/n2:19/r/nI can’t lose myself again/r/n2:22/r/nHelp me raise this heart/r/n2:26/r/nHeart, unbreakable/r/n2:29/r/nOnce you play GOD/r/n2:30/r/nOnce you play GOD/r/n2:32/r/nThey’re gonna’ crumble one by one/r/n2:35/r/nThen we gonna ride right into the Sun/r/n2:38/r/nlike it’s the day my kingdom come/r/n2:42/r/nOnce you play GOD/r/n2:44/r/nOnce you play GOD/r/n2:45/r/nThey’re gonna’ crumble one by one/r/n2:48/r/nThen we gonna ride right into the Sun/r/n2:51/r/nlike it’s the day my kingdom come/r/n2:55/r/nBaby we’re/r/n2:57/r/nGA-GA-GA-GA-GA-GODS/r/n3:02/r/nYeah we’re/r/n3:03/r/nGA-GA-GA-GA-GA-GODS/r/n3:10/r/nGA-GA-GA-GA-GA-GODS/r/n3:15/r/nYeah we’re/r/n3:16/r/nGA-GA-GA-GA-GA-GODS/r/n3:35/r/nOnce you play",
-      "name": "Sheesh",
+      "lyric": "0:02/r/nGA-GA-GA-GA-GA-GODS/r/n0:09/r/nGA-GA-GA-GA-GA-GODS/r/n0:15/r/n(’ey) This is what you came for/r/n0:17/r/nBlood on the game ball/r/n0:19/r/nEverybody dropping like rainfall/r/n0:22/r/n(‘uh’) This is your moment/r/n0:24/r/nEyes on the pulpit, kid/r/n0:26/r/n(I) think Church just opened/r/n0:28/r/nAnd they’re singing your praises la-la-la/r/n0:32/r/nScreaming your name out la-la-loud/r/n0:35/r/nOne more step, you’re Immortal now, ‘cause/r/n0:40/r/nOnce you play GOD/r/n0:42/r/nOnce you play GOD/r/n0:44/r/nThey’re gonna’ crumble one by one/r/n0:47/r/nThen we gonna ride right into the Sun/r/n0:50/r/nlike it’s the day my kingdom come/r/n0:53/r/nBaby we’re/r/n0:55/r/nGA-GA-GA-GA-GA-GODS/r/n1:00/r/nYeah we’re/r/n1:02/r/nGA-GA-GA-GA-GA-GODS/r/n1:08/r/n(’ey) Welcome to the big show/r/n1:10/r/nNext on the ladder/r/n1:11/r/nIs it your name in the rafters?/r/n1:14/r/nBrief moment of silence/r/n1:18/r/nBad girl woke up chose violence/r/n1:21/r/nAnd they’re singing my praises la-la-la/r/n1:25/r/nScreaming my name out la-la-loud/r/n1:28/r/nThis is why we’re Immortal now, ‘cause/r/n1:33/r/nOnce you play GOD/r/n1:34/r/nOnce you play GOD/r/n1:36/r/nThey’re gonna’ crumble one by one/r/n1:40/r/nThen we gonna ride right into the Sun/r/n1:42/r/nlike it’s the day my kingdom come/r/n1:46/r/nBaby we’re/r/n1:48/r/nGA-GA-GA-GA-GA-GODS/r/n1:53/r/nYeah we’re/r/n1:54/r/nGA-GA-GA-GA-GA-GODS/r/n2:12/r/nI’m on my knees/r/n2:14/r/nPray for glory/r/n2:16/r/nAnyone read this underdog story?/r/n2:19/r/nI can’t lose myself again/r/n2:22/r/nHelp me raise this heart/r/n2:26/r/nHeart, unbreakable/r/n2:29/r/nOnce you play GOD/r/n2:30/r/nOnce you play GOD/r/n2:32/r/nThey’re gonna’ crumble one by one/r/n2:35/r/nThen we gonna ride right into the Sun/r/n2:38/r/nlike it’s the day my kingdom come/r/n2:42/r/nOnce you play GOD/r/n2:44/r/nOnce you play GOD/r/n2:45/r/nThey’re gonna’ crumble one by one/r/n2:48/r/nThen we gonna ride right into the Sun/r/n2:51/r/nlike it’s the day my kingdom come/r/n2:55/r/nBaby we’re/r/n2:57/r/nGA-GA-GA-GA-GA-GODS/r/n3:02/r/nYeah we’re/r/n3:03/r/nGA-GA-GA-GA-GA-GODS/r/n3:10/r/nGA-GA-GA-GA-GA-GODS/r/n3:15/r/nYeah we’re/r/n3:16/r/nGA-GA-GA-GA-GA-GODS/r/n3:35/r/nOnce you play",
+      "name": "GODS",
       "view": 1
     },
     {
-      "Url": "songs/NewJeans-Hype Boy.mp3",
+      "Url": "songs/ILLIT-Magnetic.mp3",
       "album": 1,
-      "artis": 1,
+      "artis": 12,
       "genres": 1,
       "id": 2,
-      "image": "https://i1.sndcdn.com/artworks-ZWtqLnVynwDjk3PE-ciJbSg-t500x500.jpg",
-      "lyric": "0:18/r/n(1,2,3,4)/r/n0:19/r/nBaby, got me looking so crazy/r/n0:22/r/n빠져버리는 daydream/r/n0:25/r/nGot me feeling you/r/n0:26/r/n너도 말해줄래/r/n0:29/r/n누가 내게 뭐라든/r/n0:30/r/n남들과는 달라 넌/r/n0:31/r/nMaybe you could be the one/r/n0:33/r/n날 믿어봐 한 번/r/n0:35/r/nI’m not looking for just fun/r/n0:36/r/nMaybe I could be the one/r/n0:37/r/nOh baby/r/n0:39/r/n예민하대 나 lately/r/n0:42/r/n너 없이는 매일 매일이 yeah/r/n0:45/r/n재미없어 어쩌지/r/n0:47/r/nI just want you/r/n0:49/r/nCall my phone right now/r/n0:50/r/nI just wanna hear you’re mine/r/n0:52/r/n'Cause I know what you like boy/r/n0:57/r/nYou’re my chemical hype boy/r/n1:02/r/n내 지난 날들은/r/n1:04/r/n눈 뜨면 잊는 꿈/r/n1:07/r/nHype boy 너만 원해/r/n1:09/r/nHype boy 내가 전해/r/n1:11/r/nAnd we can go high/r/n1:13/r/n말해봐 yeah 느껴봐 mm mm/r/n1:16/r/nTake him to the sky/r/n1:18/r/nYou know I hype you boy/r/n1:21/r/n눈을 감아/r/n1:23/r/n말해봐 yeah 느껴봐 mm mm/r/n1:25/r/nTake him to the sky/r/n1:28/r/nYou know I hype you boy/r/n1:34/r/n잠에 들려고 잠에 들려 해도/r/n1:36/r/n네 생각에 또 새벽 세 시 uh-oh/r/n1:39/r/n알려줄 거야/r/n1:39/r/nthey can’t have you no more/r/n1:41/r/n봐봐 여기/r/n1:42/r/n내 이름 써있다고/r/n1:45/r/n누가 내게 뭐라든/r/n1:47/r/n남들과는 달라 넌/r/n1:48/r/nMaybe you could be the one/r/n1:50/r/n날 믿어봐 한 번/r/n1:51/r/nI’m not looking for just fun/r/n1:53/r/nMaybe I could be the one/r/n1:54/r/nOh baby/r/n1:56/r/n예민하대 나 lately/r/n1:59/r/n너 없이는 매일 매일이 yeah/r/n2:02/r/n재미없어 어쩌지/r/n2:04/r/nI just want you/r/n2:05/r/nCall my phone right now/r/n2:07/r/nI just wanna hear you’re mine/r/n2:09/r/n'Cause I know what you like boy/r/n2:14/r/nYou’re my chemical hype boy/r/n2:19/r/n내 지난날들은/r/n2:21/r/n눈 뜨면 잊는 꿈/r/n2:24/r/nHype boy 너만 원해/r/n2:25/r/nHype boy 내가 전해/r/n2:28/r/nAnd we can go high/r/n2:30/r/n말해봐 yeah/r/n2:31/r/n느껴봐 mm mm/r/n2:32/r/nTake him to the sky/r/n2:35/r/nYou know I hype you boy/r/n2:37/r/n눈을 감아/r/n2:40/r/n말해봐 yeah/r/n2:41/r/n느껴봐 mm mm/r/n2:42/r/nTake him to the sky/r/n2:45/r/nYou know I hype you boy",
-      "name": "Hype Boy",
+      "image": "https://i1.sndcdn.com/artworks-7xxH4cot1ycP2rio-IDWG0g-t500x500.jpg",
+      "lyric": "0:01/r/nBaby/r/n0:02/r/nI’m just trying to play it cool/r/n0:05/r/nBut I just can’t hide that/r/n0:07/r/nI want you/r/n0:08/r/nWait a minute 이게 뭐지?/r/n0:10/r/n내 심장이 lub-dub/r/n0:12/r/n자꾸만 뛰어/r/n0:14/r/n저 멀리서도 oh my gosh!/r/n0:18/r/n끌어당겨 you’re my crush!/r/n0:21/r/n초능력처럼/r/n0:22/r/n거대한 자석이 된 것만 같아 my heart/r/n0:26/r/n네 모든 게 내 맘에 달라붙어버려 boy/r/n0:31/r/nWe’re magnetized 인정할게/r/n0:35/r/nThis time I want/r/n0:40/r/nYou You You You like it’s magnetic/r/n0:44/r/nU U U U U U U U super 이끌림/r/n0:48/r/nYou You You You like it’s magnetic/r/n0:51/r/nU U U U U U U U super 이끌림/r/n0:55/r/nBAE BAE BAE BAE BAE BAE BAE BAE BAE/r/n0:59/r/nDash-da-da Dash-da-da Dash-da/r/n1:01/r/nLike it’s magnetic/r/n1:02/r/nBAE BAE BAE BAE BAE BAE BAE BAE BAE/r/n1:06/r/nDash-da-da Dash-da-da/r/n1:08/r/nBaby don’t say no/r/n1:10/r/n정반대 같아 our type/r/n1:12/r/n넌 J 난 완전 P/r/n1:14/r/nS와 N 극이지만/r/n1:16/r/n그래서 끌리지/r/n1:18/r/n내가 만들래 green light/r/n1:20/r/n여잔 배짱이지/r/n1:21/r/nSo let’s go let’s go/r/n1:23/r/nLet’s go let’s go/r/n1:24/r/n숨기고 싶지 않아 자석 같은 my heart/r/n1:28/r/n내 맘의 끌림대로 너를 향해 갈게 boy/r/n1:33/r/nWe’re magnetized 인정할게/r/n1:37/r/nThis time I want/r/n1:39/r/nYou You You You like it’s magnetic/r/n1:43/r/nU U U U U U U U super 이끌림/r/n1:46/r/nYou You You You like it’s magnetic/r/n1:50/r/nU U U U U U U U super 이끌림/r/n1:54/r/nNo push and pull/r/n1:54/r/n전속력으로 너에게 갈게/r/n1:56/r/n(In a rush in a rush)/r/n1:57/r/nOur chemistry/r/n1:58/r/n난 과몰입해 지금 순간에 (Baby you’re my crush you’re my crush)/r/n2:01/r/nNo push and pull/r/n2:02/r/n네게 집중 후회는 안 할래/r/n2:03/r/n(Gonna dash gonna dash)/r/n2:05/r/nNever holding back/r/n2:06/r/n직진해 yeah/r/n2:17/r/nThis time I want/r/n2:19/r/nYou You You You like it’s magnetic/r/n2:22/r/nU U U U U U U U super 이끌림/r/n2:26/r/nYou You You You like it’s magnetic/r/n2:29/r/nU U U U U U U U super 이끌림/r/n2:33/r/nBAE BAE BAE BAE BAE BAE BAE BAE BAE/r/n2:37/r/nDash-da-da Dash-da-da Dash-da/r/n2:39/r/nLike it’s magnetic/r/n2:40/r/nBAE BAE BAE BAE BAE BAE BAE BAE BAE/r/n2:44/r/nDash-da-da Dash-da-da/r/n2:46/r/nBaby don’t say no",
+      "name": "Magnetic",
       "view": 1
     },
     {
@@ -632,6 +640,37 @@
       "lyric": "0:16/r/nOoh hoo hoo hoo/r/n0:18/r/n발버둥 쳐봐/r/n0:19/r/n어차피 손바닥/r/n0:21/r/n위에서 못 나가/r/n0:23/r/nYou know that/r/n0:24/r/n눈을 뜬 순간 피어나/r/n0:28/r/nAll eyes on me 불을 질러라/r/n0:31/r/nDo or die/r/n0:33/r/nOn my life/r/n0:35/r/nYeah you ain’t seen nothing yet/r/n0:37/r/nGot them all going/r/n0:39/r/nSheesh Sheesh/r/n0:40/r/nSheesh Sheesh Sheesh yeah/r/n0:44/r/nB.A.B.Y.M.O.N/r/n0:45/r/nSheesh Sheesh/r/n0:47/r/nSheesh Sheesh Sheesh yeah/r/n0:51/r/nGot them all going/r/n0:52/r/nYo hold on 쉿/r/n0:54/r/n걍 들이부어라 네 달팽이관에/r/n0:56/r/n이건 네 귀에 줄 축복/r/n0:58/r/n음악에 맞춰 걍 춤 춰/r/n1:00/r/n히비리 합 합 boom boom pow/r/n1:01/r/n분위기 타올라 너네들 눈 돌아/r/n1:03/r/n띵하니 적잖이 충격일 거야/r/n1:06/r/nCrown this queen/r/n1:06/r/n홈런은 쳤고 내 다음은 위/r/n1:08/r/n어중이떠중이 중간 아님/r/n1:10/r/n날 보고 닫혔던 입들 say/r/n1:11/r/nSheesh Sheesh Sheesh/r/n1:13/r/nYou know what it is/r/n1:14/r/nI be running this/r/n1:15/r/nPull up in a ghost/r/n1:15/r/nPeek a peek a boo hoo/r/n1:16/r/nVroom vroom/r/n1:17/r/n너네 심장에 박동이 pump pump pop/r/n1:19/r/nPedal to the metal/r/n1:20/r/nClick clack click/r/n1:20/r/nPut’em up to the sky/r/n1:21/r/nHigh high high high/r/n1:23/r/n눈을 뜬 순간 피어나/r/n1:26/r/nAll eyes on me 불을 질러라/r/n1:29/r/nDo or die/r/n1:31/r/nOn my life/r/n1:33/r/nYeah you ain’t seen nothing yet/r/n1:36/r/nGot them all going/r/n1:37/r/nSheesh Sheesh/r/n1:39/r/nSheesh Sheesh Sheesh yeah/r/n1:42/r/nB.A.B.Y.M.O.N/r/n1:44/r/nSheesh Sheesh/r/n1:46/r/nSheesh Sheesh Sheesh yeah/r/n1:49/r/nGot them all going/r/n1:51/r/n마음껏 웃어봐/r/n1:53/r/n이젠 내 차례니까/r/n1:57/r/n천천히 불태워 네가 잠든 사이/r/n2:04/r/nTime’s up 올라가 올라가 더/r/n2:07/r/n꼭대기 꼭대기로/r/n2:08/r/n하늘 위 하늘 위로/r/n2:10/r/nFly away/r/n2:11/r/n온 세상을 뒤집어/r/n2:13/r/nCome on let’s ride/r/n2:18/r/nBABY I’mma MONSTER/r/n2:23/r/nB A B Y M O N/r/n2:26/r/nTell a friend tell a friend tell a friend/r/n2:30/r/nB A B Y M O N/r/n2:33/r/nTell a friend tell a friend tell a friend/r/n2:36/r/nLet's go/r/n2:37/r/nJump jump and let it go/r/n2:39/r/nWatch out we on a roll/r/n2:40/r/nRum pump pump pump it up then/r/n2:44/r/nJump jump and let it go/r/n2:45/r/nWatch out we on a roll/r/n2:47/r/nRum pump pump pump it up then",
       "name": "Sheesh",
       "view": 1
+    },
+    {
+      "Url": "songs/NewJeans-Hype Boy.mp3",
+      "album": 1,
+      "artis": 1,
+      "genres": 1,
+      "id": 18,
+      "image": "https://i1.sndcdn.com/artworks-ZWtqLnVynwDjk3PE-ciJbSg-t500x500.jpg",
+      "lyric": "0:18/r/n(1,2,3,4)/r/n0:19/r/nBaby, got me looking so crazy/r/n0:22/r/n빠져버리는 daydream/r/n0:25/r/nGot me feeling you/r/n0:26/r/n너도 말해줄래/r/n0:29/r/n누가 내게 뭐라든/r/n0:30/r/n남들과는 달라 넌/r/n0:31/r/nMaybe you could be the one/r/n0:33/r/n날 믿어봐 한 번/r/n0:35/r/nI’m not looking for just fun/r/n0:36/r/nMaybe I could be the one/r/n0:37/r/nOh baby/r/n0:39/r/n예민하대 나 lately/r/n0:42/r/n너 없이는 매일 매일이 yeah/r/n0:45/r/n재미없어 어쩌지/r/n0:47/r/nI just want you/r/n0:49/r/nCall my phone right now/r/n0:50/r/nI just wanna hear you’re mine/r/n0:52/r/n'Cause I know what you like boy/r/n0:57/r/nYou’re my chemical hype boy/r/n1:02/r/n내 지난 날들은/r/n1:04/r/n눈 뜨면 잊는 꿈/r/n1:07/r/nHype boy 너만 원해/r/n1:09/r/nHype boy 내가 전해/r/n1:11/r/nAnd we can go high/r/n1:13/r/n말해봐 yeah 느껴봐 mm mm/r/n1:16/r/nTake him to the sky/r/n1:18/r/nYou know I hype you boy/r/n1:21/r/n눈을 감아/r/n1:23/r/n말해봐 yeah 느껴봐 mm mm/r/n1:25/r/nTake him to the sky/r/n1:28/r/nYou know I hype you boy/r/n1:34/r/n잠에 들려고 잠에 들려 해도/r/n1:36/r/n네 생각에 또 새벽 세 시 uh-oh/r/n1:39/r/n알려줄 거야/r/n1:39/r/nthey can’t have you no more/r/n1:41/r/n봐봐 여기/r/n1:42/r/n내 이름 써있다고/r/n1:45/r/n누가 내게 뭐라든/r/n1:47/r/n남들과는 달라 넌/r/n1:48/r/nMaybe you could be the one/r/n1:50/r/n날 믿어봐 한 번/r/n1:51/r/nI’m not looking for just fun/r/n1:53/r/nMaybe I could be the one/r/n1:54/r/nOh baby/r/n1:56/r/n예민하대 나 lately/r/n1:59/r/n너 없이는 매일 매일이 yeah/r/n2:02/r/n재미없어 어쩌지/r/n2:04/r/nI just want you/r/n2:05/r/nCall my phone right now/r/n2:07/r/nI just wanna hear you’re mine/r/n2:09/r/n'Cause I know what you like boy/r/n2:14/r/nYou’re my chemical hype boy/r/n2:19/r/n내 지난날들은/r/n2:21/r/n눈 뜨면 잊는 꿈/r/n2:24/r/nHype boy 너만 원해/r/n2:25/r/nHype boy 내가 전해/r/n2:28/r/nAnd we can go high/r/n2:30/r/n말해봐 yeah/r/n2:31/r/n느껴봐 mm mm/r/n2:32/r/nTake him to the sky/r/n2:35/r/nYou know I hype you boy/r/n2:37/r/n눈을 감아/r/n2:40/r/n말해봐 yeah/r/n2:41/r/n느껴봐 mm mm/r/n2:42/r/nTake him to the sky/r/n2:45/r/nYou know I hype you boy",
+      "name": "Hype Boy",
+      "view": 1
     }
-  ]
+  ],
+  "users": {
+    "EB63cuBdqaNpS7kSrldTo8SIrkw2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "UP9dbAc2GDayeaSwp4n3ldlXpIB3": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "mg1GBCoUs9aAKdQYZUAztFTrqkE3": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    }
+  }
 }

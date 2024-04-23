@@ -148,7 +148,7 @@ public class SongHelper {
         return result;
     }
 
-    public static List<Song> getSongByAlbum(List<Integer> album){
+    public static List<Song> getSongByAlbum(List<Long> album){
         if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -162,8 +162,8 @@ public class SongHelper {
         List<Song> result = new ArrayList<>();
         if(album.size()>0){
             for (Song song : songList){
-                for(Integer i : album){
-                    if(song.getAlbum() == i){
+                for(Long i : album){
+                    if(song.getId() == i){
                         result.add(song);
                     }
                 }
