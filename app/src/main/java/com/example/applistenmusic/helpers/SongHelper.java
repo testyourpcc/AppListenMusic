@@ -139,7 +139,7 @@ public class SongHelper {
         if(artist.size()>0){
             for (Song song : songList){
                 for(Integer i : artist){
-                    if(song.getArtis() == i){
+                    if(song.getArtist() == i){
                         result.add(song);
                     }
                 }
@@ -171,7 +171,6 @@ public class SongHelper {
         }
         return result;
     }
-
 
 
 }

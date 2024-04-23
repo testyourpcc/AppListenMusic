@@ -9,18 +9,18 @@ public class Album {
     private List<Long> songIdList;
 
     private String image;
-    private int artis;
+    private int artist;
 
     public Album() {
     }
 
-    public Album(int id, String name, List<Song> songList, List<Long> songIdList, String image, int artis) {
+    public Album(int id, String name, List<Song> songList, List<Long> songIdList, String image, int artist) {
         Id = id;
         this.name = name;
         this.songList = songList;
         this.songIdList = songIdList;
         this.image = image;
-        this.artis = artis;
+        this.artist = artist;
     }
 
     public int getId() {
@@ -63,11 +63,11 @@ public class Album {
         this.image = image;
     }
 
-    public int getArtis() {
-        return artis;
+    public int getartist() {
+        return artist;
     }
 
-    public void setArtis(int artis) {
-        this.artis = artis;
+    public void setartist(int artist) {
+        this.artist = artist;
     }
 }

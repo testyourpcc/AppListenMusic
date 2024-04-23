@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".activities.RegisterSuccess">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="68dp"
@@ -43,125 +42,76 @@
     <!-- EditText để nhập từ khóa tìm kiếm -->
     <EditText
         android:id="@+id/searchEditText"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSearch"
         android:layout_marginTop="20dp"
-        android:hint="Artist, Songs, Lyrics, ...."
+        android:hint="Albums, Artists, Songs, Lyrics, ...."
         android:background="@drawable/edit_text_rounded_corner"
         android:textColor="@android:color/black"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
         android:padding="10dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp" />
-    <TextView
-        android:id="@+id/textViewSearchResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/searchEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="20dp"
-        android:text="Search Result"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:visibility="gone"/>
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewSearchResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:text="Search Result"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:visibility="gone" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInSearchResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSearchResult"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        android:visibility="gone" />
-    <TextView
-        android:id="@+id/textViewTrendingNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/recyclerViewInSearchResult"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="120dp"
-        android:text="Trending now"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewInSearchResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewSearchResult"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewTrendingNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerViewInSearchResult"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:text="Trending now"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInTrendingNow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTrendingNow"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        android:visibility="visible" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewInTrendingNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTrendingNow"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/textViewVpop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/recyclerViewInTrendingNow"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="120dp"
-        android:text="VPOP"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
+        </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInVpop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewVpop"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/textViewKPOP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/recyclerViewInVpop"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="120dp"
-        android:text="KPOP"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInKPOP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewKPOP"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/textViewUSUK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/recyclerViewInKPOP"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="120dp"
-        android:text="USUK"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewInUSUK"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewUSUK"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="visible" />
-
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

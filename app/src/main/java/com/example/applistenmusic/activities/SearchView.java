@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.adapters.SongAdapter;
+import com.example.applistenmusic.adapters.SongSearchResultAdapter;
 import com.example.applistenmusic.dialogs.AlertDialogManager;
 import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
@@ -38,17 +39,17 @@ public class SearchView extends AppCompatActivity {
     TextView textViewSearchResult;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
     RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong, recyclerViewSearchResult;
+    SongSearchResultAdapter  adapterSearchResult , adapterTrendingSong;
+    SongAdapter adapterKpopSong, adapterVpopSong, adapterUSUKSong;
 
-    SongAdapter adapterKpopSong, adapterVpopSong, adapterUSUKSong,adapterTrendingSong, adapterSearchResult;
- 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_search);
         setcontrol();
 
-        KpopSong = new ArrayList<>();
-        VpopSong = new ArrayList<>();
+//        KpopSong = new ArrayList<>();
+//        VpopSong = new ArrayList<>();
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
         if (SongListSingleton.getInstance().hasSong()){
@@ -65,46 +66,45 @@ public class SearchView extends AppCompatActivity {
         Iterator<Song> iterator = allSong.iterator();
         while (iterator.hasNext()) {
             Song song = iterator.next();
-            // Kpop
-            if(song.getGenres()==1){
-                KpopSong.add(song);
-            }
-            // Vpop
-            if(song.getGenres()==31){
-                VpopSong.add(song);
-            }
+//            // Kpop
+//            if(song.getGenres()==1){
+//                KpopSong.add(song);
+//            }
+//            // Vpop
+//            if(song.getGenres()==31){
+//                VpopSong.add(song);
+//            }
             // USUK
             if(song.getGenres()==32){
                 USUKSong.add(song);
             }
         }
 
-        adapterKpopSong = new SongAdapter(KpopSong);
-        LinearLayoutManager layoutManagerKpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewKpopSong.setLayoutManager(layoutManagerKpop);
-        recyclerViewKpopSong.setAdapter(adapterKpopSong);
+//        adapterKpopSong = new SongAdapter(KpopSong);
+//        LinearLayoutManager layoutManagerKpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewKpopSong.setLayoutManager(layoutManagerKpop);
+//        recyclerViewKpopSong.setAdapter(adapterKpopSong);
+//
+//        adapterVpopSong = new SongAdapter(VpopSong);
+//        LinearLayoutManager layoutManagerVpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewVpopSong.setLayoutManager(layoutManagerVpop);
+//        recyclerViewVpopSong.setAdapter(adapterVpopSong);
+//
+//        adapterUSUKSong = new SongAdapter(USUKSong);
+//        LinearLayoutManager layoutManagerUSUK = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerViewUSUKSong.setLayoutManager(layoutManagerUSUK);
+//        recyclerViewUSUKSong.setAdapter(adapterUSUKSong);
 
-        adapterVpopSong = new SongAdapter(VpopSong);
-        LinearLayoutManager layoutManagerVpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewVpopSong.setLayoutManager(layoutManagerVpop);
-        recyclerViewVpopSong.setAdapter(adapterVpopSong);
 
-        adapterUSUKSong = new SongAdapter(USUKSong);
-        LinearLayoutManager layoutManagerUSUK = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewUSUKSong.setLayoutManager(layoutManagerUSUK);
-        recyclerViewUSUKSong.setAdapter(adapterUSUKSong);
-
-        adapterTrendingSong = new SongAdapter(allSong);
-        LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
-        recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
-
-        adapterSearchResult = new SongAdapter(USUKSong);
-        LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        adapterSearchResult = new SongSearchResultAdapter(USUKSong);
+        LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
         recyclerViewSearchResult.setAdapter(adapterSearchResult);
 
-
+        adapterTrendingSong = new SongSearchResultAdapter(allSong);
+        LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
+        recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
 
 
         Home.setOnClickListener(new View.OnClickListener() {
@@ -137,19 +137,43 @@ public class SearchView extends AppCompatActivity {
         });
 
 
-        adapterKpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int id) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
+//        adapterKpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int id) {
+//                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
+//                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+//                playIntent.putExtra("playNow",true);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
+//
+//        adapterVpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int id) {
+//                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
+//                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+//                playIntent.putExtra("playNow",true);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
+//
+//        adapterUSUKSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int id) {
+//                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
+//                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+//                playIntent.putExtra("playNow",true);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
 
-        adapterVpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+        adapterTrendingSong.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
                 Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
@@ -160,31 +184,7 @@ public class SearchView extends AppCompatActivity {
                 finish();
             }
         });
-
-        adapterUSUKSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int id) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
-
-        adapterTrendingSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int id) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
-        adapterSearchResult.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
+        adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
                 Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
@@ -255,9 +255,9 @@ public class SearchView extends AppCompatActivity {
         }
     }
     public void setcontrol() {
-        recyclerViewKpopSong = findViewById(R.id.recyclerViewInKPOP);
-        recyclerViewVpopSong = findViewById(R.id.recyclerViewInVpop);
-        recyclerViewUSUKSong = findViewById(R.id.recyclerViewInUSUK);
+//        recyclerViewKpopSong = findViewById(R.id.recyclerViewInKPOP);
+//        recyclerViewVpopSong = findViewById(R.id.recyclerViewInVpop);
+//        recyclerViewUSUKSong = findViewById(R.id.recyclerViewInUSUK);
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
         textViewSearchResult = findViewById(R.id.textViewSearchResult);
