@@ -57,17 +57,20 @@ public class ResetPasswd extends AppCompatActivity {
                 String newPassword = newPasswd.getText().toString();
                 String repeatPassword = repeatPasswd.getText().toString();
                 String oldPassword = oldPasswd.getText().toString();
-
+                oldPasswordLayout.setError(null);
+                newPasswordLayout.setError(null);
+                repeatPasswordLayout.setError(null);
                 if (TextUtils.isEmpty(oldPassword)){
                     oldPasswordLayout.setError("This field cannot be left blank");
                 } else if (TextUtils.isEmpty(newPassword)) {
                     newPasswordLayout.setError("This field cannot be left blank");
+                } else if (newPassword.length() < 6) {
+                    newPasswordLayout.setError("Password must be at least 6 characters long");
                 } else if (TextUtils.isEmpty(repeatPassword)) {
                     repeatPasswordLayout.setError("This field cannot be left blank");
                 } else if (!newPassword.equals(repeatPassword)) {
                     repeatPasswordLayout.setError("Re-entered password does not match");
                 } else {
-                    // Xác minh mật khẩu cũ và tiến hành đổi mật khẩu mới
                     reauthenticateAndResetPassword(oldPassword,newPassword);
                 }
             }
