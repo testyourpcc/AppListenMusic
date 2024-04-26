@@ -1,6 +1,8 @@
 package com.example.applistenmusic.models;
 
 public class MenuItem {
+
+    int id;
     String Name;
     String Image;
 
@@ -8,7 +10,8 @@ public class MenuItem {
 
     }
 
-    public MenuItem(String name, String image) {
+    public MenuItem(int id, String name, String image) {
+        this.id = id;
         Name = name;
         Image = image;
     }
@@ -27,5 +30,13 @@ public class MenuItem {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

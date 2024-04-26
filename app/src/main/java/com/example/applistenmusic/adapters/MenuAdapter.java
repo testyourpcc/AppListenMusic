@@ -12,29 +12,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.MenuItem;
+import com.example.applistenmusic.models.Song;
 
 import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
-    private Context mContext;
     private List<MenuItem> mItems;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick(String item);
+        void onItemClick(int id);
+    }
+    public void setOnItemClickListener(MenuAdapter.OnItemClickListener listener) {
+        mListener = listener;
     }
 
-    public MenuAdapter(Context context, List<MenuItem> items, OnItemClickListener listener) {
-        mContext = context;
-        mItems = items;
-        mListener = listener;
+    public void setmData(List<MenuItem> filteredList) {
+        this.mItems = filteredList;
+        notifyDataSetChanged();
+    }
+    public MenuAdapter(List<MenuItem> mItems) {
+        this.mItems = mItems;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.menu_feature_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_feature_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -71,7 +76,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     MenuItem item = mItems.get(position);
-                    mListener.onItemClick(item.getName());
+                    mListener.onItemClick(item.getId());
                 }
             }
         }

@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.adapters.MenuAdapter;
 import com.example.applistenmusic.adapters.SongAdapter;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.models.MenuItem;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
@@ -23,10 +25,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    ImageView Feature, Home,Search,Play,Account;
-
+    ImageView HomeFeature, Home,Search,Play,Account;
+    List<MenuItem> menuItems;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
-    RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong;
+    RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong, recyclerViewMenuBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,10 @@ public class Home extends AppCompatActivity {
         VpopSong = new ArrayList<>();
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
+        menuItems = new ArrayList<>();
+
+        menuItems.add(new MenuItem(1,"as",""));
+
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -68,6 +74,7 @@ public class Home extends AppCompatActivity {
         SongAdapter adapterVpopSong = new SongAdapter(VpopSong);
         SongAdapter adapterUSUKSong = new SongAdapter(USUKSong);
         SongAdapter adapterTrendingSong = new SongAdapter(allSong);
+        MenuAdapter adapterMenuItem = new MenuAdapter(menuItems);
         LinearLayoutManager layoutManagerKpop = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewKpopSong.setLayoutManager(layoutManagerKpop);
         recyclerViewKpopSong.setAdapter(adapterKpopSong);
@@ -80,6 +87,9 @@ public class Home extends AppCompatActivity {
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
         recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
+        LinearLayoutManager layoutManagerMenuItem = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewMenuBar.setLayoutManager(layoutManagerMenuItem);
+        recyclerViewMenuBar.setAdapter(adapterMenuItem);
         Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +119,18 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        HomeFeature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recyclerViewMenuBar.getVisibility() == View.VISIBLE) {
+                    recyclerViewMenuBar.setVisibility(View.INVISIBLE);
+                    adapterMenuItem.setmData(new ArrayList<>());
+                } else {
+                    recyclerViewMenuBar.setVisibility(View.VISIBLE);
+                    adapterMenuItem.setmData(menuItems);
+                }
+            }
+        });
         adapterKpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
@@ -156,6 +178,13 @@ public class Home extends AppCompatActivity {
                 finish();
             }
         });
+        adapterMenuItem.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int id) {
+                menuItems.add(new MenuItem(2,"aaa",""));
+                adapterMenuItem.setmData(menuItems);
+            }
+        });
 
 
 
@@ -166,10 +195,12 @@ public class Home extends AppCompatActivity {
         recyclerViewVpopSong = findViewById(R.id.recyclerViewInVpop);
         recyclerViewUSUKSong = findViewById(R.id.recyclerViewInUSUK);
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
+        recyclerViewMenuBar = findViewById(R.id.recyclerViewMenuBar);
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
+        HomeFeature = findViewById(R.id.imageView2);
 
     }
 }
