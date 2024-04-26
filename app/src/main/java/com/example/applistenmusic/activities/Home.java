@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
     ImageView HomeFeature, Home,Search,Play,Account;
+    LinearLayout menu;
     List<MenuItem> menuItems;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
     RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong, recyclerViewMenuBar;
@@ -122,11 +124,11 @@ public class Home extends AppCompatActivity {
         HomeFeature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (recyclerViewMenuBar.getVisibility() == View.VISIBLE) {
-                    recyclerViewMenuBar.setVisibility(View.INVISIBLE);
+                if (menu.getVisibility() == View.VISIBLE) {
+                    menu.setVisibility(View.INVISIBLE);
                     adapterMenuItem.setmData(new ArrayList<>());
                 } else {
-                    recyclerViewMenuBar.setVisibility(View.VISIBLE);
+                    menu.setVisibility(View.VISIBLE);
                     adapterMenuItem.setmData(menuItems);
                 }
             }
@@ -196,6 +198,7 @@ public class Home extends AppCompatActivity {
         recyclerViewUSUKSong = findViewById(R.id.recyclerViewInUSUK);
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewMenuBar = findViewById(R.id.recyclerViewMenuBar);
+        menu = findViewById(R.id.menu);
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
