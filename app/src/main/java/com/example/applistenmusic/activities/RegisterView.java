@@ -87,7 +87,10 @@ public class RegisterView extends AppCompatActivity {
                 password = passwordInput.getText().toString();
                 rpPassword = rpPasswordInput.getText().toString();
                 name = nameInput.getText().toString();
-
+                nameInputLayout.setError(null);
+                emailInputLayout.setError(null);
+                passwordInputLayout.setError(null);
+                rpPasswordInputLayout.setError(null);
                 if(TextUtils.isEmpty(name)){
                     nameInputLayout.setError("This field can not be left blank");
                 } else if (TextUtils.isEmpty(email)) {

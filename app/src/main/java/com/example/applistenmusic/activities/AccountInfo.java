@@ -85,8 +85,8 @@ public class AccountInfo extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phoneNumber);
 
         user = auth.getCurrentUser();
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/images/"+user.getUid()+"/avatar");
+        if (user != null && user.getUid() != null) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/images/" + user.getUid() + "/avatar");
             storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
@@ -99,6 +99,7 @@ public class AccountInfo extends AppCompatActivity {
                     Log.e("TAG", "Error downloading image", exception);
                 }
             });
+        }
         uploadText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

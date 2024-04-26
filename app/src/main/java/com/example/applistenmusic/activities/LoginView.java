@@ -137,7 +137,8 @@ public class LoginView extends AppCompatActivity {
                     editor.remove("password");
                     editor.apply();
                 }
-
+                emailInputLayout.setError(null);
+                passwordInputLayout.setError(null);
                 if(TextUtils.isEmpty(email)){
                     emailInputLayout.setError("This field can not be left blank");
                 }else if (!email.matches(emailPattern)) {
