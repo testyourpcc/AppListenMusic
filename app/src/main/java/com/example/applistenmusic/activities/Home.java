@@ -53,22 +53,22 @@ public class Home extends AppCompatActivity {
             });
         }
 
-//        Iterator<Song> iterator = allSong.iterator();
-//        while (iterator.hasNext()) {
-//            Song song = iterator.next();
-//            // Kpop
-//            if(song.getGenres()==1){
-//                KpopSong.add(song);
-//            }
-//            // Vpop
-//            if(song.getGenres()==31){
-//                VpopSong.add(song);
-//            }
-//            // USUK
-//            if(song.getGenres()==32){
-//                USUKSong.add(song);
-//            }
-//        }
+        Iterator<Song> iterator = allSong.iterator();
+        while (iterator.hasNext()) {
+            Song song = iterator.next();
+            // Kpop
+            if(song.getGenres()==1){
+                KpopSong.add(song);
+            }
+            // Vpop
+            if(song.getGenres()==31){
+                VpopSong.add(song);
+            }
+            // USUK
+            if(song.getGenres()==32){
+                USUKSong.add(song);
+            }
+        }
 
         SongAdapter adapterKpopSong = new SongAdapter(KpopSong);
         SongAdapter adapterVpopSong = new SongAdapter(VpopSong);
