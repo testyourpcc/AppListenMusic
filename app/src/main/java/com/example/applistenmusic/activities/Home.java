@@ -210,7 +210,7 @@ public class Home extends AppCompatActivity {
                 switch (id){
                     //playlist
                     case 1: {
-                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, PlayView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -218,7 +218,7 @@ public class Home extends AppCompatActivity {
                     }
                     // Arist
                     case 2:{
-                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, AccountInfo.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -226,7 +226,7 @@ public class Home extends AppCompatActivity {
                     }
                     // Song
                     case 3: {
-                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, LyricView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -242,7 +242,7 @@ public class Home extends AppCompatActivity {
                     }
                     // download
                     case 5: {
-                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, SearchView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
