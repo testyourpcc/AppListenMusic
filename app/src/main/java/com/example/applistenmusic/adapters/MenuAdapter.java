@@ -1,6 +1,6 @@
 package com.example.applistenmusic.adapters;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +14,14 @@ import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.MenuItem;
 import com.example.applistenmusic.models.Song;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     private List<MenuItem> mItems;
     private OnItemClickListener mListener;
+    private HashMap<String, Integer> imageResources;
 
     public interface OnItemClickListener {
         void onItemClick(int id);
@@ -34,6 +36,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
     public MenuAdapter(List<MenuItem> mItems) {
         this.mItems = mItems;
+        imageResources = new HashMap<>();
+        // Thêm các ánh xạ tên tài nguyên và resId vào HashMap
+        imageResources.put("artist", R.drawable.ic_library_filled_24px);
+        imageResources.put("playlist", R.drawable.playlist);
+        imageResources.put("album", R.drawable.ic_library_filled_24px);
+        imageResources.put("song", R.drawable.ic_library_filled_24px);
+        imageResources.put("downloaded", R.drawable.ic_library_filled_24px);
+
     }
 
     @NonNull
@@ -47,11 +57,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MenuItem item = mItems.get(position);
         holder.textView.setText(item.getName());
-        Glide.with(holder.itemView)
-                .load(item.getImage())
-                .override(80, 80) // Kích thước mới của hình ảnh sau khi được cắt
-                .centerCrop() // Cắt hình ảnh để vừa với kích thước mới
-                .into(holder.imageView);
+        if (imageResources.containsKey(item.getImage())) {
+            int resId = imageResources.get(item.getImage());
+            holder.imageView.setImageResource(resId);
+        } else {
+            Log.e("MyAdapter", "Resource not found: " + item.getImage());
+        }
     }
 
     @Override

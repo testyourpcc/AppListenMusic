@@ -1,6 +1,6 @@
 <!-- list_item_layout.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:padding="12dp"
     android:clickable="true"
@@ -23,5 +23,13 @@
         android:textColor="@color/white"
         android:text="Item Name"
         android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
+        android:src="@drawable/ic_arrow_foward_24px" />
 
 </RelativeLayout>

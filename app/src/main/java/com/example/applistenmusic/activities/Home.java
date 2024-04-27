@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-    ImageView HomeFeature, Home,Search,Play,Account;
+    ImageView HomeFeature, HomeFeatureClose, Home,Search,Play,Account;
     LinearLayout menu;
     List<MenuItem> menuItems;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
@@ -41,8 +41,11 @@ public class Home extends AppCompatActivity {
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
         menuItems = new ArrayList<>();
-
-        menuItems.add(new MenuItem(1,"as",""));
+        menuItems.add(new MenuItem(1,"Playlists","playlist"));
+        menuItems.add(new MenuItem(2,"Artists","artist"));
+        menuItems.add(new MenuItem(3,"Songs","song"));
+        menuItems.add(new MenuItem(4,"Albums","album"));
+        menuItems.add(new MenuItem(5,"Downloaded","downloaded"));
 
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
@@ -133,6 +136,25 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        HomeFeatureClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu.getVisibility() == View.VISIBLE) {
+                    menu.setVisibility(View.INVISIBLE);
+                    adapterMenuItem.setmData(new ArrayList<>());
+                } else {
+                    menu.setVisibility(View.VISIBLE);
+                    adapterMenuItem.setmData(menuItems);
+                }
+            }
+        });
+
         adapterKpopSong.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
@@ -180,11 +202,44 @@ public class Home extends AppCompatActivity {
                 finish();
             }
         });
+
+
         adapterMenuItem.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                menuItems.add(new MenuItem(2,"aaa",""));
-                adapterMenuItem.setmData(menuItems);
+                switch (id){
+                    case 1: {
+                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                    case 2:{
+                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                    case 3: {
+                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                    case 4: {
+                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                    case 5: {
+                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                    }
+                }
+
             }
         });
 
@@ -204,6 +259,7 @@ public class Home extends AppCompatActivity {
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
         HomeFeature = findViewById(R.id.imageView2);
+        HomeFeatureClose =  findViewById(R.id.imageViewMenuClose);
 
     }
 }
