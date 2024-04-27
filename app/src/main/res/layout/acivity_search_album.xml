@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A0437"
+    android:orientation="vertical"
+    tools:context=".activities.RegisterSuccess">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="68dp"
+        android:layout_height="63dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        app:srcCompat="@drawable/rectangle" />
+
+    <TextView
+        android:id="@+id/textViewSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="83dp"
+        android:layout_marginTop="15dp"
+        android:text="SEARCH ALBUM"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="49dp"
+        android:layout_height="43dp"
+        android:layout_alignLeft="@+id/textViewSearch"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="258dp"
+        android:layout_marginTop="12dp"
+        app:srcCompat="@drawable/baseline_dehaze_24" />
+    <!-- EditText để nhập từ khóa tìm kiếm -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewSearch"
+        android:layout_marginTop="20dp"
+        android:hint="Albums, Artists, Songs, Lyrics, ...."
+        android:background="@drawable/edit_text_rounded_corner"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:padding="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchEditText"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textViewSearchResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:text="Search Result"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewInSearchResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewSearchResult"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewTrendingNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyclerViewInSearchResult"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:text="Trending now"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewInTrendingNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTrendingNow"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="@color/black"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/homebtnimg" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/searchimgbtn" />
+
+        <ImageView
+            android:id="@+id/imageViewHeadPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onImageView3Clicked"
+            android:src="@drawable/headphoneimgbtn" />
+
+        <ImageView
+            android:id="@+id/imageViewAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onImageView4Clicked"
+            android:src="@drawable/accounticon" />
+    </LinearLayout>
+
+</RelativeLayout>

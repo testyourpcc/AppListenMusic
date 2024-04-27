@@ -208,35 +208,45 @@ public class Home extends AppCompatActivity {
             @Override
             public void onItemClick(int id) {
                 switch (id){
+                    //playlist
                     case 1: {
                         Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
+                        break;
                     }
+                    // Arist
                     case 2:{
                         Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
+                        break;
                     }
+                    // Song
                     case 3: {
                         Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
+                        break;
                     }
+                    // album
                     case 4: {
-                        Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, SearchAlbumView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
+                        break;
                     }
+                    // download
                     case 5: {
                         Intent playIntent = new Intent(com.example.applistenmusic.activities.Home.this, PlayView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
+                        break;
                     }
                 }
 

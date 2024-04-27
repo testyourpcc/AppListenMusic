@@ -58,6 +58,9 @@
             android:name=".activities.SearchView"
             android:exported="false" />
         <activity
+            android:name=".activities.SearchAlbumView"
+            android:exported="false" />
+        <activity
             android:name=".activities.LyricView"
             android:exported="false" />
         <activity
