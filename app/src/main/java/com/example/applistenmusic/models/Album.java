@@ -63,11 +63,11 @@ public class Album {
         this.image = image;
     }
 
-    public int getartist() {
+    public int getArtist() {
         return artist;
     }
 
-    public void setartist(int artist) {
+    public void setArtist(int artist) {
         this.artist = artist;
     }
 }

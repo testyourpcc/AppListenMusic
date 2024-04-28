@@ -20,31 +20,32 @@ import java.util.Random;
 
 public class SongHelper {
     static List<Song> songList = new ArrayList<>();
+
     public SongHelper() {
     }
 
-    public static Song getSongById(List<Song> songList, int id){
-        for(Song song : songList){
-            if(song.getId() == id){
+    public static Song getSongById(List<Song> songList, int id) {
+        for (Song song : songList) {
+            if (song.getId() == id) {
                 return song;
             }
         }
         return new Song();
     }
 
-    public static Song getRandomSong(List<Song> songList){
+    public static Song getRandomSong(List<Song> songList) {
         Random random = new Random();
-        int id =  random.nextInt(songList.size()) + 1;
+        int id = random.nextInt(songList.size()) + 1;
 
-        for(Song song : songList){
-            if(song.getId() == id){
+        for (Song song : songList) {
+            if (song.getId() == id) {
                 return song;
             }
         }
         return new Song();
     }
 
-    public static Song getSongById(int id){
+    public static Song getSongById(int id) {
         if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -56,15 +57,15 @@ public class SongHelper {
             });
         }
 
-        for(Song song : songList){
-            if(song.getId() ==  id){
-                return  song;
+        for (Song song : songList) {
+            if (song.getId() == id) {
+                return song;
             }
         }
         return null;
     }
 
-    public static void getALLSong(SongDataCallback callback){
+    public static void getALLSong(SongDataCallback callback) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference();
         List<Song> songList = new ArrayList<>();
@@ -75,8 +76,7 @@ public class SongHelper {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                     callback.onError("Error getting data");
-                }
-                else {
+                } else {
                     DataSnapshot dataSnapshot = task.getResult();
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
@@ -93,14 +93,14 @@ public class SongHelper {
         });
     }
 
-    public static List<Song> getTrendingSong(){
+    public static List<Song> getTrendingSong() {
         Song song = new Song();
         List<Song> songList = new ArrayList<>();
         songList.add(song);
         return songList;
     }
 
-    public static List<Song> getSongByGenres(List<Integer> genres){
+    public static List<Song> getSongByGenres(List<Integer> genres) {
         if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -112,10 +112,10 @@ public class SongHelper {
             });
         }
         List<Song> result = new ArrayList<>();
-        if(genres.size()>0){
-            for (Song song : songList){
-                for(Integer i : genres){
-                    if(song.getGenres() == i){
+        if (genres.size() > 0) {
+            for (Song song : songList) {
+                for (Integer i : genres) {
+                    if (song.getGenres() == i) {
                         result.add(song);
                     }
                 }
@@ -124,7 +124,7 @@ public class SongHelper {
         return result;
     }
 
-    public static List<Song> getSongByArtist(List<Integer> artist){
+    public static List<Song> getSongByArtist(List<Integer> artist) {
         if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -136,10 +136,10 @@ public class SongHelper {
             });
         }
         List<Song> result = new ArrayList<>();
-        if(artist.size()>0){
-            for (Song song : songList){
-                for(Integer i : artist){
-                    if(song.getArtist() == i){
+        if (artist.size() > 0) {
+            for (Song song : songList) {
+                for (Integer i : artist) {
+                    if (song.getArtist() == i) {
                         result.add(song);
                     }
                 }
@@ -148,7 +148,7 @@ public class SongHelper {
         return result;
     }
 
-    public static List<Song> getSongByAlbum(List<Long> album){
+    public static List<Song> getSongByAlbum(List<Long> album) {
         if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -160,10 +160,10 @@ public class SongHelper {
             });
         }
         List<Song> result = new ArrayList<>();
-        if(album.size()>0){
-            for (Song song : songList){
-                for(Long i : album){
-                    if(song.getId() == i){
+        if (album.size() > 0) {
+            for (Song song : songList) {
+                for (Long i : album) {
+                    if (song.getAlbum() == i) {
                         result.add(song);
                     }
                 }
@@ -173,4 +173,26 @@ public class SongHelper {
     }
 
 
+    public static List<Integer> getSongIDListByName(String keyword) {
+        if (SongListSingleton.getInstance().hasSong()) {
+            songList = SongListSingleton.getInstance().getAllSongIfExist();
+        } else {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> List) {
+                    songList = List;
+                }
+            });
+        }
+        List<Integer> result = new ArrayList<>();
+        if (!keyword.isEmpty()) {
+            for (Song song : songList) {
+                if (song.getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
+                    result.add(song.getId());
+                }
+            }
+            return result;
+        }
+        return new ArrayList<>();
+    }
 }

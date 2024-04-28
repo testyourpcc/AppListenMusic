@@ -88,23 +88,23 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/textViewTrendingNow"
+                android:id="@+id/textViewAllAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recyclerViewInSearchResult"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="5dp"
-                android:text="Trending now"
+                android:text="All Album"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewInTrendingNow"
+                android:id="@+id/recyclerViewAllAlbum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewTrendingNow"
+                android:layout_below="@id/textViewAllAlbum"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
                 android:visibility="visible" />
