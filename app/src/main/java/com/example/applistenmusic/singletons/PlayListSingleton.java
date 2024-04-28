@@ -63,6 +63,7 @@ public class PlayListSingleton {
         if (playList== null) {
             playList = new ArrayList<>();
         }
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();

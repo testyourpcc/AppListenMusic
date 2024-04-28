@@ -63,7 +63,7 @@ public class RegisterView extends AppCompatActivity {
         emailInputLayout = findViewById(R.id.editEmailLayout);
         rpPasswordInputLayout = findViewById(R.id.repeatPasswdLayout);
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override

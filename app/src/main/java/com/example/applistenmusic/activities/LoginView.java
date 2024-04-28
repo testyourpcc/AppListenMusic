@@ -26,7 +26,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.interfaces.AlbumLoadListener;
+import com.example.applistenmusic.interfaces.ArtistLoadListener;
+import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.interfaces.GenresLoadListener;
+import com.example.applistenmusic.interfaces.PlayListLoadListener;
+import com.example.applistenmusic.models.Album;
+import com.example.applistenmusic.models.Artist;
+import com.example.applistenmusic.models.Genres;
+import com.example.applistenmusic.models.PlayList;
+import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.models.UserInfo;
+import com.example.applistenmusic.singletons.AlbumSingleton;
+import com.example.applistenmusic.singletons.ArtistSingleton;
+import com.example.applistenmusic.singletons.GenresSingleton;
+import com.example.applistenmusic.singletons.PlayListSingleton;
+import com.example.applistenmusic.singletons.SongListSingleton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -46,6 +61,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
 import java.util.Objects;
 
 public class LoginView extends AppCompatActivity {
@@ -57,6 +73,11 @@ public class LoginView extends AppCompatActivity {
     private FirebaseAuth mAuth;
     GoogleSignInClient googleSignInClient;
     ProgressBar progressBar;
+    List<Song> songs;
+    List<Artist> allArtist;
+    List<Album> allAlbum;
+    List<PlayList> allUserPlayList;
+    List<Genres> allGenres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +97,7 @@ public class LoginView extends AppCompatActivity {
         emailInputLayout = findViewById(R.id.editEmailLayout);
         passwordInputLayout = findViewById(R.id.editPasswordLayout);
 
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
         progressBar.setVisibility(View.GONE);
 
@@ -97,6 +118,39 @@ public class LoginView extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(LoginView.this, options);
+
+
+        SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
+            @Override
+            public void onDataLoaded(List<Song> songList) {
+                songs = songList;
+            }
+        });
+
+        ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener(){
+            @Override
+            public void onArtistLoaded(List<Artist> artists) {
+                allArtist = artists;}
+        });
+
+        PlayListSingleton.getInstance().getAllPlayList(new PlayListLoadListener(){
+            @Override
+            public void onPlayListLoaded(List<PlayList> playLists) {
+                allUserPlayList = playLists;}
+        });
+
+        AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener(){
+            @Override
+            public void onAlbumLoaded(List<Album> albums) {
+                allAlbum = albums;}
+        });
+        GenresSingleton.getInstance().getAllGenres(new GenresLoadListener(){
+            @Override
+            public void onGenresLoaded(List<Genres> GenresList) {
+                allGenres = GenresList;
+            }
+        });
+
         googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,4 +282,13 @@ public class LoginView extends AppCompatActivity {
         }
     });
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SongListSingleton.getInstance().setAllSong(songs);
+        ArtistSingleton.getInstance().setAllArtist(allArtist);
+        AlbumSingleton.getInstance().setAllAlbum(allAlbum);
+        PlayListSingleton.getInstance().setAllPlayList(allUserPlayList);
+        GenresSingleton.getInstance().setAllGenres(allGenres);
+    }
 }
