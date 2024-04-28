@@ -24,7 +24,7 @@ public class RegisterSuccess extends AppCompatActivity {
     FirebaseUser user;
     TextView userInfo;
 
-    PlayList defaultPlaylist;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,11 @@ public class RegisterSuccess extends AppCompatActivity {
             finish();
         }else{
             userInfo.setText(user.getDisplayName());
-            createDefaultPlaylist(); // Gọi phương thức để tạo playlist mặc định
+            auth.signOut();
         }
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.signOut();
                 Intent intent = new Intent(getApplicationContext(), LoginView.class);
                 startActivity(intent);
                 finish();
@@ -56,17 +55,4 @@ public class RegisterSuccess extends AppCompatActivity {
         });
     }
 
-    private void createDefaultPlaylist() {
-        DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference("playList");
-
-        // Tạo một đối tượng Playlist mới
-        defaultPlaylist = new PlayList();
-        defaultPlaylist.setName("Favorite");
-        defaultPlaylist.setImage("link"); // Thay link bằng đường dẫn hình ảnh mặc định cho playlist
-        defaultPlaylist.setSongIdList(new ArrayList<Integer>()); // Tạo danh sách trống cho các ID bài hát
-
-        // Lưu playlist vào Firebase Realtime Database
-        String userId = user.getUid();
-        playlistRef.child(userId).child("0").setValue(defaultPlaylist);
-    }
 }

@@ -108,14 +108,20 @@ public class AccountInfo extends AppCompatActivity {
             }
         });
 
-        if(user==null){
+        if(user == null){
             Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
             startActivity(intent);
             finish();
-        }else{
+        } else {
+            if (user.getProviderData().get(1).getProviderId().equals("google.com")) {
+                emailText.setText(user.getProviderData().get(1).getEmail());
+                resetPasswdText.setVisibility(View.GONE);
+            } else {
+                emailText.setText(user.getEmail());
+            }
             nameText.setText(user.getDisplayName());
-            emailText.setText(user.getEmail());
         }
+
 
         reference = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getUid());
         reference.addValueEventListener(new ValueEventListener() {

@@ -32,8 +32,7 @@ import java.util.Objects;
 
 public class ResetPasswd extends AppCompatActivity {
     Button confirmBtn;
-    TextInputEditText oldPasswd, newPasswd, repeatPasswd;
-    TextInputLayout oldPasswordLayout,newPasswordLayout,repeatPasswordLayout;
+    EditText emailInput;
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
@@ -44,51 +43,36 @@ public class ResetPasswd extends AppCompatActivity {
 
 
         confirmBtn = findViewById(R.id.confirmBtn);
-        oldPasswd = findViewById(R.id.oldPasswd);
-        newPasswd = findViewById(R.id.newPasswd);
-        repeatPasswd = findViewById(R.id.repeatPasswd);
-        oldPasswordLayout = findViewById(R.id.oldPasswdLayout);
-        newPasswordLayout = findViewById(R.id.newPasswdLayout);
-        repeatPasswordLayout = findViewById(R.id.repeatPasswdLayout);
+        emailInput = findViewById(R.id.editEmail);
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPassword = newPasswd.getText().toString();
-                String repeatPassword = repeatPasswd.getText().toString();
-                String oldPassword = oldPasswd.getText().toString();
-                oldPasswordLayout.setError(null);
-                newPasswordLayout.setError(null);
-                repeatPasswordLayout.setError(null);
-                if (TextUtils.isEmpty(oldPassword)){
-                    oldPasswordLayout.setError("This field cannot be left blank");
-                } else if (TextUtils.isEmpty(newPassword)) {
-                    newPasswordLayout.setError("This field cannot be left blank");
-                } else if (newPassword.length() < 6) {
-                    newPasswordLayout.setError("Password must be at least 6 characters long");
-                } else if (TextUtils.isEmpty(repeatPassword)) {
-                    repeatPasswordLayout.setError("This field cannot be left blank");
-                } else if (!newPassword.equals(repeatPassword)) {
-                    repeatPasswordLayout.setError("Re-entered password does not match");
+                String emailUser = emailInput.getText().toString();
+                if(TextUtils.isEmpty(emailUser)){
+                    emailInput.setError("This field can not be left blank");
+                }else if (!emailUser.matches(emailPattern)) {
+                    emailInput.setError("Invalid email format");
                 } else {
-                    reauthenticateAndResetPassword(oldPassword,newPassword);
+                    auth.sendPasswordResetEmail(emailUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ResetPasswd.this, "We have sent the password change link to your email", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ResetPasswd.this, LoginView.class);
+                                startActivity(intent);
+                                auth.signOut();
+                                finish();
+                            } else {
+                                Toast.makeText(ResetPasswd.this, "Failed to send reset email", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         });
 
-    }
-    private void reauthenticateAndResetPassword(String oldPassword, String newPassword) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(auth.getCurrentUser().getEmail(), oldPassword);
-
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUserPassword(newPassword);
-                    }
-                });
     }
     private void updateUserPassword(String newPassword) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

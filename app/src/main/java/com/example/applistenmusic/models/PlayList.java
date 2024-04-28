@@ -15,7 +15,7 @@ public class PlayList {
     }
 
     public PlayList(int id, String name, List<Song> songList, ArrayList<Integer> songIdList, String image, String user) {
-        Id = id;
+        this.Id = id;
         this.name = name;
         this.songList = songList;
         this.songIdList = songIdList;
