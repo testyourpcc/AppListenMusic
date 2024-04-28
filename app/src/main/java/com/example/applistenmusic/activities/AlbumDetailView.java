@@ -3,8 +3,6 @@ package com.example.applistenmusic.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,9 +16,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.adapters.SongSearchResultAdapter;
-import com.example.applistenmusic.helpers.AlbumHelper;
-import com.example.applistenmusic.helpers.ArtistHelper;
-import com.example.applistenmusic.helpers.GenresHelper;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.models.Album;
@@ -30,9 +25,7 @@ import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AlbumDetailView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account, AlbumImage;
@@ -46,7 +39,7 @@ public class AlbumDetailView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acivity_album_detail);
+        setContentView(R.layout.activity_album_detail);
         setcontrol();
         allSongInAlbum = new ArrayList<>();
         if (SongListSingleton.getInstance().hasSong()) {
