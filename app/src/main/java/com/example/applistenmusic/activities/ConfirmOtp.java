@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.models.PlayList;
 import com.example.applistenmusic.models.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,9 +53,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class ConfirmOtp extends AppCompatActivity {
+    PlayList defaultPlaylist;
     ProgressBar progressBar;
     DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -113,7 +116,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                                        UserInfo userInfo = new UserInfo("USER","1234567890","97 Man Thien",false);
+                                        UserInfo userInfo = new UserInfo("USER","1234567890","97 Man Thien",false,0,0);
 
                                         reference.child("users").child(mAuth.getUid()).setValue(userInfo);
 
@@ -134,6 +137,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
+                                        createDefaultPlaylist(user.getUid());
                                     } else {
                                         Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
@@ -331,6 +335,22 @@ public class ConfirmOtp extends AppCompatActivity {
             }
         }
         return otpInput.toString();
+    }
+
+    private void createDefaultPlaylist(String userId) {
+        DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(userId).child("0");
+
+        // Tạo một đối tượng Playlist mới
+        defaultPlaylist = new PlayList();
+        defaultPlaylist.setName("Favorite");
+        defaultPlaylist.setImage("link");
+        defaultPlaylist.setId(0);
+        defaultPlaylist.setImage(null);
+        defaultPlaylist.setUser("tuan");
+        defaultPlaylist.setSongIdList(new ArrayList<Integer>());
+
+        // Lưu playlist vào Firebase Realtime Database
+        playlistRef.setValue(defaultPlaylist);
     }
 
 }

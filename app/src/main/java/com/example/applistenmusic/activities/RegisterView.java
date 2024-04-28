@@ -95,13 +95,15 @@ public class RegisterView extends AppCompatActivity {
                     nameInputLayout.setError("This field can not be left blank");
                 } else if (TextUtils.isEmpty(email)) {
                     emailInputLayout.setError("This field can not be left blank");
-                } else if (TextUtils.isEmpty(password)) {
-                    passwordInputLayout.setError("This field can not be left blank");
-                } else if (TextUtils.isEmpty(rpPassword)) {
-                    rpPasswordInputLayout.setError("This field can not be left blank");
                 } else if (!email.matches(emailPattern)) {
                     emailInputLayout.setError("Invalid email format");
-                } else if (!TextUtils.equals(password, rpPassword)) {
+                }else if (TextUtils.isEmpty(password)) {
+                    passwordInputLayout.setError("This field can not be left blank");
+                } else if (password.length() < 6) {
+                    passwordInputLayout.setError("Password must be at least 6 characters long");
+                }else if (TextUtils.isEmpty(rpPassword)) {
+                    rpPasswordInputLayout.setError("This field can not be left blank");
+                }  else if (!TextUtils.equals(password, rpPassword)) {
                     rpPasswordInputLayout.setError("Password confirmation does not match");
                 } else{
                     String otp = sendOtp.generateOTP();
