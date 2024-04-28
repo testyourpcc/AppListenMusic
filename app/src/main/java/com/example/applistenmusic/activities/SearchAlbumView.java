@@ -39,8 +39,8 @@ public class SearchAlbumView extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     EditText searchEditText;
     TextView textViewSearchResult;
-    List<Album> allAlbum, KpopAlbum, VpopAlbum, USUKAlbum, AllAlbum;
-    RecyclerView recyclerViewKpopAlbum, recyclerViewUSUKAlbum, recyclerViewVpopAlbum, recyclerViewAllAlbum, recyclerViewSearchResult;
+    List<Album> allAlbum, SearchAlbum;
+    RecyclerView  recyclerViewAllAlbum, recyclerViewSearchResult;
     AlbumSearchResultAdapter adapterSearchResult , adapterAllAlbum;
  
 
@@ -50,10 +50,7 @@ public class SearchAlbumView extends AppCompatActivity {
         setContentView(R.layout.acivity_search_album);
         setcontrol();
 
-//        KpopAlbum = new ArrayList<>();
-//        VpopAlbum = new ArrayList<>();
-        USUKAlbum = new ArrayList<>();
-        AllAlbum = new ArrayList<>();
+        SearchAlbum = new ArrayList<>();
         if (AlbumSingleton.getInstance().hasAlbum()){
             allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
         } else {
@@ -66,7 +63,7 @@ public class SearchAlbumView extends AppCompatActivity {
         }
 
 
-        adapterSearchResult = new AlbumSearchResultAdapter(allAlbum);
+        adapterSearchResult = new AlbumSearchResultAdapter(SearchAlbum);
         LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
         recyclerViewSearchResult.setAdapter(adapterSearchResult);
@@ -154,7 +151,6 @@ public class SearchAlbumView extends AppCompatActivity {
             for(Album Album : allAlbum) {
                 if (Album.getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
                     set.add(Album);
-                    continue;
                 }
 
             }
