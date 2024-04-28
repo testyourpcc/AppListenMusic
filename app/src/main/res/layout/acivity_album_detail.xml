@@ -8,110 +8,124 @@
     android:orientation="vertical"
     tools:context=".activities.RegisterSuccess">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="68dp"
-        android:layout_height="63dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
-        app:srcCompat="@drawable/rectangle" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/round_back_10">
+            <!-- Nút trở về -->
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="Go back to previous screen"
+                android:onClick="onBackPressed"
+                android:src="@drawable/back_icon" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/AlbumNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="Tên Album"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/navigationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Navigation Menu"
+            android:onClick="openNavigationDrawer"
+            android:padding="16dp"
+            android:src="@drawable/ic_menu" /> <!-- Adjust padding as needed -->
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
-        android:id="@+id/textViewSearch"
+        android:id="@+id/textViewSongSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="83dp"
-        android:layout_marginTop="15dp"
-        android:text="SEARCH"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/toolbar"
+        android:layout_centerInParent="true"
+        android:text="Size"
+        android:textSize="18sp"
         android:textColor="@color/white"
-        android:textSize="28sp" />
+        android:gravity="center"
+        />
+
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignLeft="@+id/textViewSearch"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="258dp"
-        android:layout_marginTop="12dp"
-        app:srcCompat="@drawable/baseline_dehaze_24" />
-    <!-- EditText để nhập từ khóa tìm kiếm -->
-    <EditText
-        android:id="@+id/searchEditText"
+        android:id="@+id/AlbumImage"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/textViewSongSize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_centerInParent="true"
+        android:padding="16dp"
+        android:src="@drawable/noimage" />
+
+    <LinearLayout
+        android:id="@+id/buttonFrame"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/AlbumImage"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonPlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Play"
+            android:layout_marginLeft="40dp"/>
+
+        <!-- Button 2 -->
+        <Button
+            android:id="@+id/buttonShuffle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Shuffle"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAllSongInAlbum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSearch"
-        android:layout_marginTop="20dp"
-        android:hint="Albums, Artists, Songs, Lyrics, ...."
-        android:background="@drawable/edit_text_rounded_corner"
-        android:textColor="@android:color/black"
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:padding="10dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/searchEditText"
-        android:layout_marginTop="10dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textViewSearchResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
-                android:text="Search Result"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:visibility="gone" />
+        android:layout_below="@id/buttonFrame"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:visibility="visible" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewInSearchResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewSearchResult"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/textViewTrendingNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerViewInSearchResult"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="5dp"
-                android:text="Trending now"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewInTrendingNow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewTrendingNow"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp"
-                android:visibility="visible" />
-
-        </RelativeLayout>
-
-    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

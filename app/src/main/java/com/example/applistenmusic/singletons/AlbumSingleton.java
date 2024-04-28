@@ -17,6 +17,7 @@ public class AlbumSingleton {
 
     private static volatile AlbumSingleton instance;
     private List<Album> allAlbum;
+    private Album album;
     private boolean isAlbumLoaded = false;
     private AlbumLoadListener AlbumLoadListener;
 
@@ -82,5 +83,16 @@ public class AlbumSingleton {
                 }
             }
         });
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public Album getAlbum() {
+        if (album == null) {
+            album = new Album();
+        }
+        return album;
     }
 }

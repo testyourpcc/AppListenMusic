@@ -109,11 +109,9 @@ public class SearchAlbumView extends AppCompatActivity {
         adapterAllAlbum.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                List<Album> albums = new ArrayList<>();
-                albums.add(AlbumHelper.getAlbumByID(id));
+                Album album = AlbumHelper.getAlbumByID(id);
                 Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAllAlbum(albums);
-                playIntent.putExtra("playNow",true);
+                AlbumSingleton.getInstance().setAlbum(album);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -122,11 +120,9 @@ public class SearchAlbumView extends AppCompatActivity {
         adapterSearchResult.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                List<Album> albums = new ArrayList<>();
-                albums.add(AlbumHelper.getAlbumByID(id));
+                Album album = AlbumHelper.getAlbumByID(id);
                 Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAllAlbum(albums);
-                playIntent.putExtra("playNow",true);
+                AlbumSingleton.getInstance().setAlbum(album);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
