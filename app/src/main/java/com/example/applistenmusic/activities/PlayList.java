@@ -113,6 +113,11 @@ public class PlayList extends AppCompatActivity {
                 // Cập nhật RecyclerView với 10 bài hát tiếp theo
                 updateRecyclerViewWithNextSongs(id);
             }
+
+            @Override
+            public void onButtonClick(int id) {
+
+            }
         });
     }
 

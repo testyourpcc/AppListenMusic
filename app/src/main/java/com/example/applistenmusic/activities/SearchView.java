@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -117,11 +118,30 @@ public class SearchView extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
+
+            @Override
+            public void onButtonClick(int id) {
+                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();            }
         });
         adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
                 Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+
+            @Override
+            public void onButtonClick(int id) {
+                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
                 SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
                 playIntent.putExtra("playNow",true);
                 startActivity(playIntent);

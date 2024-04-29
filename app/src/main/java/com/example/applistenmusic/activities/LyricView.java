@@ -198,6 +198,19 @@ public class LyricView extends AppCompatActivity {
             }
         });
 
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.reset();
+                Song s = SongHelper.getRandomSong(songs);
+                SongSingleton.getInstance().setSong(s);
+                Url = s.getUrl();
+                getAndPlaySong(Url);
+                getData();
+            }
+        });
+
+
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {

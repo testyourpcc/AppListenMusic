@@ -28,6 +28,7 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
 
     public interface OnItemClickListener {
         void onItemClick(int id);
+        void onButtonClick(int id);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -70,7 +71,7 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
         notifyDataSetChanged();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageViewSong;
+        public ImageView imageViewSong , buttonFeature;
         public TextView textViewSongTitle;
         public TextView textViewArtist;
         public TextView textViewAlbum;
@@ -83,6 +84,7 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
             textViewArtist = itemView.findViewById(R.id.textViewArtist);
             textViewAlbum = itemView.findViewById(R.id.textViewAlbum);
             textViewGenres = itemView.findViewById(R.id.textViewGenres);
+            buttonFeature = itemView.findViewById(R.id.imageViewFeature);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,6 +93,19 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
                         if (position != RecyclerView.NO_POSITION) {
                             Song item = mData.get(position);
                             mListener.onItemClick(item.getId());
+                        }
+                    }
+                }
+            });
+
+            buttonFeature.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Song item = mData.get(position);
+                            mListener.onButtonClick(item.getId());
                         }
                     }
                 }
