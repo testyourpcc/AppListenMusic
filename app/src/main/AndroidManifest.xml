@@ -73,6 +73,13 @@
             android:name=".activities.SongDetailView"
             android:exported="false" />
         <activity
+            android:name=".activities.SongManagement"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SongAdd"
+            android:exported="false" />
+
+        <activity
             android:name=".SplashView"
             android:exported="true">
             <intent-filter>
