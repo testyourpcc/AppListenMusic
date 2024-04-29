@@ -1,9 +1,7 @@
 package com.example.applistenmusic.activities;
 
-import com.example.applistenmusic.SplashView;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
-import com.example.applistenmusic.models.LyricForSync;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,17 +14,11 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,27 +27,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class LyricView extends AppCompatActivity {
     boolean isUserInteracting = false;
@@ -78,7 +63,7 @@ public class LyricView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acivity_lyric);
+        setContentView(R.layout.activity_lyric);
         setcontrol();
         mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
 

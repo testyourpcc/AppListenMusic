@@ -15,62 +15,74 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
-import com.example.applistenmusic.adapters.AlbumSearchResultAdapter;
+import com.example.applistenmusic.adapters.SongAdapter;
+import com.example.applistenmusic.adapters.SongSearchResultAdapter;
 import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
+import com.example.applistenmusic.helpers.GenresHelper;
 import com.example.applistenmusic.helpers.SongHelper;
-import com.example.applistenmusic.interfaces.AlbumLoadListener;
-import com.example.applistenmusic.models.Album;
-import com.example.applistenmusic.singletons.AlbumSingleton;
+import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.models.Song;
+import com.example.applistenmusic.singletons.SongListSingleton;
+import com.example.applistenmusic.singletons.SongSingleton;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class SearchAlbumView extends AppCompatActivity {
+public class SongManagement extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     EditText searchEditText;
     TextView textViewSearchResult;
-    List<Album> allAlbum, SearchAlbum;
-    RecyclerView  recyclerViewAllAlbum, recyclerViewSearchResult;
-    AlbumSearchResultAdapter adapterSearchResult , adapterAllAlbum;
- 
+    List<Song> allSong, USUKSong, TrendingSong;
+    RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult;
+    SongSearchResultAdapter  adapterSearchResult , adapterTrendingSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_album);
+        setContentView(R.layout.activity_search);
         setcontrol();
 
-        SearchAlbum = new ArrayList<>();
-        if (AlbumSingleton.getInstance().hasAlbum()){
-            allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
+        USUKSong = new ArrayList<>();
+        TrendingSong = new ArrayList<>();
+        if (SongListSingleton.getInstance().hasSong()){
+            allSong = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
-            AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener() {
+            SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
                 @Override
-                public void onAlbumLoaded(List<Album> AlbumList) {
-                    allAlbum = AlbumList;
+                public void onDataLoaded(List<Song> songList) {
+                    allSong = songList;
                 }
             });
         }
 
+        Iterator<Song> iterator = allSong.iterator();
+        while (iterator.hasNext()) {
+            Song song = iterator.next();
 
-        adapterSearchResult = new AlbumSearchResultAdapter(SearchAlbum);
+            if(song.getGenres()==32){
+                USUKSong.add(song);
+            }
+        }
+
+
+        adapterSearchResult = new SongSearchResultAdapter(USUKSong);
         LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
         recyclerViewSearchResult.setAdapter(adapterSearchResult);
 
-        adapterAllAlbum = new AlbumSearchResultAdapter(allAlbum);
+        adapterTrendingSong = new SongSearchResultAdapter(allSong);
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerViewAllAlbum.setLayoutManager(layoutManagerTrending);
-        recyclerViewAllAlbum.setAdapter(adapterAllAlbum);
-
+        recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
+        recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, Home.class);
+                Intent playIntent = new Intent(SongManagement.this, Home.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
@@ -79,7 +91,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, PlayView.class);
+                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -88,7 +100,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, AccountInfo.class);
+                Intent playIntent = new Intent(SongManagement.this, AccountInfo.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -96,23 +108,23 @@ public class SearchAlbumView extends AppCompatActivity {
             }
         });
 
-        adapterAllAlbum.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
+        adapterTrendingSong.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAlbum(album);
+                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
         });
-        adapterSearchResult.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
+        adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAlbum(album);
+                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -130,42 +142,42 @@ public class SearchAlbumView extends AppCompatActivity {
                 // Xử lý tìm kiếm bài hát khi người dùng thay đổi nội dung của EditText
                 String keyword = s.toString();
                 // Thực hiện tìm kiếm bài hát dựa trên keyword ở đây
-                performSearch(keyword,allAlbum);
+                performSearch(keyword,allSong);
             }
         });
 
 
 
     }
-    private void performSearch(String keyword, List<Album> allAlbum) {
-
-        if (!keyword.isEmpty() ){
-            Set<Album> set = new HashSet<>();
-            for(Album Album : allAlbum) {
-                if (Album.getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
-                    set.add(Album);
-                }
-
+    private void performSearch(String keyword, List<Song> allSong) {
+        Set<Song> set = new HashSet<>();
+        for(Song song : allSong){
+            if(song.getName().toLowerCase().contains(keyword.trim().toLowerCase())){
+                set.add(song);
+                continue;
             }
 
             if(!ArtistHelper.getArtistIDByArtistName(keyword).isEmpty()){
-                set.addAll(AlbumHelper.getAlbumByArtist(ArtistHelper.getArtistIDByArtistName(keyword)));
+                set.addAll(SongHelper.getSongByArtist(ArtistHelper.getArtistIDByArtistName(keyword)));
+                continue;
+            }
+            if(!AlbumHelper.getAlbumIDByAlbumName(keyword).isEmpty()){
+                set.addAll(SongHelper.getSongByAlbum(AlbumHelper.getAlbumIDByAlbumName(keyword)));
+                continue;
+            }
+            if(!GenresHelper.getGenresIDByGenresName(keyword).isEmpty()){
+                set.addAll(SongHelper.getSongByGenres(GenresHelper.getGenresIDByGenresName(keyword)));
             }
 
-            if(!SongHelper.getSongIDListByName(keyword).isEmpty()){
-                set.addAll(AlbumHelper.getAlbumBySong(SongHelper.getSongIDListByName(keyword)));
-            }
-
-            List<Album> result = new ArrayList<>(set);
-
-            textViewSearchResult.setVisibility(View.VISIBLE);
-            recyclerViewSearchResult.setVisibility(View.VISIBLE);
-            adapterSearchResult.setmData(result);
-        } else {
-            textViewSearchResult.setVisibility(View.INVISIBLE);
-            recyclerViewSearchResult.setVisibility(View.INVISIBLE);
-            adapterSearchResult.setmData(new ArrayList<>());
         }
+
+
+        List<Song> result = new ArrayList<>(set);
+
+
+        textViewSearchResult.setVisibility(View.VISIBLE);
+        recyclerViewSearchResult.setVisibility(View.VISIBLE);
+        adapterSearchResult.setmData(result);
 
 
     }
@@ -178,7 +190,7 @@ public class SearchAlbumView extends AppCompatActivity {
         }
     }
     public void setcontrol() {
-        recyclerViewAllAlbum = findViewById(R.id.recyclerViewAllAlbum);
+        recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
         textViewSearchResult = findViewById(R.id.textViewSearchResult);
         Home = findViewById(R.id.imageViewHome);

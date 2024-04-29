@@ -34,7 +34,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acivity_home);
+        setContentView(R.layout.activity_home);
         setcontrol();
         KpopSong = new ArrayList<>();
         VpopSong = new ArrayList<>();
@@ -226,7 +226,7 @@ public class Home extends AppCompatActivity {
                     }
                     // Song
                     case 3: {
-                        Intent playIntent = new Intent(Home.this, LyricView.class);
+                        Intent playIntent = new Intent(Home.this, SearchView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -242,7 +242,7 @@ public class Home extends AppCompatActivity {
                     }
                     // download
                     case 5: {
-                        Intent playIntent = new Intent(Home.this, SearchView.class);
+                        Intent playIntent = new Intent(Home.this, LyricView.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

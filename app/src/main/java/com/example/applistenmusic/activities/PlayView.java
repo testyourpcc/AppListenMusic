@@ -10,8 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,7 +78,7 @@ public class PlayView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acivity_play);
+        setContentView(R.layout.activity_play);
         setcontrol();
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
