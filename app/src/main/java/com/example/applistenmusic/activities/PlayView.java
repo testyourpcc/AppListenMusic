@@ -697,20 +697,23 @@ public class PlayView extends AppCompatActivity {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d("12345", "onFling called");
             boolean result = false;
             try {
                 float diffX = e2.getX() - e1.getX();
+                float diffY = e2.getY() - e1.getY(); // Calculate vertical difference
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffX < 0) {
                         // Vuốt sang trái, chuyển sang một activity khác
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
+                        Log.d("12345", "onFling: sang phải");
                         Intent intent = new Intent(PlayView.this, LyricView.class);
                         intent.putExtra("seekBarProcess", seekBar.getProgress());
                         startActivity(intent);
                         result = true;
                     } else {
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        Log.d("12345", "onFling: sang trái");
                         // Vuốt sang phải, chuyển sang activity khác
                         Intent intent = new Intent(PlayView.this, SongDetailView.class);
 
@@ -718,6 +721,23 @@ public class PlayView extends AppCompatActivity {
                         result = true;
                     }
                 }
+                //vuốt lên và xuống
+                if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffY < 0) {
+                        // Swipe up, switch to PlayList activity
+                        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+                        Log.d("12345", "onFling: vuot len");
+                        Intent intent = new Intent(PlayView.this, PlayList.class);
+                        startActivity(intent);
+                        result = true;
+                    } else {
+                        // Swipe down, switch to another activity
+                        overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_up);
+                        Intent intent = new Intent(PlayView.this, Home.class);
+                        startActivity(intent);
+                        result = true;
+                    }
+              }
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
