@@ -4,10 +4,12 @@ package com.example.applistenmusic.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +37,7 @@ import java.util.Set;
 public class SongManagement extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     EditText searchEditText;
+    LinearLayout layoutAdd;
     TextView textViewSearchResult;
     List<Song> allSong, USUKSong, TrendingSong;
     RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult;
@@ -43,9 +46,8 @@ public class SongManagement extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_song_management);
         setcontrol();
-
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
         if (SongListSingleton.getInstance().hasSong()){
@@ -68,7 +70,6 @@ public class SongManagement extends AppCompatActivity {
             }
         }
 
-
         adapterSearchResult = new SongSearchResultAdapter(USUKSong);
         LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
@@ -78,8 +79,7 @@ public class SongManagement extends AppCompatActivity {
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
         recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
-
-        Home.setOnClickListener(new View.OnClickListener() {
+            Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent playIntent = new Intent(SongManagement.this, Home.class);
@@ -101,6 +101,17 @@ public class SongManagement extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent playIntent = new Intent(SongManagement.this, AccountInfo.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+
+        layoutAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SongManagement.this, SongAdd.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -146,8 +157,6 @@ public class SongManagement extends AppCompatActivity {
             }
         });
 
-
-
     }
     private void performSearch(String keyword, List<Song> allSong) {
         Set<Song> set = new HashSet<>();
@@ -171,14 +180,11 @@ public class SongManagement extends AppCompatActivity {
 
         }
 
-
         List<Song> result = new ArrayList<>(set);
-
 
         textViewSearchResult.setVisibility(View.VISIBLE);
         recyclerViewSearchResult.setVisibility(View.VISIBLE);
         adapterSearchResult.setmData(result);
-
 
     }
     public static boolean canParseLong(String str) {
@@ -198,5 +204,6 @@ public class SongManagement extends AppCompatActivity {
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
         searchEditText = findViewById(R.id.searchEditText);
+        layoutAdd = findViewById(R.id.layoutAdd);
     }
 }

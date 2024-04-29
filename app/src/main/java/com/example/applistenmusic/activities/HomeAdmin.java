@@ -222,7 +222,7 @@ public class HomeAdmin extends AppCompatActivity {
                     }
                     // Song
                     case 3: {
-                        Intent playIntent = new Intent(HomeAdmin.this, SearchView.class);
+                        Intent playIntent = new Intent(HomeAdmin.this, SongManagement.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

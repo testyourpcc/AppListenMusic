@@ -35,7 +35,6 @@ public class SearchAlbumView extends AppCompatActivity {
     List<Album> allAlbum, SearchAlbum;
     RecyclerView  recyclerViewAllAlbum, recyclerViewSearchResult;
     AlbumSearchResultAdapter adapterSearchResult , adapterAllAlbum;
- 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,6 @@ public class SearchAlbumView extends AppCompatActivity {
             });
         }
 
-
         adapterSearchResult = new AlbumSearchResultAdapter(SearchAlbum);
         LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewSearchResult.setLayoutManager(layoutManagerSearchResult);
@@ -65,7 +63,6 @@ public class SearchAlbumView extends AppCompatActivity {
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewAllAlbum.setLayoutManager(layoutManagerTrending);
         recyclerViewAllAlbum.setAdapter(adapterAllAlbum);
-
 
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,8 +131,6 @@ public class SearchAlbumView extends AppCompatActivity {
             }
         });
 
-
-
     }
     private void performSearch(String keyword, List<Album> allAlbum) {
 
@@ -167,16 +162,8 @@ public class SearchAlbumView extends AppCompatActivity {
             adapterSearchResult.setmData(new ArrayList<>());
         }
 
+    }
 
-    }
-    public static boolean canParseLong(String str) {
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
     public void setcontrol() {
         recyclerViewAllAlbum = findViewById(R.id.recyclerViewAllAlbum);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
