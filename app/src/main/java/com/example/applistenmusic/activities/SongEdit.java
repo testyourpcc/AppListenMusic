@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.interfaces.AlbumLoadListener;
 import com.example.applistenmusic.interfaces.ArtistLoadListener;
@@ -27,12 +30,10 @@ import com.example.applistenmusic.singletons.ArtistSingleton;
 import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongAdd extends AppCompatActivity {
+public class SongEdit extends AppCompatActivity {
 
     private EditText editText1, editText3, editText6;
     AutoCompleteTextView editTextArtist ,editTextAlbum, editTextGenres ;
@@ -47,7 +48,7 @@ public class SongAdd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_song_add);
+        setContentView(R.layout.activity_song_edit);
         setControl();
         if (SongListSingleton.getInstance().hasSong()){
             songList = SongListSingleton.getInstance().getAllSongIfExist();
