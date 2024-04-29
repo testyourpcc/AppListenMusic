@@ -43,6 +43,8 @@ import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,11 +77,21 @@ public class PlayView extends AppCompatActivity {
     boolean shufferSong ;
     boolean favorite = false;
 
+    String currentUserId;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // Lấy thông tin người dùng hiện tại
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         setcontrol();
+
+        // Lấy ID của người dùng hiện tại
+        if (user != null) {
+            currentUserId = user.getUid();
+            // Sử dụng currentUserId ở đây
+        }
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
@@ -299,24 +311,10 @@ public class PlayView extends AppCompatActivity {
         });
 
 
-//        shuffleImg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!shufferSong) {
-//                    shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
-//                    shufferSong = true;
-//                } else {
-//                    shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
-//                    shufferSong = false;
-//                }
-//            }
-//        });
-
         shuffleImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("shuffle");
-
+                DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("shuffle");
                 shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -347,8 +345,7 @@ public class PlayView extends AppCompatActivity {
         repeatImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("repeat");
-
+                DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("repeat");
                 repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -483,7 +480,7 @@ public class PlayView extends AppCompatActivity {
     }
 
     private void checkShuffleFromFirebase() {
-        DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("shuffle");
+        DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("shuffle");
 
         shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -511,7 +508,7 @@ public class PlayView extends AppCompatActivity {
     }
 
     private void checkRepeatFromFirebase() {
-        DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("repeat");
+        DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("repeat");
 
         repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
