@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.adapters.MenuAdapter;
 import com.example.applistenmusic.adapters.SongSearchResultAdapter;
+import com.example.applistenmusic.dialogs.ConfirmDialogManager;
 import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
 import com.example.applistenmusic.helpers.GenresHelper;
@@ -41,7 +42,7 @@ public class SongManagement extends AppCompatActivity {
     LinearLayout layoutAdd;
     TextView textViewSearchResult;
     List<Song> allSong, USUKSong, TrendingSong;
-    RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult, recyclerViewmMenubar;
+    RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult, recyclerViewMenubar;
     SongSearchResultAdapter  adapterSearchResult , adapterTrendingSong;
     MenuAdapter adapterMenuBar;
     List<MenuItem> menuItems;
@@ -89,8 +90,8 @@ public class SongManagement extends AppCompatActivity {
 
         adapterMenuBar = new MenuAdapter(menuItems);
         LinearLayoutManager layoutMenuItems = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerViewmMenubar.setLayoutManager(layoutMenuItems);
-        recyclerViewmMenubar.setAdapter(adapterMenuBar);
+        recyclerViewMenubar.setLayoutManager(layoutMenuItems);
+        recyclerViewMenubar.setAdapter(adapterMenuBar);
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,11 +137,11 @@ public class SongManagement extends AppCompatActivity {
 
             @Override
             public void onButtonClick(int id, View view) {
-                if (recyclerViewmMenubar.getVisibility() == View.VISIBLE) {
-                    recyclerViewmMenubar.setVisibility(View.INVISIBLE);
+                if (recyclerViewMenubar.getVisibility() == View.VISIBLE) {
+                    recyclerViewMenubar.setVisibility(View.INVISIBLE);
                     adapterMenuBar.setmData(new ArrayList<>());
                 } else {
-                    recyclerViewmMenubar.setVisibility(View.VISIBLE);
+                    recyclerViewMenubar.setVisibility(View.VISIBLE);
                     adapterMenuBar.setmData(menuItems);
                     adapterMenuBar.setSongId(id);
                     int[] location = new int[2];
@@ -149,11 +150,11 @@ public class SongManagement extends AppCompatActivity {
                     int y = location[1];
 
                     // Set vị trí mới cho RecyclerView
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewmMenubar.getLayoutParams();
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewMenubar.getLayoutParams();
                     layoutParams.leftMargin = x - 510; // Vị trí x - chiều rộng RecyclerView
                     layoutParams.topMargin = y; // Vị trí y
 
-                    recyclerViewmMenubar.setLayoutParams(layoutParams);
+                    recyclerViewMenubar.setLayoutParams(layoutParams);
                 }
             }
 
@@ -178,6 +179,7 @@ public class SongManagement extends AppCompatActivity {
         adapterMenuBar.setOnItemClickListener(new MenuAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int id, int songId) {
+                adapterMenuBar.setmData(new ArrayList<>());
                 switch (id) {
                     //edit
                     case 1: {
@@ -190,10 +192,16 @@ public class SongManagement extends AppCompatActivity {
                     }
                     // delete
                     case 2: {
-                        Intent playIntent = new Intent(SongManagement.this, SongAdd.class);
-                        startActivity(playIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
+                        ConfirmDialogManager.showDialog(SongManagement.this, "Xác nhận xóa", "Bài hát sẽ bị xóa vĩnh viễn, bạn chắc chứ?", new ConfirmDialogManager.OnClickListener() {
+                            @Override
+                            public void onCancel() {
+                            }
+
+                            @Override
+                            public void onOK() {
+
+                            }
+                        });
                         break;
                     }
                 }
@@ -249,7 +257,7 @@ public class SongManagement extends AppCompatActivity {
     public void setcontrol() {
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
-        recyclerViewmMenubar = findViewById(R.id.recyclerViewMenuBar);
+        recyclerViewMenubar = findViewById(R.id.recyclerViewMenuBar);
         textViewSearchResult = findViewById(R.id.textViewSearchResult);
         Home = findViewById(R.id.imageViewHome);
         Account = findViewById(R.id.imageViewAccount);

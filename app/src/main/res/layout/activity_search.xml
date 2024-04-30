@@ -113,6 +113,11 @@
 
     </ScrollView>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMenuBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

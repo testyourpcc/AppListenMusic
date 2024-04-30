@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.adapters.MenuAdapter;
 import com.example.applistenmusic.adapters.SongAdapter;
 import com.example.applistenmusic.adapters.SongSearchResultAdapter;
+import com.example.applistenmusic.dialogs.ConfirmDialogManager;
 import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
 import com.example.applistenmusic.helpers.GenresHelper;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.models.MenuItem;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
@@ -38,8 +42,10 @@ public class SearchView extends AppCompatActivity {
     EditText searchEditText;
     TextView textViewSearchResult;
     List<Song> allSong, USUKSong, TrendingSong;
-    RecyclerView recyclerViewTrendingSong, recyclerViewSearchResult;
+    RecyclerView recyclerViewTrendingSong, recyclerViewSearchResult, recyclerViewMenubar;
     SongSearchResultAdapter  adapterSearchResult , adapterTrendingSong;
+    MenuAdapter adapterMenuBar;
+    List<MenuItem> menuItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,9 @@ public class SearchView extends AppCompatActivity {
 
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
+        menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem(1,"Edit","playlist"));
+        menuItems.add(new MenuItem(2,"Delete","artist"));
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -78,7 +87,10 @@ public class SearchView extends AppCompatActivity {
         recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
         recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
 
-
+        adapterMenuBar = new MenuAdapter(menuItems);
+        LinearLayoutManager layoutMenuItems = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewMenubar.setLayoutManager(layoutMenuItems);
+        recyclerViewMenubar.setAdapter(adapterMenuBar);
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,12 +133,25 @@ public class SearchView extends AppCompatActivity {
 
             @Override
             public void onButtonClick(int id, View view) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                if (recyclerViewMenubar.getVisibility() == View.VISIBLE) {
+                    recyclerViewMenubar.setVisibility(View.INVISIBLE);
+                    adapterMenuBar.setmData(new ArrayList<>());
+                } else {
+                    recyclerViewMenubar.setVisibility(View.VISIBLE);
+                    adapterMenuBar.setmData(menuItems);
+                    adapterMenuBar.setSongId(id);
+                    int[] location = new int[2];
+                    view.getLocationInWindow(location);
+                    int x = location[0];
+                    int y = location[1];
+
+                    // Set vị trí mới cho RecyclerView
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewMenubar.getLayoutParams();
+                    layoutParams.leftMargin = x - 510; // Vị trí x - chiều rộng RecyclerView
+                    layoutParams.topMargin = y; // Vị trí y
+
+                    recyclerViewMenubar.setLayoutParams(layoutParams);
+                }
             }
         });
         adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
@@ -142,15 +167,61 @@ public class SearchView extends AppCompatActivity {
 
             @Override
             public void onButtonClick(int id, View view) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                if (recyclerViewMenubar.getVisibility() == View.VISIBLE) {
+                    recyclerViewMenubar.setVisibility(View.INVISIBLE);
+                    adapterMenuBar.setmData(new ArrayList<>());
+                } else {
+                    recyclerViewMenubar.setVisibility(View.VISIBLE);
+                    adapterMenuBar.setmData(menuItems);
+                    adapterMenuBar.setSongId(id);
+                    int[] location = new int[2];
+                    view.getLocationInWindow(location);
+                    int x = location[0];
+                    int y = location[1];
+
+                    // Set vị trí mới cho RecyclerView
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewMenubar.getLayoutParams();
+                    layoutParams.leftMargin = x - 510; // Vị trí x - chiều rộng RecyclerView
+                    layoutParams.topMargin = y; // Vị trí y
+
+                    recyclerViewMenubar.setLayoutParams(layoutParams);
+                }
             }
 
         });
+
+        adapterMenuBar.setOnItemClickListener(new MenuAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int id, int songId) {
+                adapterMenuBar.setmData(new ArrayList<>());
+                switch (id) {
+                    //edit
+                    case 1: {
+                        Intent playIntent = new Intent(SearchView.this, SongEdit.class);
+                        playIntent.putExtra("id",songId);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // delete
+                    case 2: {
+                        ConfirmDialogManager.showDialog(SearchView.this, "Xác nhận xóa", "Bài hát sẽ bị xóa vĩnh viễn, bạn chắc chứ?", new ConfirmDialogManager.OnClickListener() {
+                            @Override
+                            public void onCancel() {
+                            }
+
+                            @Override
+                            public void onOK() {
+
+                            }
+                        });
+                        break;
+                    }
+                }
+            }
+        });
+
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -200,6 +271,7 @@ public class SearchView extends AppCompatActivity {
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
         textViewSearchResult = findViewById(R.id.textViewSearchResult);
+        recyclerViewMenubar = findViewById(R.id.recyclerViewMenuBar);
         Home = findViewById(R.id.imageViewHome);
         Search = findViewById(R.id.imageViewSearch);
         Play = findViewById(R.id.imageViewHeadPhone);
