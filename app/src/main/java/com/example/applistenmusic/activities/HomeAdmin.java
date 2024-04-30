@@ -247,6 +247,11 @@ public class HomeAdmin extends AppCompatActivity {
                 }
 
             }
+
+            @Override
+            public void onButtonClick(int id) {
+
+            }
         });
 
 

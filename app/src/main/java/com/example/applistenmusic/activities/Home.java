@@ -251,6 +251,11 @@ public class Home extends AppCompatActivity {
                 }
 
             }
+
+            @Override
+            public void onButtonClick(int id) {
+
+            }
         });
 
 

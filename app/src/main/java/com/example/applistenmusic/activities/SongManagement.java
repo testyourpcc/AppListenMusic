@@ -4,12 +4,12 @@ package com.example.applistenmusic.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
-import com.example.applistenmusic.adapters.SongAdapter;
+import com.example.applistenmusic.adapters.MenuAdapter;
 import com.example.applistenmusic.adapters.SongSearchResultAdapter;
 import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
 import com.example.applistenmusic.helpers.GenresHelper;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.models.MenuItem;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
@@ -35,13 +36,15 @@ import java.util.List;
 import java.util.Set;
 
 public class SongManagement extends AppCompatActivity {
-    ImageView Feature, Home,Search,Play,Account;
+    ImageView Feature, Home,Account;
     EditText searchEditText;
     LinearLayout layoutAdd;
     TextView textViewSearchResult;
     List<Song> allSong, USUKSong, TrendingSong;
-    RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult;
+    RecyclerView  recyclerViewTrendingSong, recyclerViewSearchResult, recyclerViewmMenubar;
     SongSearchResultAdapter  adapterSearchResult , adapterTrendingSong;
+    MenuAdapter adapterMenuBar;
+    List<MenuItem> menuItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,10 @@ public class SongManagement extends AppCompatActivity {
         setcontrol();
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
+        menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem(1,"Edit","playlist"));
+        menuItems.add(new MenuItem(2,"Delete","artist"));
+
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -79,24 +86,21 @@ public class SongManagement extends AppCompatActivity {
         LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewTrendingSong.setLayoutManager(layoutManagerTrending);
         recyclerViewTrendingSong.setAdapter(adapterTrendingSong);
-            Home.setOnClickListener(new View.OnClickListener() {
+
+        adapterMenuBar = new MenuAdapter(menuItems);
+        LinearLayoutManager layoutMenuItems = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewmMenubar.setLayoutManager(layoutMenuItems);
+        recyclerViewmMenubar.setAdapter(adapterMenuBar);
+        Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SongManagement.this, Home.class);
+                Intent playIntent = new Intent(SongManagement.this, HomeAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
             }
         });
-        Play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
+
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,9 +135,27 @@ public class SongManagement extends AppCompatActivity {
             }
 
             @Override
-            public void onButtonClick(int id) {
+            public void onButtonClick(int id, View view) {
+                if (recyclerViewmMenubar.getVisibility() == View.VISIBLE) {
+                    recyclerViewmMenubar.setVisibility(View.INVISIBLE);
+                    adapterMenuBar.setmData(new ArrayList<>());
+                } else {
+                    recyclerViewmMenubar.setVisibility(View.VISIBLE);
+                    adapterMenuBar.setmData(menuItems);
+                    int[] location = new int[2];
+                    view.getLocationInWindow(location);
+                    int x = location[0];
+                    int y = location[1];
 
+                    // Set vị trí mới cho RecyclerView
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewmMenubar.getLayoutParams();
+                    layoutParams.leftMargin = x - 510; // Vị trí x - chiều rộng RecyclerView
+                    layoutParams.topMargin = y; // Vị trí y
+
+                    recyclerViewmMenubar.setLayoutParams(layoutParams);
+                }
             }
+
         });
         adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
@@ -146,6 +168,22 @@ public class SongManagement extends AppCompatActivity {
                 finish();
             }
 
+            @Override
+            public void onButtonClick(int id, View view) {
+
+            }
+        });
+
+        adapterMenuBar.setOnItemClickListener(new MenuAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int id) {
+                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+                playIntent.putExtra("playNow",true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
             @Override
             public void onButtonClick(int id) {
 
@@ -197,21 +235,13 @@ public class SongManagement extends AppCompatActivity {
         adapterSearchResult.setmData(result);
 
     }
-    public static boolean canParseLong(String str) {
-        try {
-            Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
+
     public void setcontrol() {
         recyclerViewTrendingSong = findViewById(R.id.recyclerViewInTrendingNow);
         recyclerViewSearchResult = findViewById(R.id.recyclerViewInSearchResult);
+        recyclerViewmMenubar = findViewById(R.id.recyclerViewMenuBar);
         textViewSearchResult = findViewById(R.id.textViewSearchResult);
         Home = findViewById(R.id.imageViewHome);
-        Search = findViewById(R.id.imageViewSearch);
-        Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
         searchEditText = findViewById(R.id.searchEditText);
         layoutAdd = findViewById(R.id.layoutAdd);

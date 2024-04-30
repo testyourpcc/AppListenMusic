@@ -28,7 +28,7 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
 
     public interface OnItemClickListener {
         void onItemClick(int id);
-        void onButtonClick(int id);
+        void onButtonClick(int id, View view);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -102,10 +102,14 @@ public class SongSearchResultAdapter extends RecyclerView.Adapter<SongSearchResu
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
+                        int[] location = new int[2];
+                        v.getLocationInWindow(location);
+                        int x = location[0];
+                        int y = location[1];
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Song item = mData.get(position);
-                            mListener.onButtonClick(item.getId());
+                            mListener.onButtonClick(item.getId(), v);
                         }
                     }
                 }

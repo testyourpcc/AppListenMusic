@@ -115,9 +115,10 @@ public class PlayList extends AppCompatActivity {
             }
 
             @Override
-            public void onButtonClick(int id) {
+            public void onButtonClick(int id, View view) {
 
             }
+
         });
     }
 

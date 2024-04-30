@@ -25,6 +25,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(int id);
+
+        void onButtonClick(int id);
     }
     public void setOnItemClickListener(MenuAdapter.OnItemClickListener listener) {
         mListener = listener;

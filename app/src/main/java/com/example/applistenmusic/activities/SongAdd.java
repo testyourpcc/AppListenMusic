@@ -1,6 +1,7 @@
 package com.example.applistenmusic.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SongAdd extends AppCompatActivity {
-
+    ImageView Feature, Home,Account;
     private EditText editText1, editText3, editText6;
     AutoCompleteTextView editTextArtist ,editTextAlbum, editTextGenres ;
     private Button buttonSave, buttonCancel, buttonUpload;
@@ -203,6 +205,26 @@ public class SongAdd extends AppCompatActivity {
                 uploadFile();
             }
         });
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SongAdd.this, HomeAdmin.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+
+        Account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SongAdd.this, AccountInfo.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
     }
 
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
@@ -239,7 +261,8 @@ public class SongAdd extends AppCompatActivity {
 
         mainLayout = findViewById(R.id.mainLayout);
 
-
+        Home = findViewById(R.id.imageViewHome);
+        Account = findViewById(R.id.imageViewAccount);
     }
 }
 

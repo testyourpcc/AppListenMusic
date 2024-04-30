@@ -103,6 +103,11 @@ public class SearchAlbumView extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
+
+            @Override
+            public void onButtonClick(int id) {
+
+            }
         });
         adapterSearchResult.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
@@ -113,6 +118,11 @@ public class SearchAlbumView extends AppCompatActivity {
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
+            }
+
+            @Override
+            public void onButtonClick(int id) {
+
             }
         });
         searchEditText.addTextChangedListener(new TextWatcher() {

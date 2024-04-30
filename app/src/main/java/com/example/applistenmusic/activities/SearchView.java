@@ -120,13 +120,14 @@ public class SearchView extends AppCompatActivity {
             }
 
             @Override
-            public void onButtonClick(int id) {
+            public void onButtonClick(int id, View view) {
                 Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
                 SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
                 playIntent.putExtra("playNow",true);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();            }
+                finish();
+            }
         });
         adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
@@ -140,7 +141,7 @@ public class SearchView extends AppCompatActivity {
             }
 
             @Override
-            public void onButtonClick(int id) {
+            public void onButtonClick(int id, View view) {
                 Intent playIntent = new Intent(com.example.applistenmusic.activities.SearchView.this, Home.class);
                 SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
                 playIntent.putExtra("playNow",true);
@@ -148,6 +149,7 @@ public class SearchView extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
             }
+
         });
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override

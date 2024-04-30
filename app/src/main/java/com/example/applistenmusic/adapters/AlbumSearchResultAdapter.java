@@ -15,6 +15,8 @@ import com.example.applistenmusic.helpers.AlbumHelper;
 import com.example.applistenmusic.helpers.ArtistHelper;
 import com.example.applistenmusic.helpers.GenresHelper;
 import com.example.applistenmusic.models.Album;
+import com.example.applistenmusic.models.MenuItem;
+import com.example.applistenmusic.models.Song;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class AlbumSearchResultAdapter extends RecyclerView.Adapter<AlbumSearchRe
 
     public interface OnItemClickListener {
         void onItemClick(int id);
+        void onButtonClick(int id);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -74,6 +77,7 @@ public class AlbumSearchResultAdapter extends RecyclerView.Adapter<AlbumSearchRe
         public TextView textViewArtist;
         public TextView textViewAlbum;
         public TextView textViewGenres;
+         public  ImageView buttonFeature;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,6 +86,8 @@ public class AlbumSearchResultAdapter extends RecyclerView.Adapter<AlbumSearchRe
             textViewArtist = itemView.findViewById(R.id.textViewArtist);
             textViewAlbum = itemView.findViewById(R.id.textViewAlbum);
             textViewGenres = itemView.findViewById(R.id.textViewGenres);
+            buttonFeature = itemView.findViewById(R.id.imageViewFeature);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,6 +96,19 @@ public class AlbumSearchResultAdapter extends RecyclerView.Adapter<AlbumSearchRe
                         if (position != RecyclerView.NO_POSITION) {
                             Album item = mData.get(position);
                             mListener.onItemClick(item.getId());
+                        }
+                    }
+                }
+            });
+
+            buttonFeature.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Album item = mData.get(position);
+                            mListener.onButtonClick(item.getId());
                         }
                     }
                 }
