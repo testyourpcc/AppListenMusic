@@ -2,7 +2,9 @@ package com.example.applistenmusic.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +40,11 @@ import com.example.applistenmusic.singletons.ArtistSingleton;
 import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +62,7 @@ public class SongEdit extends AppCompatActivity {
     List<Album> albums;
     List<Artist> artists;
     List<Song> songList;
-    boolean isFirstSelectionGenres = true, isFirstSelectionAlbum = true, isFirstSelectionArtist = true;
+    boolean isFirstSelectionGenres , isFirstSelectionAlbum , isFirstSelectionArtist ;
     Song song;
 
     @Override
@@ -62,7 +70,7 @@ public class SongEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_edit);
         setControl();
-        if (SongListSingleton.getInstance().hasSong()){
+        if (SongListSingleton.getInstance().hasSong()) {
             songList = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
             SongListSingleton.getInstance().getAllSong(new DataLoadListener() {
@@ -73,7 +81,7 @@ public class SongEdit extends AppCompatActivity {
             });
         }
 
-        if (AlbumSingleton.getInstance().hasAlbum()){
+        if (AlbumSingleton.getInstance().hasAlbum()) {
             albums = AlbumSingleton.getInstance().getAllAlbumIfExist();
         } else {
             AlbumSingleton.getInstance().getAllAlbum(new AlbumLoadListener() {
@@ -84,10 +92,10 @@ public class SongEdit extends AppCompatActivity {
             });
         }
 
-        if (ArtistSingleton.getInstance().hasArtist()){
+        if (ArtistSingleton.getInstance().hasArtist()) {
             artists = ArtistSingleton.getInstance().getAllArtistIfExist();
         } else {
-            ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener(){
+            ArtistSingleton.getInstance().getAllArtist(new ArtistLoadListener() {
                 @Override
                 public void onArtistLoaded(List<Artist> List) {
                     artists = List;
@@ -95,7 +103,7 @@ public class SongEdit extends AppCompatActivity {
             });
         }
 
-        if (GenresSingleton.getInstance().hasGenres()){
+        if (GenresSingleton.getInstance().hasGenres()) {
             genres = GenresSingleton.getInstance().getAllGenresIfExist();
         } else {
             GenresSingleton.getInstance().getAllGenres(new GenresLoadListener() {
@@ -107,9 +115,11 @@ public class SongEdit extends AppCompatActivity {
         }
 
         List<String> genresToStringList = new ArrayList<>();
-        for(Genres g : genres){
+        for (Genres g : genres) {
             genresToStringList.add(g.getName());
         }
+
+        isFirstSelectionGenres = isFirstSelectionAlbum = isFirstSelectionArtist = true;
 
         ArrayAdapter<String> adapterGenres = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genresToStringList);
         adapterGenres.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -133,10 +143,9 @@ public class SongEdit extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextGenres.setAdapter(adapterGenres);
 
         List<String> albumToStringList = new ArrayList<>();
-        for(Album album : albums){
+        for (Album album : albums) {
             albumToStringList.add(album.getName());
         }
 
@@ -162,10 +171,9 @@ public class SongEdit extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextAlbum.setAdapter(adapterAlbum);
 
         List<String> artistToStringList = new ArrayList<>();
-        for(Artist artist : artists){
+        for (Artist artist : artists) {
             artistToStringList.add(artist.getName());
         }
 
@@ -191,7 +199,6 @@ public class SongEdit extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextArtist.setAdapter(adapterArtist);
 
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -206,7 +213,13 @@ public class SongEdit extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
+
+                if (hasFileSelected()) {
+                    saveData();
+                } else {
+                    // Hiển thị thông báo lỗi cho người dùng rằng họ phải chọn một tệp trước khi lưu
+                    Toast.makeText(getApplicationContext(), "Bạn phải chọn một tệp trước khi lưu!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -222,7 +235,10 @@ public class SongEdit extends AppCompatActivity {
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadFile();
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*"); // Mọi loại tệp
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -260,7 +276,7 @@ public class SongEdit extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", -1);
-        song = SongHelper.getSongById(songList,id);
+        song = SongHelper.getSongById(songList, id);
         editText1.setText(song.getName());
         editText3.setText(song.getImage());
         Glide.with(this)
@@ -268,16 +284,42 @@ public class SongEdit extends AppCompatActivity {
                 .override(275, 275)
                 .centerCrop()
                 .into(AlbumImage);
-//        spinnerGenres.setSelection(song.getAlbum()-1);
-//        spinnerAlbum.setSelection(song.getAlbum()-1);
-//        spinnerArtist.setSelection(song.getArtist()-1);
-        editTextAlbum.setText(AlbumHelper.getAlbumNameByID(song.getAlbum()));
-        editTextArtist.setText(ArtistHelper.getArtistNameByID(song.getArtist()));
-        editTextGenres.setText(GenresHelper.getGenresNameByID(song.getGenres()));
+        spinnerGenres.setSelection(song.getAlbum() - 1);
+        spinnerAlbum.setSelection(song.getAlbum() - 1);
+        spinnerArtist.setSelection(song.getArtist() - 1);
+
     }
 
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
     private void saveData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("song");
+
+        // Tạo một song mới và đặt giá trị của nó vào Realtime Firebase
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Lấy số lượng children hiện có trong "songs" để xác định ID tiếp theo
+
+                Intent intent = getIntent();
+                int id = intent.getIntExtra("id", -1);
+                Song song = new Song();
+                song.setId(id);
+                song.setImage(editText3.getText().toString());
+                song.setName(editText1.getText().toString());
+                song.setAlbum(spinnerAlbum.getSelectedItemPosition());
+                song.setArtist(spinnerArtist.getSelectedItemPosition());
+                song.setGenres(spinnerGenres.getSelectedItemPosition());
+                song.setUrl("");
+                song.setView(1);
+                myRef.child(String.valueOf(id)).setValue(song);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Xử lý lỗi nếu có
+            }
+        });
 
     }
 
@@ -317,5 +359,32 @@ public class SongEdit extends AppCompatActivity {
         btnBack = findViewById(R.id.backButton);
         AlbumImage = findViewById(R.id.AlbumImage);
     }
+
+    private boolean hasFileSelected() {
+        // Lấy URI của tệp đã chọn từ Intent
+        Intent intent = getIntent();
+        Uri uri = intent.getData();
+
+        // Trả về true nếu URI không null và không trống
+        return uri != null && !uri.toString().isEmpty();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            // Lấy đường dẫn của tệp đã chọn
+            Uri uri = data.getData();
+
+            // Thực hiện các thao tác tiếp theo với tệp đã chọn
+            // Ví dụ: upload tệp lên server, xử lý nó, vv.
+            handleFile(uri);
+        }
+    }
+
+    private void handleFile(Uri uri) {
+        // Xử lý tệp đã chọn ở đây
+    }
+
 }
 

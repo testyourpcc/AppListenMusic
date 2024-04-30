@@ -3,6 +3,7 @@ package com.example.applistenmusic.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +29,11 @@ import com.example.applistenmusic.singletons.AlbumSingleton;
 import com.example.applistenmusic.singletons.ArtistSingleton;
 import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -119,7 +125,6 @@ public class SongAdd extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextGenres.setAdapter(adapterGenres);
 
         List<String> albumToStringList = new ArrayList<>();
         albumToStringList.add("");
@@ -145,7 +150,6 @@ public class SongAdd extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextAlbum.setAdapter(adapterAlbum);
 
         List<String> artistToStringList = new ArrayList<>();
         artistToStringList.add("");
@@ -171,7 +175,6 @@ public class SongAdd extends AppCompatActivity {
                 // Không có gì được chọn
             }
         });
-        editTextArtist.setAdapter(adapterArtist);
 
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -240,6 +243,37 @@ public class SongAdd extends AppCompatActivity {
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
     private void saveData() {
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("song");
+
+        // Tạo một song mới và đặt giá trị của nó vào Realtime Firebase
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Lấy số lượng children hiện có trong "songs" để xác định ID tiếp theo
+                long count = dataSnapshot.getChildrenCount();
+
+                // Tạo một child mới với ID tăng dần từ 1
+                String newSongId = String.valueOf(count + 1);
+
+                Song song = new Song();
+                song.setImage(editText3.getText().toString());
+                song.setName(editText1.getText().toString());
+                song.setAlbum(spinnerAlbum.getSelectedItemPosition());
+                song.setArtist(spinnerArtist.getSelectedItemPosition());
+                song.setGenres(spinnerGenres.getSelectedItemPosition());
+                song.setId(Integer.valueOf(newSongId));
+                song.setUrl("");
+                song.setView(1);
+                song.setLyric("");
+                myRef.child(newSongId).setValue(song);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Xử lý lỗi nếu có
+            }
+        });
     }
 
     // Phương thức xử lý khi nhấn nút Cancel

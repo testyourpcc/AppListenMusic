@@ -7,20 +7,22 @@
   "album": [
     null,
     {
-      "artis": 1,
+      "artist": 1,
       "id": 1,
+      "image": "https://upload.wikimedia.org/wikipedia/en/4/45/NewJeans_-_NJWMX.png",
       "name": "NJWMX",
       "songIdList": [
         null,
-        2,
+        18,
         3,
         4,
         5
       ]
     },
     {
-      "artis": 3,
+      "artist": 3,
       "id": 2,
+      "image": "https://bandina.vn/wp-content/uploads/2023/03/GD00092444.default.1.png",
       "name": "I've Ive",
       "songIdList": [
         null,
@@ -50,7 +52,7 @@
     {
       "id": 4,
       "image": "",
-      "name": "LESSERAFIM"
+      "name": "LEESERAFIM"
     },
     {
       "id": 5,
@@ -415,6 +417,20 @@
     }
   ],
   "playList": {
+    "2kN1uHz1a7fOmsTrMIMqqx0lH4u2": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
+    ],
+    "734YF0uxU6Yqx9vI9SoZa7zxjEH2": [
+      {
+        "id": 0,
+        "name": "Favorite",
+        "user": "tuan"
+      }
+    ],
     "JcZW5RYZeyfzRSQXIU3YtZUM9F12": [
       null,
       {
@@ -443,7 +459,42 @@
         ]
       }
     ],
+    "RWRGSAtipfa37ZYjxqgzm9fY7na2": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
+    ],
+    "RanMOsbRQWaN7uQ4XaycWsJ4wfG3": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
+    ],
     "UP9dbAc2GDayeaSwp4n3ldlXpIB3": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
+    ],
+    "fULMhxolNbhU34RFnCQhUZ1edMH2": [
+      {
+        "id": 0,
+        "name": "Favorite",
+        "user": "tuan"
+      }
+    ],
+    "lXXoZGNa2thyLrkVVF1dJft9bal1": [
+      {
+        "id": 0,
+        "image": "link",
+        "name": "Favorite"
+      }
+    ],
+    "mlenoBOhLLfTmdrsYG9de8Wejyi1": [
       {
         "id": 0,
         "image": "link",
@@ -451,13 +502,12 @@
       }
     ]
   },
-  "repeat": "1",
   "song": [
     null,
     {
-      "Url": "songs/NewJeans-GODS.mp3",
+      "url": "songs/NewJeans-GODS.mp3",
       "album": 1,
-      "artis": 1,
+      "artist": 1,
       "genres": 1,
       "id": 1,
       "image": "https://www.billboard.com/wp-content/uploads/2023/11/newjeans-press-credit-Colin-Young-Wolff-Riot-Games-2023-billboard-1-1548.jpg",
@@ -466,9 +516,9 @@
       "view": 1
     },
     {
-      "Url": "songs/ILLIT-Magnetic.mp3",
+      "url": "songs/ILLIT-Magnetic.mp3",
       "album": 1,
-      "artis": 12,
+      "artist": 12,
       "genres": 1,
       "id": 2,
       "image": "https://i1.sndcdn.com/artworks-7xxH4cot1ycP2rio-IDWG0g-t500x500.jpg",
@@ -477,9 +527,9 @@
       "view": 1
     },
     {
-      "Url": "songs/NewJeans-Attention.mp3",
+      "url": "songs/NewJeans-Attention.mp3",
       "album": 1,
-      "artis": 1,
+      "artist": 1,
       "genres": 1,
       "id": 3,
       "image": "https://thebiaslistcom.files.wordpress.com/2022/07/newjeans-attention.jpg",
@@ -488,9 +538,9 @@
       "view": 1
     },
     {
-      "Url": "songs/NewJeans-Hurt.mp3",
+      "url": "songs/NewJeans-Hurt.mp3",
       "album": 1,
-      "artis": 1,
+      "artist": 1,
       "genres": 1,
       "id": 4,
       "image": "https://i1.sndcdn.com/artworks-CaArV5Xifm8jQScm-yy4BYQ-t500x500.jpg",
@@ -499,9 +549,9 @@
       "view": 1
     },
     {
-      "Url": "songs/NewJeans-Cookie.mp3",
+      "url": "songs/NewJeans-Cookie.mp3",
       "album": 1,
-      "artis": 1,
+      "artist": 1,
       "genres": 1,
       "id": 5,
       "image": "https://media-cdn-v2.laodong.vn/storage/newsportal/2022/8/27/1086014/20220805-Cg-142801.jpg",
@@ -510,9 +560,9 @@
       "view": 1
     },
     {
-      "Url": "songs/IVE-After LIKE.mp3",
+      "url": "songs/IVE-After LIKE.mp3",
       "album": 1,
-      "artis": 3,
+      "artist": 3,
       "genres": 1,
       "id": 6,
       "image": "https://bloganchoi.com/wp-content/uploads/2022/08/ive-afterlike3-scaled.jpg",
@@ -521,9 +571,9 @@
       "view": 1
     },
     {
-      "Url": "songs/IVE-I AM.mp3",
+      "url": "songs/IVE-I AM.mp3",
       "album": 1,
-      "artis": 3,
+      "artist": 3,
       "genres": 1,
       "id": 7,
       "image": "https://bazaarvietnam.vn/wp-content/uploads/2023/04/ive-gat-hai-nhieu-thanh-tich-khung-voi-i-am.jpg",
@@ -532,9 +582,9 @@
       "view": 1
     },
     {
-      "Url": "songs/IVE-LOVE DIVE.mp3",
+      "url": "songs/IVE-LOVE DIVE.mp3",
       "album": 1,
-      "artis": 3,
+      "artist": 3,
       "genres": 1,
       "id": 8,
       "image": "https://thanhnien.mediacdn.vn/Uploaded/ngocthanh/2022_04_13/khuc-hat-quai-vat1-8891.jpg",
@@ -543,9 +593,9 @@
       "view": 1
     },
     {
-      "Url": "songs/LE SSERAFIM-Perfect Night.mp3",
+      "url": "songs/LE SSERAFIM-Perfect Night.mp3",
       "album": 1,
-      "artis": 4,
+      "artist": 4,
       "genres": 1,
       "id": 9,
       "image": "https://shop.le-sserafim.us/cdn/shop/files/PerfectNight_thumbnail_10_19_1.jpg",
@@ -554,9 +604,9 @@
       "view": 1
     },
     {
-      "Url": "songs/SƠN TÙNG MTP-CHÚNG TA CỦA TƯƠNG LAI.mp3",
+      "url": "songs/SƠN TÙNG MTP-CHÚNG TA CỦA TƯƠNG LAI.mp3",
       "album": 1,
-      "artis": 15,
+      "artist": 15,
       "genres": 31,
       "id": 10,
       "image": "https://i1.sndcdn.com/artworks-m719uD390107CLKp-zQC9dA-t500x500.jpg",
@@ -565,9 +615,9 @@
       "view": 1
     },
     {
-      "Url": "songs/SƠN TÙNG MTP-MUỘN RỒI MÀ SAO CÒN.mp3",
+      "url": "songs/SƠN TÙNG MTP-MUỘN RỒI MÀ SAO CÒN.mp3",
       "album": 1,
-      "artis": 15,
+      "artist": 15,
       "genres": 31,
       "id": 11,
       "image": "https://upload.wikimedia.org/wikipedia/vi/9/93/S%C6%A1n_T%C3%B9ng_M-TP_-_Mu%E1%BB%99n_r%E1%BB%93i_m%C3%A0_sao_c%C3%B2n.png",
@@ -576,9 +626,9 @@
       "view": 1
     },
     {
-      "Url": "songs/Selena Gomez-Calm Down.mp3",
+      "url": "songs/Selena Gomez-Calm Down.mp3",
       "album": 1,
-      "artis": 41,
+      "artist": 41,
       "genres": 32,
       "id": 12,
       "image": "https://i1.sndcdn.com/artworks-bZoe0y2USPuXyf3Y-7MGOhg-t500x500.jpg",
@@ -587,9 +637,9 @@
       "view": 1
     },
     {
-      "Url": "songs/JUSTATEE x PHƯƠNG LY-THẰNG ĐIÊN.mp3",
+      "url": "songs/JUSTATEE x PHƯƠNG LY-THẰNG ĐIÊN.mp3",
       "album": 1,
-      "artis": 35,
+      "artist": 35,
       "genres": 31,
       "id": 13,
       "image": "https://cdn-petrotimes.mastercms.vn/stores/news_dataimages/huyenanh/102018/22/15/in_article/0402_photo1539400655450-1539400655450454787566.jpg",
@@ -598,9 +648,9 @@
       "view": 1
     },
     {
-      "Url": "songs/Đen-Nhạc của rừng.mp3",
+      "url": "songs/Đen-Nhạc của rừng.mp3",
       "album": 1,
-      "artis": 31,
+      "artist": 31,
       "genres": 31,
       "id": 14,
       "image": "https://thoidai.com.vn/stores/news_dataimages/2024/032024/06/05/loi-bai-hat-nhac-cua-rung-lyric-den-vau-420240306051653.jpg",
@@ -609,9 +659,9 @@
       "view": 1
     },
     {
-      "Url": "songs/HIEUTHUHAI-LỜI ĐƯỜNG MẬT.mp3",
+      "url": "songs/HIEUTHUHAI-LỜI ĐƯỜNG MẬT.mp3",
       "album": 1,
-      "artis": 16,
+      "artist": 16,
       "genres": 31,
       "id": 15,
       "image": "https://thegioidienanh.vn/stores/news_dataimages/kimanh/112020/07/16/in_article/2010_TQdesgin1.jpg",
@@ -620,9 +670,9 @@
       "view": 1
     },
     {
-      "Url": "songs/The Weeknd JENNIE LilyRose Depp-One Of The Girls.mp3",
+      "url": "songs/The Weeknd JENNIE LilyRose Depp-One Of The Girls.mp3",
       "album": 1,
-      "artis": 49,
+      "artist": 49,
       "genres": 32,
       "id": 16,
       "image": "https://images.genius.com/55e1d2b5376243566e951f899768cd3e.1000x1000x1.jpg",
@@ -631,9 +681,9 @@
       "view": 1
     },
     {
-      "Url": "songs/BABYMONSTER- SHEESH.mp3",
+      "url": "songs/BABYMONSTER- SHEESH.mp3",
       "album": 1,
-      "artis": 2,
+      "artist": 2,
       "genres": 1,
       "id": 17,
       "image": "https://bazaarvietnam.vn/wp-content/uploads/2024/03/baby-monster-teaser-sheesh.jpg",
@@ -642,9 +692,9 @@
       "view": 1
     },
     {
-      "Url": "songs/NewJeans-Hype Boy.mp3",
+      "url": "songs/NewJeans-Hype Boy.mp3",
       "album": 1,
-      "artis": 1,
+      "artist": 1,
       "genres": 1,
       "id": 18,
       "image": "https://i1.sndcdn.com/artworks-ZWtqLnVynwDjk3PE-ciJbSg-t500x500.jpg",
@@ -654,19 +704,84 @@
     }
   ],
   "users": {
+    "2kN1uHz1a7fOmsTrMIMqqx0lH4u2": {
+      "address": "97 Man Thien",
+      "phone": "0123456789",
+      "premium": false,
+      "role": "USER"
+    },
+    "734YF0uxU6Yqx9vI9SoZa7zxjEH2": {
+      "address": "97 Man Thien",
+      "phone": "0854645787",
+      "premium": false,
+      "repeat": 1,
+      "role": "USER",
+      "shuffle": 0
+    },
+    "7f450GXdDZXRC3OZW6bmoqkkh8T2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "8AEVdgJB63MSaqrfWhoSoJsYDZK2": {
+      "address": "shsgdjdbd",
+      "phone": "134244949"
+    },
     "EB63cuBdqaNpS7kSrldTo8SIrkw2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "ADMIN"
+    },
+    "Pll0lkhQTEOrOVusICUxlXqlgZo2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "ROY15P6MnlMInV2cRZelU0UpuIN2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "RWRGSAtipfa37ZYjxqgzm9fY7na2": {
       "address": "97 Man Thien",
       "phone": "1234567890",
       "premium": false,
       "role": "USER"
     },
     "UP9dbAc2GDayeaSwp4n3ldlXpIB3": {
+      "phone": "01234"
+    },
+    "UQMZCQaWqYTtz02aBD1dDUMp4Ab2": {
+      "address": "tuan tu",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "fULMhxolNbhU34RFnCQhUZ1edMH2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "repeat": 0,
+      "role": "USER",
+      "shuffle": 0
+    },
+    "lXXoZGNa2thyLrkVVF1dJft9bal1": {
       "address": "97 Man Thien",
       "phone": "1234567890",
       "premium": false,
       "role": "USER"
     },
-    "mg1GBCoUs9aAKdQYZUAztFTrqkE3": {
+    "rF6cLQ2OniQwrSCSUX0ZukdEgac2": {
+      "address": "97 Man Thien",
+      "phone": "1234567890",
+      "premium": false,
+      "role": "USER"
+    },
+    "zTwQv5HcpmQMWbbv4X2lUM6fFhf1": {
       "address": "97 Man Thien",
       "phone": "1234567890",
       "premium": false,
