@@ -7,14 +7,14 @@ public class PlayList {
     private int Id;
     private String name;
     private List<Song> songList;
-    private ArrayList<Integer> songIdList;
+    private List<Integer> songIdList;
     private String image;
     private String user;
 
     public PlayList() {
     }
 
-    public PlayList(int id, String name, List<Song> songList, ArrayList<Integer> songIdList, String image, String user) {
+    public PlayList(int id, String name, List<Song> songList, List<Integer> songIdList, String image, String user) {
         this.Id = id;
         this.name = name;
         this.songList = songList;
@@ -51,7 +51,7 @@ public class PlayList {
         return songIdList;
     }
 
-    public void setSongIdList(ArrayList<Integer> songIdList) {
+    public void setSongIdList(List<Integer> songIdList) {
         this.songIdList = songIdList;
     }
 

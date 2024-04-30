@@ -16,6 +16,9 @@
         android:theme="@style/Theme.AppListenMusic"
         tools:targetApi="31">
         <activity
+            android:name=".activities.SearchPlayList"
+            android:exported="false" />
+        <activity
             android:name=".activities.PlayList"
             android:exported="false" />
         <activity
@@ -81,7 +84,6 @@
         <activity
             android:name=".activities.SongEdit"
             android:exported="false" />
-
         <activity
             android:name=".SplashView"
             android:exported="true">
