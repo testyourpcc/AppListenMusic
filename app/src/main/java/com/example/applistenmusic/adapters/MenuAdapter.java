@@ -18,15 +18,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
-
+    private int songId = -1;
     private List<MenuItem> mItems;
     private OnItemClickListener mListener;
     private HashMap<String, Integer> imageResources;
 
     public interface OnItemClickListener {
-        void onItemClick(int id);
-
-        void onButtonClick(int id);
+        void onItemClick(int id, int songId);
     }
     public void setOnItemClickListener(MenuAdapter.OnItemClickListener listener) {
         mListener = listener;
@@ -34,6 +32,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     public void setmData(List<MenuItem> filteredList) {
         this.mItems = filteredList;
+        notifyDataSetChanged();
+    }
+    public void setSongId(int filteredList) {
+        this.songId = filteredList;
         notifyDataSetChanged();
     }
     public MenuAdapter(List<MenuItem> mItems) {
@@ -89,7 +91,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     MenuItem item = mItems.get(position);
-                    mListener.onItemClick(item.getId());
+                    mListener.onItemClick(item.getId(), songId);
                 }
             }
         }

@@ -142,6 +142,7 @@ public class SongManagement extends AppCompatActivity {
                 } else {
                     recyclerViewmMenubar.setVisibility(View.VISIBLE);
                     adapterMenuBar.setmData(menuItems);
+                    adapterMenuBar.setSongId(id);
                     int[] location = new int[2];
                     view.getLocationInWindow(location);
                     int x = location[0];
@@ -176,17 +177,26 @@ public class SongManagement extends AppCompatActivity {
 
         adapterMenuBar.setOnItemClickListener(new MenuAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int id) {
-                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-            @Override
-            public void onButtonClick(int id) {
-
+            public void onItemClick(int id, int songId) {
+                switch (id) {
+                    //edit
+                    case 1: {
+                        Intent playIntent = new Intent(SongManagement.this, SongEdit.class);
+                        playIntent.putExtra("id",songId);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // delete
+                    case 2: {
+                        Intent playIntent = new Intent(SongManagement.this, SongAdd.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                }
             }
         });
         searchEditText.addTextChangedListener(new TextWatcher() {

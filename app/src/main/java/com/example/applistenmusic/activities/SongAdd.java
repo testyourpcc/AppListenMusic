@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SongAdd extends AppCompatActivity {
-    ImageView Feature, Home,Account;
+    ImageView Feature, Home,Account, btnBack;
     private EditText editText1, editText3, editText6;
     AutoCompleteTextView editTextArtist ,editTextAlbum, editTextGenres ;
     private Button buttonSave, buttonCancel, buttonUpload;
@@ -225,6 +225,16 @@ public class SongAdd extends AppCompatActivity {
 
             }
         });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SongAdd.this, SongManagement.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
     }
 
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
@@ -234,7 +244,9 @@ public class SongAdd extends AppCompatActivity {
 
     // Phương thức xử lý khi nhấn nút Cancel
     private void cancelOperation() {
-        // Xử lý ở đây (ví dụ: finish activity)
+        Intent playIntent = new Intent(SongAdd.this, SongManagement.class);
+        startActivity(playIntent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 
@@ -263,6 +275,7 @@ public class SongAdd extends AppCompatActivity {
 
         Home = findViewById(R.id.imageViewHome);
         Account = findViewById(R.id.imageViewAccount);
+        btnBack = findViewById(R.id.backButton);
     }
 }
 

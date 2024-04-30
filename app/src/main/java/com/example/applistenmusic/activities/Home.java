@@ -206,7 +206,7 @@ public class Home extends AppCompatActivity {
 
         adapterMenuItem.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int id) {
+            public void onItemClick(int id, int songId) {
                 switch (id){
                     //playlist
                     case 1: {
@@ -252,10 +252,6 @@ public class Home extends AppCompatActivity {
 
             }
 
-            @Override
-            public void onButtonClick(int id) {
-
-            }
         });
 
 

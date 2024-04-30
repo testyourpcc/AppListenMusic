@@ -18,7 +18,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.helpers.AlbumHelper;
+import com.example.applistenmusic.helpers.ArtistHelper;
+import com.example.applistenmusic.helpers.GenresHelper;
+import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.AlbumLoadListener;
 import com.example.applistenmusic.interfaces.ArtistLoadListener;
 import com.example.applistenmusic.interfaces.DataLoadListener;
@@ -31,12 +36,15 @@ import com.example.applistenmusic.singletons.AlbumSingleton;
 import com.example.applistenmusic.singletons.ArtistSingleton;
 import com.example.applistenmusic.singletons.GenresSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
+import com.example.applistenmusic.singletons.SongSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class SongEdit extends AppCompatActivity {
-    ImageView Feature, Home,Account;
+    ImageView Feature, Home,Account, btnBack, AlbumImage ;
     private EditText editText1, editText3, editText6;
     AutoCompleteTextView editTextArtist ,editTextAlbum, editTextGenres ;
     private Button buttonSave, buttonCancel, buttonUpload;
@@ -46,6 +54,8 @@ public class SongEdit extends AppCompatActivity {
     List<Album> albums;
     List<Artist> artists;
     List<Song> songList;
+    boolean isFirstSelectionGenres = true, isFirstSelectionAlbum = true, isFirstSelectionArtist = true;
+    Song song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +107,6 @@ public class SongEdit extends AppCompatActivity {
         }
 
         List<String> genresToStringList = new ArrayList<>();
-        genresToStringList.add("");
         for(Genres g : genres){
             genresToStringList.add(g.getName());
         }
@@ -110,6 +119,10 @@ public class SongEdit extends AppCompatActivity {
         spinnerGenres.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (isFirstSelectionGenres) {
+                    isFirstSelectionGenres = false;
+                    return; // không làm gì cả
+                }
                 String selectedGenre = genresToStringList.get(position);
                 editTextGenres.setText(selectedGenre);
                 Toast.makeText(getApplicationContext(), "Selected Genre: " + selectedGenre, Toast.LENGTH_SHORT).show();
@@ -123,7 +136,6 @@ public class SongEdit extends AppCompatActivity {
         editTextGenres.setAdapter(adapterGenres);
 
         List<String> albumToStringList = new ArrayList<>();
-        albumToStringList.add("");
         for(Album album : albums){
             albumToStringList.add(album.getName());
         }
@@ -136,6 +148,10 @@ public class SongEdit extends AppCompatActivity {
         spinnerAlbum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (isFirstSelectionAlbum) {
+                    isFirstSelectionAlbum = false;
+                    return; // không làm gì cả
+                }
                 String selectedGenre = albumToStringList.get(position);
                 editTextAlbum.setText(selectedGenre);
                 Toast.makeText(getApplicationContext(), "Selected Genre: " + selectedGenre, Toast.LENGTH_SHORT).show();
@@ -149,7 +165,6 @@ public class SongEdit extends AppCompatActivity {
         editTextAlbum.setAdapter(adapterAlbum);
 
         List<String> artistToStringList = new ArrayList<>();
-        artistToStringList.add("");
         for(Artist artist : artists){
             artistToStringList.add(artist.getName());
         }
@@ -162,6 +177,10 @@ public class SongEdit extends AppCompatActivity {
         spinnerArtist.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (isFirstSelectionArtist) {
+                    isFirstSelectionArtist = false;
+                    return; // không làm gì cả
+                }
                 String selectedGenre = artistToStringList.get(position);
                 editTextArtist.setText(selectedGenre);
                 Toast.makeText(getApplicationContext(), "Selected Genre: " + selectedGenre, Toast.LENGTH_SHORT).show();
@@ -227,6 +246,34 @@ public class SongEdit extends AppCompatActivity {
 
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SongEdit.this, SongManagement.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("id", -1);
+        song = SongHelper.getSongById(songList,id);
+        editText1.setText(song.getName());
+        editText3.setText(song.getImage());
+        Glide.with(this)
+                .load(song.getImage())
+                .override(275, 275)
+                .centerCrop()
+                .into(AlbumImage);
+//        spinnerGenres.setSelection(song.getAlbum()-1);
+//        spinnerAlbum.setSelection(song.getAlbum()-1);
+//        spinnerArtist.setSelection(song.getArtist()-1);
+        editTextAlbum.setText(AlbumHelper.getAlbumNameByID(song.getAlbum()));
+        editTextArtist.setText(ArtistHelper.getArtistNameByID(song.getArtist()));
+        editTextGenres.setText(GenresHelper.getGenresNameByID(song.getGenres()));
     }
 
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
@@ -236,7 +283,9 @@ public class SongEdit extends AppCompatActivity {
 
     // Phương thức xử lý khi nhấn nút Cancel
     private void cancelOperation() {
-        // Xử lý ở đây (ví dụ: finish activity)
+        Intent playIntent = new Intent(SongEdit.this, SongManagement.class);
+        startActivity(playIntent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 
@@ -265,6 +314,8 @@ public class SongEdit extends AppCompatActivity {
 
         Home = findViewById(R.id.imageViewHome);
         Account = findViewById(R.id.imageViewAccount);
+        btnBack = findViewById(R.id.backButton);
+        AlbumImage = findViewById(R.id.AlbumImage);
     }
 }
 

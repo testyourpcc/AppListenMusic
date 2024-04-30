@@ -78,6 +78,9 @@
         <activity
             android:name=".activities.SongAdd"
             android:exported="false" />
+        <activity
+            android:name=".activities.SongEdit"
+            android:exported="false" />
 
         <activity
             android:name=".SplashView"
