@@ -139,6 +139,7 @@ public class PlayView extends AppCompatActivity {
         } else {
                 favorite = false;
                 ivFavorite.setImageResource(R.drawable.ic_heart_off);
+
             }
 
 
@@ -410,11 +411,10 @@ public class PlayView extends AppCompatActivity {
                     favorite = true;
 
                 } else {
+                    removeData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_off);
                     favorite = false;
                 }
-
-
             }
         });
 
@@ -631,6 +631,12 @@ public class PlayView extends AppCompatActivity {
         // Tham chiếu đến file nhạc trên Firebase Storage
         StorageReference storageRef = storage.getReference().child(Url);
 
+        // Cập nhật SongSingleton với bài hát mới
+        SongSingleton.getInstance().setSong(song);
+        // Kiểm tra trạng thái yêu thích cho bài hát mới
+        checkFavoriteStatus(song.getId());
+        //
+
         // Tải file nhạc từ Firebase Storage
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -732,6 +738,71 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onCancelled(@android.support.annotation.NonNull DatabaseError databaseError) {
                 // Xử lý lỗi nếu có
+            }
+        });
+    }
+
+    private void removeData(int songId) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                    PlayList playList = songSnapshot.getValue(PlayList.class);
+                    if(playList.getId() == 1) {
+                        List<Integer> songIdList = playList.getSongIdList();
+                        if (songIdList.contains(songId)) {
+                            // Remove the songId from the list
+                            songIdList.remove(Integer.valueOf(songId));
+                            // Update the songIdList in Firebase
+                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList");
+                            // Check if songIdList only contains one element
+                            if (songIdList.size() == 1) {
+                                // If songIdList only contains one element, set the value of child "1" to 0
+                                DatabaseReference newChildRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("1");
+                                newChildRef.setValue(0);
+                            } else {
+                                playlistRef.setValue(songIdList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@android.support.annotation.NonNull DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
+
+    private void checkFavoriteStatus(int currentSongId) {
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId);
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                    PlayList playList = songSnapshot.getValue(PlayList.class);
+                    if(playList.getId() == 1) {
+                        List<Integer> songIdList = playList.getSongIdList();
+                        if (songIdList.contains(currentSongId)) {
+                            // If the current song ID is in the songIdList, set the heart icon to red and favorite to true
+                            favorite = true;
+                            ivFavorite.setImageResource(R.drawable.ic_heart_on);
+                        } else {
+                            // If the current song ID is not in the songIdList, set the heart icon to white and favorite to false
+                            favorite = false;
+                            ivFavorite.setImageResource(R.drawable.ic_heart_off);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@android.support.annotation.NonNull DatabaseError databaseError) {
+                // Handle error
             }
         });
     }
