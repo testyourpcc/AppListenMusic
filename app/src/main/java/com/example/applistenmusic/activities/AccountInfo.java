@@ -6,8 +6,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,12 +28,23 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
 import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.ResponseInfo;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.rewarded.OnAdMetadataChangedListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.gms.ads.rewarded.ServerSideVerificationOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,6 +83,8 @@ public class AccountInfo extends AppCompatActivity {
 
     private AdView adView;
 
+    private RewardedAd rewardedAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +100,48 @@ public class AccountInfo extends AppCompatActivity {
             // Load quảng cáo vào AdView
             adView.loadAd(adRequest);
         });
+
+
+        //
+        RewardedAd.load(
+                AccountInfo.this,
+                "ca-app-pub-3940256099942544/5224354917", // Thay thế bằng ID quảng cáo rewarded của bạn
+                new AdRequest.Builder().build(),
+                new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        rewardedAd = ad;
+                        rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Quảng cáo đã kết thúc
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Lỗi khi hiển thị quảng cáo
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Quảng cáo đã được hiển thị
+                                rewardedAd = null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Lỗi khi tải quảng cáo
+                        rewardedAd = null;
+                    }
+                }
+        );
+
+
+
+
+
         auth = FirebaseAuth.getInstance();
 
         nameText = findViewById(R.id.nameText);
@@ -172,8 +229,18 @@ public class AccountInfo extends AppCompatActivity {
         resetPasswdText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AccountInfo.this, ResetPasswd.class);
-                startActivity(intent);
+                if (rewardedAd != null) {
+                    rewardedAd.show(AccountInfo.this, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Người dùng đã kiếm được phần thưởng, xử lý ở đây
+                        }
+                    });
+                } else {
+                    // Quảng cáo chưa được tải hoặc đã bị giải phóng, xử lý tương ứng
+                }
+//                Intent intent = new Intent(AccountInfo.this, ResetPasswd.class);
+//                startActivity(intent);
             }
         });
 
