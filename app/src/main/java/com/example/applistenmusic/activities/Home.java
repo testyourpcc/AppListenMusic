@@ -210,7 +210,7 @@ public class Home extends AppCompatActivity {
                 switch (id){
                     //playlist
                     case 1: {
-                        Intent playIntent = new Intent(Home.this, PlayView.class);
+                        Intent playIntent = new Intent(Home.this, SearchPlayList.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

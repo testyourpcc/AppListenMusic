@@ -26,6 +26,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1250830090477010~9671388492"/>
         <activity
+            android:name=".activities.SearchPlayList"
+            android:exported="false" />
+        <activity
             android:name=".activities.PlayList"
             android:exported="false" />
         <activity
@@ -91,7 +94,6 @@
         <activity
             android:name=".activities.SongEdit"
             android:exported="false" />
-
         <activity
             android:name=".SplashView"
             android:exported="true">
