@@ -43,7 +43,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         imageResources = new HashMap<>();
         // Thêm các ánh xạ tên tài nguyên và resId vào HashMap
         imageResources.put("artist", R.drawable.ic_library_filled_24px);
-        imageResources.put("playlist", R.drawable.playlist);
+        imageResources.put("playlist", R.drawable.ic_library_filled_24px);
         imageResources.put("album", R.drawable.ic_library_filled_24px);
         imageResources.put("song", R.drawable.ic_library_filled_24px);
         imageResources.put("downloaded", R.drawable.ic_library_filled_24px);
