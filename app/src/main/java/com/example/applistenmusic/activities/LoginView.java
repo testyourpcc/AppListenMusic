@@ -78,6 +78,8 @@ public class LoginView extends AppCompatActivity {
     List<Album> allAlbum;
     List<PlayList> allUserPlayList;
     List<Genres> allGenres;
+    LoginData loginData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +212,7 @@ public class LoginView extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+
                                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid());
                                         mDatabase.child("role").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                             @Override
@@ -224,6 +227,22 @@ public class LoginView extends AppCompatActivity {
                                                         startActivity(intent);
                                                         finish();
                                                     }else{
+                                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("loginCounts");
+                                                        String loginId = ref.push().getKey();
+                                                        loginData = new LoginData();
+                                                        ref.child(loginId).setValue(loginData, new DatabaseReference.CompletionListener() {
+                                                            @Override
+                                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                                                if (databaseError != null) {
+                                                                    // Có lỗi xảy ra khi thêm dữ liệu
+                                                                    Log.e("Firebase", "Failed to add login data: " + databaseError.getMessage());
+                                                                } else {
+                                                                    // Dữ liệu đã được thêm thành công
+                                                                    Log.d("Firebase", "Login data added successfully");
+                                                                }
+                                                            }
+                                                        });
+
                                                         Intent intent = new Intent(LoginView.this, Home.class);
                                                         startActivity(intent);
                                                         finish();
@@ -246,6 +265,7 @@ public class LoginView extends AppCompatActivity {
                 }
             }
         });
+
         forgotPasswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

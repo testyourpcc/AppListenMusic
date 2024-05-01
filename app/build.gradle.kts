@@ -60,4 +60,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(files("libs/activation.jar", "libs/mail.jar","libs/additionnal.jar"))
+    implementation("com.github.PhilJay:MPAndroidChart:v3.0.2")
 }
