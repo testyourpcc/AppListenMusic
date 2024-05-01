@@ -2,15 +2,24 @@ package com.example.applistenmusic.activities;
 
 import static android.graphics.Color.*;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.adapters.MenuAdapter;
+import com.example.applistenmusic.models.MenuItem;
+import com.example.applistenmusic.models.Song;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Legend;
@@ -39,6 +48,11 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
     private BarChart barChart;
     private List<String> xLabels;
 
+    ImageView HomeFeature, HomeFeatureClose, Home,imageViewFeature,Account;
+    LinearLayout menu;
+    List<MenuItem> menuItems;
+    RecyclerView recyclerViewMenuBar;
+
     public HomeAdmin() {
     }
 
@@ -46,6 +60,124 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
+        setcontrol();
+
+        menuItems = new ArrayList<>();
+        menuItems.add(new MenuItem(1,"Playlists","playlist"));
+        menuItems.add(new MenuItem(2,"Artists","artist"));
+        menuItems.add(new MenuItem(3,"Songs","song"));
+        menuItems.add(new MenuItem(4,"Albums","album"));
+        menuItems.add(new MenuItem(5,"Downloaded","downloaded"));
+        MenuAdapter adapterMenuItem = new MenuAdapter(menuItems);
+        LinearLayoutManager layoutManagerMenuItem = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewMenuBar.setLayoutManager(layoutManagerMenuItem);
+        recyclerViewMenuBar.setAdapter(adapterMenuItem);
+
+        Account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(HomeAdmin.this, AccountInfo.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+
+        HomeFeature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu.getVisibility() == View.VISIBLE) {
+                    menu.setVisibility(View.INVISIBLE);
+                    adapterMenuItem.setmData(new ArrayList<>());
+                } else {
+                    menu.setVisibility(View.VISIBLE);
+                    adapterMenuItem.setmData(menuItems);
+                }
+            }
+        });
+
+        imageViewFeature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu.getVisibility() == View.VISIBLE) {
+                    menu.setVisibility(View.INVISIBLE);
+                    adapterMenuItem.setmData(new ArrayList<>());
+                } else {
+                    menu.setVisibility(View.VISIBLE);
+                    adapterMenuItem.setmData(menuItems);
+                }
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        HomeFeatureClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu.getVisibility() == View.VISIBLE) {
+                    menu.setVisibility(View.INVISIBLE);
+                    adapterMenuItem.setmData(new ArrayList<>());
+                } else {
+                    menu.setVisibility(View.VISIBLE);
+                    adapterMenuItem.setmData(menuItems);
+                }
+            }
+        });
+
+        adapterMenuItem.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int id, int songId) {
+                switch (id){
+                    //playlist
+                    case 1: {
+                        Intent playIntent = new Intent(HomeAdmin.this, SearchPlayList.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // Arist
+                    case 2:{
+                        Intent playIntent = new Intent(HomeAdmin.this, AccountInfo.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // Song
+                    case 3: {
+                        Intent playIntent = new Intent(HomeAdmin.this, SongManagement.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // album
+                    case 4: {
+                        Intent playIntent = new Intent(HomeAdmin.this, SearchAlbumView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // download
+                    case 5: {
+                        Intent playIntent = new Intent(HomeAdmin.this, LyricView.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                }
+
+            }
+
+        });
+
 
         // Khởi tạo combineChart
         mChart = (CombinedChart) findViewById(R.id.combinedChart);
@@ -202,5 +334,16 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    public void setcontrol() {
+        recyclerViewMenuBar = findViewById(R.id.recyclerViewMenuBar);
+        menu = findViewById(R.id.menu);
+        Home = findViewById(R.id.imageViewHome);
+        imageViewFeature = findViewById(R.id.imageViewFeature);
+        Account = findViewById(R.id.imageViewAccount);
+        HomeFeature = findViewById(R.id.imageViewFeatureOpen);
+        HomeFeatureClose =  findViewById(R.id.imageViewMenuClose);
+
     }
 }

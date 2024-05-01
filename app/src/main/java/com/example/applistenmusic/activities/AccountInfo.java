@@ -26,6 +26,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,10 +69,62 @@ public class AccountInfo extends AppCompatActivity {
     ImageView Home, Search, Play, Account, noImage, backgroundAcountImg;
     EditText address,phoneNumber;
 
+    private AdView adView;
+
+    private RewardedAd rewardedAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_info);
+
+        adView = findViewById(R.id.adView);
+
+        // Khởi tạo quảng cáo
+        MobileAds.initialize(AccountInfo.this, initializationStatus -> {
+            // Tạo yêu cầu quảng cáo
+            AdRequest adRequest = new AdRequest.Builder().build();
+
+            // Load quảng cáo vào AdView
+            adView.loadAd(adRequest);
+        });
+
+
+        //
+        RewardedAd.load(
+                AccountInfo.this,
+                "ca-app-pub-1250830090477010/3793425606", // Thay thế bằng ID quảng cáo rewarded của bạn
+                new AdRequest.Builder().build(),
+                new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        rewardedAd = ad;
+                        rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Quảng cáo đã kết thúc
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Lỗi khi hiển thị quảng cáo
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Quảng cáo đã được hiển thị
+                                rewardedAd = null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Lỗi khi tải quảng cáo
+                        rewardedAd = null;
+                    }
+                }
+        );
 
         auth = FirebaseAuth.getInstance();
 

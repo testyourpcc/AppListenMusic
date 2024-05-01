@@ -57,19 +57,20 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/uploadImgText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/upimgbtn"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/inriasans_regular"
-            android:textSize="15sp"
-            android:textAlignment="center"
-            android:gravity="center"
+            android:layout_height="18dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:text="upload avatar"/>
+            android:background="@drawable/upimgbtn"
+            android:fontFamily="@font/inriasans_regular"
+            android:gravity="center"
+            android:text="upload avatar"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,31 +205,43 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1"
             android:gravity="bottom"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reset password"
                 android:id="@+id/resetPasswdText"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:textColor="#ffffff"/>
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Logout"
-                android:id="@+id/logoutText"
-                android:textSize="25sp"
                 android:gravity="center"
-                android:textColor="#ffffff"/>
+                android:text="Reset password"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/logoutText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Logout"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_marginTop="50dp"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-1250830090477010/3674624659" />
 
     <LinearLayout
         android:id="@+id/toolbar"
