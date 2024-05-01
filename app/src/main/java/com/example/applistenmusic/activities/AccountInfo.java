@@ -105,7 +105,7 @@ public class AccountInfo extends AppCompatActivity {
         //
         RewardedAd.load(
                 AccountInfo.this,
-                "ca-app-pub-3940256099942544/5224354917", // Thay thế bằng ID quảng cáo rewarded của bạn
+                "ca-app-pub-1250830090477010/3793425606", // Thay thế bằng ID quảng cáo rewarded của bạn
                 new AdRequest.Builder().build(),
                 new RewardedAdLoadCallback() {
                     @Override
