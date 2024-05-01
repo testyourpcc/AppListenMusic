@@ -91,4 +91,14 @@ public class PlayListSingleton {
             PlayListLoadListener.onPlayListLoaded(new ArrayList<PlayList>());
         }
     }
+
+    private PlayList currentPlayList;
+
+    public synchronized void setPlayList(PlayList playList) {
+        this.currentPlayList = playList;
+    }
+
+    public synchronized PlayList getPlayList() {
+        return this.currentPlayList;
+    }
 }

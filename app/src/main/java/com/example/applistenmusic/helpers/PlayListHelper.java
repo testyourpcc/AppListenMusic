@@ -1,8 +1,14 @@
 package com.example.applistenmusic.helpers;
 
+import android.util.Log;
+
+import com.example.applistenmusic.interfaces.PlayListFetchListener;
 import com.example.applistenmusic.interfaces.PlayListLoadListener;
 import com.example.applistenmusic.models.PlayList;
 import com.example.applistenmusic.singletons.PlayListSingleton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +103,40 @@ public class PlayListHelper {
         }
         return "";
     }
+    // tìm kiếm playlist theo tên
+    public static void getPlayListByUserId(String userId, PlayListFetchListener playListFetchListener) {
+        List<PlayList> userPlayLists = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference().child("playList").child(userId);
+
+        reference.get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e("firebase", "Error getting data", task.getException());
+            } else {
+                DataSnapshot dataSnapshot = task.getResult();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot playListSnapshot : dataSnapshot.getChildren()) {
+                        PlayList playList = playListSnapshot.getValue(PlayList.class);
+                        userPlayLists.add(playList);
+                        // Fetch songIdList from the first child
+                        if (playListSnapshot.hasChild("songIdList")) {
+                            List<Integer> songIdList = new ArrayList<>();
+                            for (DataSnapshot songIdSnapshot : playListSnapshot.child("songIdList").getChildren()) {
+                                songIdList.add(songIdSnapshot.getValue(Integer.class));
+                                Log.d("firebase", "songIdList: " + songIdList);
+                            }
+                            playList.setSongIdList(songIdList);
+                        }
+                    }
+                } else {
+                    Log.e("firebase", "No data found");
+                }
+                playListFetchListener.onPlayListFetched(userPlayLists);
+            }
+        });
+    }
+
+
     public PlayList getPlayList() {
         return playList;
     }

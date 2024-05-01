@@ -24,6 +24,8 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.ViewHo
 
     public interface OnItemClickListener {
         void onItemClick(int id);
+
+        void onButtonClick(int id);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -67,6 +69,18 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.ViewHo
             textView = itemView.findViewById(R.id.textViewPlayListName);
             imageView = itemView.findViewById(R.id.imageViewPlayList);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            PlayList item = mData.get(position);
+                            mListener.onItemClick(item.getId());
+                        }
+                    }
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

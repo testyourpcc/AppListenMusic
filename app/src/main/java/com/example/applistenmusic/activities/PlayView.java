@@ -13,7 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.applistenmusic.models.PlayList;
 import android.media.AudioAttributes;
 
 import com.bumptech.glide.Glide;
@@ -37,8 +37,10 @@ import androidx.annotation.NonNull;
 import com.example.applistenmusic.dialogs.AlertDialogManager;
 import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
+import com.example.applistenmusic.interfaces.PlayListLoadListener;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
+import com.example.applistenmusic.singletons.PlayListSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -76,9 +78,9 @@ public class PlayView extends AppCompatActivity {
     boolean repeatSong;
     boolean shufferSong ;
     boolean favorite = false;
-
+    PlayList fvr;
     String currentUserId;
-
+    List<PlayList> allPlayList;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // Lấy thông tin người dùng hiện tại
 
     @Override
@@ -92,6 +94,20 @@ public class PlayView extends AppCompatActivity {
             currentUserId = user.getUid();
             // Sử dụng currentUserId ở đây
         }
+
+
+        if(PlayListSingleton.getInstance().hasPlayList()){
+            allPlayList = PlayListSingleton.getInstance().getAllPlayListIfExist();
+        } else {
+            PlayListSingleton.getInstance().getAllPlayList(new PlayListLoadListener() {
+                @Override
+                public void onPlayListLoaded(List<com.example.applistenmusic.models.PlayList> songList) {
+                    allPlayList = songList;
+                }
+            });
+        }
+
+        fvr = allPlayList.get(0);
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
@@ -115,7 +131,17 @@ public class PlayView extends AppCompatActivity {
         boolean playNow = intent.getBooleanExtra("playNow", false);
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
-            Song song = SongSingleton.getInstance().getSong();
+            song = SongSingleton.getInstance().getSong();
+            if( fvr.getSongIdList().contains(song.getId())){
+                favorite = true;
+                ivFavorite.setImageResource(R.drawable.ic_heart_on);
+
+        } else {
+                favorite = false;
+                ivFavorite.setImageResource(R.drawable.ic_heart_off);
+            }
+
+
             imageUrl = song.getImage();
             songName.setText(song.getName());
             playButton.setImageResource(R.drawable.ic_pause_40px);
@@ -379,12 +405,16 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favorite) {
+                    saveData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
+
                 } else {
                     ivFavorite.setImageResource(R.drawable.ic_heart_off);
                     favorite = false;
                 }
+
+
             }
         });
 
@@ -543,6 +573,7 @@ public class PlayView extends AppCompatActivity {
     private void updateAndPlayNextSong(Song nextSong) {
         // Cập nhật thông tin bài hát mới
         SongSingleton.getInstance().setSong(nextSong);
+        song = SongSingleton.getInstance().getSong();
         imageUrl = nextSong.getImage();
         int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size);
         Glide.with(PlayView.this)
@@ -658,6 +689,49 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void saveData(int songId) {
+
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId);
+
+        // Tạo một song mới và đặt giá trị của nó vào Realtime Firebase
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
+                //  Lấy số lượng children hiện có trong "songs" để xác định ID tiếp theo
+                boolean flag = true;
+                for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                    PlayList playList = songSnapshot.getValue(PlayList.class);
+                    if(playList.getId() == 1) {
+                        if (playList.getSongIdList().contains(0)) {
+                            flag = false;
+                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("1");
+                            playlistRef.setValue(songId);
+                        }
+                    }
+                }
+
+              if(flag){
+                    DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList");
+
+                    for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                        PlayList song = songSnapshot.getValue(PlayList.class);
+                        if(song.getId() == 1) {
+                            List<Integer> a = song.getSongIdList();
+                            a.add(songId);
+                            playlistRef.setValue(a);
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@android.support.annotation.NonNull DatabaseError databaseError) {
+                // Xử lý lỗi nếu có
             }
         });
     }

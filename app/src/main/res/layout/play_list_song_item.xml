@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<!-- play_list_song_item.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:layout_marginLeft="5dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageViewPlayListSong"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_weight="0"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/noimage" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/textViewPlayListSongTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="PlayList Song Title"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/textViewPlayListArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Artist Name"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/textViewPlayListAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Album Name"
+            android:textSize="10sp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@android:color/darker_gray"/>
+        <TextView
+            android:id="@+id/textViewPlayListGenres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genres"
+            android:textSize="10sp"
+            android:textColor="@android:color/darker_gray"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageViewPlayListFeature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_menu" />
+</LinearLayout>

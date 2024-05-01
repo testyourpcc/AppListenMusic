@@ -250,7 +250,6 @@ public class SongAdd extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Lấy số lượng children hiện có trong "songs" để xác định ID tiếp theo
                 long count = dataSnapshot.getChildrenCount();
 
                 // Tạo một child mới với ID tăng dần từ 1

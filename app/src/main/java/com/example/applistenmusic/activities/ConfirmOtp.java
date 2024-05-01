@@ -341,14 +341,14 @@ public class ConfirmOtp extends AppCompatActivity {
         DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(userId).child("0");
 
         // Tạo một đối tượng Playlist mới
-        defaultPlaylist = new PlayList();
+        PlayList defaultPlaylist = new PlayList();
         defaultPlaylist.setName("Favorite");
-        defaultPlaylist.setImage("link");
-        defaultPlaylist.setId(0);
-        defaultPlaylist.setImage(null);
-        defaultPlaylist.setUser("tuan");
-        defaultPlaylist.setSongIdList(new ArrayList<Integer>());
-
+        defaultPlaylist.setId(1);
+        defaultPlaylist.setImage("");
+        defaultPlaylist.setUser(userId.toString());
+        ArrayList<Integer> a = new ArrayList<>();
+        a.add(1,0);
+        defaultPlaylist.setSongIdList(a);
         // Lưu playlist vào Firebase Realtime Database
         playlistRef.setValue(defaultPlaylist);
     }
