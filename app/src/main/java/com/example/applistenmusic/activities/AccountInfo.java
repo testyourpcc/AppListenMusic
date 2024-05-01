@@ -26,6 +26,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,6 +56,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.UUID;
 
 public class AccountInfo extends AppCompatActivity {
@@ -61,11 +68,23 @@ public class AccountInfo extends AppCompatActivity {
     ImageView Home, Search, Play, Account, noImage, backgroundAcountImg;
     EditText address,phoneNumber;
 
+    private AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_info);
 
+        adView = findViewById(R.id.adView);
+
+        // Khởi tạo quảng cáo
+        MobileAds.initialize(AccountInfo.this, initializationStatus -> {
+            // Tạo yêu cầu quảng cáo
+            AdRequest adRequest = new AdRequest.Builder().build();
+
+            // Load quảng cáo vào AdView
+            adView.loadAd(adRequest);
+        });
         auth = FirebaseAuth.getInstance();
 
         nameText = findViewById(R.id.nameText);
