@@ -157,7 +157,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                     }
                     // album
                     case 4: {
-                        Intent playIntent = new Intent(HomeAdmin.this, SearchAlbumView.class);
+                        Intent playIntent = new Intent(HomeAdmin.this, AlbumManagement.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

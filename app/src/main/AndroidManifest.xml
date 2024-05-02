@@ -106,6 +106,9 @@
             android:name=".activities.SongEdit"
             android:exported="false" />
         <activity
+            android:name=".activities.AlbumManagement"
+            android:exported="false" />
+        <activity
             android:name=".SplashView"
             android:exported="true">
             <intent-filter>
