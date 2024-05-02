@@ -58,4 +58,5 @@ dependencies {
 
     implementation(files("libs/activation.jar", "libs/mail.jar","libs/additionnal.jar"))
     implementation("com.github.PhilJay:MPAndroidChart:v3.0.2")
+
 }

@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +29,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SearchAlbumView extends AppCompatActivity {
+public class AlbumManagement extends AppCompatActivity {
     ImageView Feature, Home,Search,Play,Account;
     EditText searchEditText;
     TextView textViewSearchResult;
+    LinearLayout layoutAdd;
     List<Album> allAlbum, SearchAlbum;
     RecyclerView  recyclerViewAllAlbum, recyclerViewSearchResult;
     AlbumSearchResultAdapter adapterSearchResult , adapterAllAlbum;
@@ -39,7 +41,7 @@ public class SearchAlbumView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_album);
+        setContentView(R.layout.activity_album_management);
         setcontrol();
 
         SearchAlbum = new ArrayList<>();
@@ -67,7 +69,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, HomeAdmin.class);
+                Intent playIntent = new Intent(AlbumManagement.this, HomeAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
@@ -76,7 +78,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, PlayView.class);
+                Intent playIntent = new Intent(AlbumManagement.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -85,7 +87,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, AccountInfoAdmin.class);
+                Intent playIntent = new Intent(AlbumManagement.this, AccountInfoAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -93,11 +95,21 @@ public class SearchAlbumView extends AppCompatActivity {
             }
         });
 
+        layoutAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(AlbumManagement.this, SongAdd.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
         adapterAllAlbum.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
                 Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
+                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
                 AlbumSingleton.getInstance().setAlbum(album);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -113,7 +125,7 @@ public class SearchAlbumView extends AppCompatActivity {
             @Override
             public void onItemClick(int id) {
                 Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(SearchAlbumView.this, AlbumDetailView.class);
+                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
                 AlbumSingleton.getInstance().setAlbum(album);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -183,5 +195,6 @@ public class SearchAlbumView extends AppCompatActivity {
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
         searchEditText = findViewById(R.id.searchEditText);
+        layoutAdd = findViewById(R.id.layoutAdd);
     }
 }

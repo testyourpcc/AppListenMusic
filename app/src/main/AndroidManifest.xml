@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.READ_CLIPBOARD" />
     <uses-permission android:name="android.permission.WRITE_CLIPBOARD" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID_SERVICE" />
@@ -19,9 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppListenMusic"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.AccountInfoAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserDetail"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UserManager"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-1250830090477010~9671388492"/>
+            android:value="ca-app-pub-1250830090477010~9671388492" />
+
         <activity
             android:name=".activities.PlayListDetailView"
             android:exported="false" />
@@ -93,6 +104,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.SongEdit"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AlbumManagement"
             android:exported="false" />
         <activity
             android:name=".SplashView"

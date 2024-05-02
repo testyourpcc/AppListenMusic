@@ -117,8 +117,16 @@ public class ConfirmOtp extends AppCompatActivity {
                                 @Override public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        String emailaddr;
 
-                                        UserInfo userInfo = new UserInfo("USER","1234567890","97 Man Thien",false,0,0);
+                                        if (user.getProviderData().get(1).getProviderId().equals("google.com")) {
+                                            emailaddr=user.getProviderData().get(1).getEmail();
+
+                                        } else {
+                                            emailaddr=user.getEmail();
+                                        }
+
+                                        UserInfo userInfo = new UserInfo(name,emailaddr,"12345678","97 Man Thien","USER","gs://applistenmusic-b4e45.appspot.com/images/" + user.getUid() + "/avatar",false,0,0,0);
 
                                         reference.child("users").child(mAuth.getUid()).setValue(userInfo);
 
@@ -127,6 +135,8 @@ public class ConfirmOtp extends AppCompatActivity {
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name)
                                                 .build();
+
+//                                        createDefaultPlaylist(user.getUid());
 
                                         user.updateProfile(profileUpdates)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {

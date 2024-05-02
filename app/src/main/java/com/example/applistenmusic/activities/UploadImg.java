@@ -83,10 +83,14 @@ public class UploadImg extends AppCompatActivity {
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                selectImage.setClickable(false);
-                uploadImage.setClickable(false);
-                uploadImage(image);
+                if (image!=null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    selectImage.setClickable(false);
+                    uploadImage.setClickable(false);
+                    uploadImage(image);
+                }else{
+                    Toast.makeText(UploadImg.this, "Please select image!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
