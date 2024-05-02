@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +51,8 @@ public class SearchPlayList extends AppCompatActivity {
     PlayListSongSearchResultAdapter adapterSearchResult , adapterAllPlayList;
     List<Song> allSong;
     ImageView ivBack;
+
+    LinearLayout layoutAdd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,23 +83,6 @@ public class SearchPlayList extends AppCompatActivity {
         }
 
         SearchPlayList = new ArrayList<>();
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            String userId = currentUser.getUid();
-//            PlayListHelper.getPlayListByUserId(userId, new PlayListFetchListener() {
-//                @Override
-//                public void onPlayListFetched(List<PlayList> playLists) {
-//                    allPlayList = playLists;
-//                    adapterAllPlayList = new PlayListAdapter(allPlayList);
-//                    LinearLayoutManager layoutManagerTrending = new LinearLayoutManager(SearchPlayList.this, LinearLayoutManager.VERTICAL, false);
-//                    recyclerViewAllPlayList.setLayoutManager(layoutManagerTrending);
-//                    recyclerViewAllPlayList.setAdapter(adapterAllPlayList);
-//                }
-//            });
-//        } else {
-//            allPlayList = new ArrayList<>();
-//        }
 
         adapterSearchResult = new PlayListSongSearchResultAdapter(SearchPlayList);
         LinearLayoutManager layoutManagerSearchResult = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -143,6 +129,17 @@ public class SearchPlayList extends AppCompatActivity {
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
+            }
+        });
+
+        layoutAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SearchPlayList.this, PlaylistAddSong.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
             }
         });
 
@@ -239,5 +236,6 @@ public class SearchPlayList extends AppCompatActivity {
         Account = findViewById(R.id.imageViewAccount);
         searchEditText = findViewById(R.id.searchEditText);
         ivBack = findViewById(R.id.ivBack);
+        layoutAdd = findViewById(R.id.layoutAdd);
     }
 }

@@ -425,7 +425,7 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favorite) {
-                   /// saveData(song.getId());
+                   // saveData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
 

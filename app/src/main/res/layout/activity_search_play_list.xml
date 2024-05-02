@@ -40,12 +40,43 @@
 <!--        android:layout_marginTop="12dp"-->
 <!--        app:srcCompat="@drawable/baseline_dehaze_24" />-->
     <!-- EditText để nhập từ khóa tìm kiếm -->
+
+    <LinearLayout
+        android:id="@+id/layoutAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@id/textViewSearch"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imageViewAdd"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/textViewSearch"
+            app:srcCompat="@drawable/add"/>
+
+        <TextView
+            android:id="@+id/textViewAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSearch"
+            android:layout_alignLeft="@+id/imageViewAdd"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="Add Playlist"
+            android:textColor="#F44336"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSearch"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/layoutAdd"
         android:hint="Albums, Artists, Songs, Lyrics, ...."
         android:background="@drawable/edit_text_rounded_corner"
         android:textColor="@android:color/black"
