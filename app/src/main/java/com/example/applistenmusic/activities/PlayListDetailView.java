@@ -35,6 +35,7 @@ public class PlayListDetailView extends AppCompatActivity {
     PlayList playList;
     RecyclerView recyclerViewAllSongInPlayList;
     SongSearchResultAdapter adapterAllSongInPlayList;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,88 @@ public class PlayListDetailView extends AppCompatActivity {
         recyclerViewAllSongInPlayList.setLayoutManager(layoutManagerTrending);
         recyclerViewAllSongInPlayList.setAdapter(adapterAllSongInPlayList);
 
-        // Implement the rest of the code similar to AlbumDetailView
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, Home.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+        Play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, PlayView.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
+        Account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, AccountInfo.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(allSong,playList.getSongIdList().get(1).intValue()));
+                playIntent.putExtra("playNow", true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+        btnShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(allSong,playList.getSongIdList().get(1).intValue()));
+                playIntent.putExtra("playNow", true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayListDetailView.this, SearchPlayList.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+
+
+        adapterAllSongInPlayList.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int id) {
+                Intent playIntent = new Intent(PlayListDetailView.this, PlayView.class);
+                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(), id));
+                playIntent.putExtra("playNow", true);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+
+            @Override
+            public void onButtonClick(int id, View view) {
+
+            }
+
+        });
+
     }
 
     public void setcontrol() {
@@ -90,5 +172,6 @@ public class PlayListDetailView extends AppCompatActivity {
         textViewPlayListName = findViewById(R.id.PlayListNameTextView);
         PlayListImage = findViewById(R.id.PlayListImage);
         textViewSongSize = findViewById(R.id.textViewSongSize);
+        ivBack = findViewById(R.id.ivBack);
     }
 }

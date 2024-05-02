@@ -870,7 +870,7 @@ public class PlayView extends AppCompatActivity {
                         // Swipe up, switch to PlayList activity
                         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
                         Log.d("12345", "onFling: vuot len");
-                        Intent intent = new Intent(PlayView.this, PlayList.class);
+                        Intent intent = new Intent(PlayView.this, MusicPlaying.class);
                         startActivity(intent);
                         result = true;
                     } else {

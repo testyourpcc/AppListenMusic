@@ -49,6 +49,7 @@ public class SearchPlayList extends AppCompatActivity {
     RecyclerView  recyclerViewAllPlayList, recyclerViewSearchResult;
     PlayListSongSearchResultAdapter adapterSearchResult , adapterAllPlayList;
     List<Song> allSong;
+    ImageView ivBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +134,15 @@ public class SearchPlayList extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
 
+            }
+        });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SearchPlayList.this, Home.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
             }
         });
 
@@ -228,5 +238,6 @@ public class SearchPlayList extends AppCompatActivity {
         Play = findViewById(R.id.imageViewHeadPhone);
         Account = findViewById(R.id.imageViewAccount);
         searchEditText = findViewById(R.id.searchEditText);
+        ivBack = findViewById(R.id.ivBack);
     }
 }
