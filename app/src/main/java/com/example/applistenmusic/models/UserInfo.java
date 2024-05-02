@@ -4,12 +4,46 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class UserInfo {
+
+    String name, email, phone, address, role,image;
+    boolean premium;
     Integer shuffle,repeat;
 
-    String role;
-    String phone;
-    String address;
-    boolean premium;
+    public UserInfo(String name, String email, String phone, String address, String role, String image, boolean premium, Integer shuffle, Integer repeat) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.image = image;
+        this.premium = premium;
+        this.shuffle = shuffle;
+        this.repeat = repeat;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public Integer getShuffle() {
         return shuffle;
@@ -60,14 +94,6 @@ public class UserInfo {
     }
 
 
-    public UserInfo(String role, String phone, String address, boolean premium,Integer shuffle, Integer repeat) {
-        this.role = role;
-        this.phone = phone;
-        this.address = address;
-        this.premium = premium;
-        this.shuffle = shuffle;
-        this.repeat = repeat;
-    }
 
     public UserInfo() {
 

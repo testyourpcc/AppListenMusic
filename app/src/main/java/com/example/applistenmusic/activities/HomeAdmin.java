@@ -76,7 +76,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(HomeAdmin.this, AccountInfo.class);
+                Intent playIntent = new Intent(HomeAdmin.this, AccountInfoAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
@@ -134,7 +134,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                 switch (id){
                     //playlist
                     case 1: {
-                        Intent playIntent = new Intent(HomeAdmin.this, SearchPlayList.class);
+                        Intent playIntent = new Intent(HomeAdmin.this, UserManager.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();
@@ -142,10 +142,9 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                     }
                     // Arist
                     case 2:{
-                        Intent playIntent = new Intent(HomeAdmin.this, AccountInfo.class);
+                        Intent playIntent = new Intent(HomeAdmin.this, AccountInfoAdmin.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
                         break;
                     }
                     // Song
