@@ -132,6 +132,8 @@ public class ConfirmOtp extends AppCompatActivity {
                                                 .setDisplayName(name)
                                                 .build();
 
+                                        createDefaultPlaylist(user.getUid());
+
                                         user.updateProfile(profileUpdates)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
@@ -145,7 +147,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
-//                                        createDefaultPlaylist(user.getUid());
+
                                     } else {
                                         Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
