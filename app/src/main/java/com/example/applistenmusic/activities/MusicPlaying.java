@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.applistenmusic.R;
 import com.example.applistenmusic.R.anim;
 import com.example.applistenmusic.R.id;
 import com.example.applistenmusic.R.layout;
@@ -22,9 +21,10 @@ import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlayList extends AppCompatActivity {
+public class MusicPlaying extends AppCompatActivity {
     ImageView Home, Play, Account;
     View mainView;
     private GestureDetector gestureDetector;
@@ -65,7 +65,7 @@ public class PlayList extends AppCompatActivity {
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(PlayList.this, PlayView.class);
+                Intent playIntent = new Intent(MusicPlaying.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(anim.slide_in_down, anim.slide_out_up);
                 finish();
@@ -75,7 +75,7 @@ public class PlayList extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(PlayList.this, Home.class);
+                Intent playIntent = new Intent(MusicPlaying.this, Home.class);
                 startActivity(playIntent);
                 overridePendingTransition(anim.slide_in_left, anim.slide_out_right);
                 finish();
@@ -84,7 +84,7 @@ public class PlayList extends AppCompatActivity {
         Play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(PlayList.this, PlayView.class);
+                Intent playIntent = new Intent(MusicPlaying.this, PlayView.class);
                 startActivity(playIntent);
                 overridePendingTransition(anim.slide_in_right, anim.slide_out_left);
                 finish();
@@ -93,7 +93,7 @@ public class PlayList extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(PlayList.this, AccountInfo.class);
+                Intent playIntent = new Intent(MusicPlaying.this, AccountInfo.class);
                 startActivity(playIntent);
                 overridePendingTransition(anim.slide_in_right, anim.slide_out_left);
                 finish();
@@ -103,12 +103,13 @@ public class PlayList extends AppCompatActivity {
         adapterAllSong.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Intent playIntent = new Intent(com.example.applistenmusic.activities.PlayList.this, PlayView.class);
+                Intent playIntent = new Intent(MusicPlaying.this, PlayView.class);
                 SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
                 playIntent.putExtra("playNow",true);
                 startActivity(playIntent);
                 overridePendingTransition(anim.slide_in_right, anim.slide_out_left);
                 finish();
+
 
                 // Cập nhật RecyclerView với 10 bài hát tiếp theo
                 updateRecyclerViewWithNextSongs(id);
@@ -123,7 +124,7 @@ public class PlayList extends AppCompatActivity {
     }
 
     public void updateRecyclerViewWithNextSongs(int currentSongId) {
-        // Tìm vị trí của bài hát đang phát trong danh sách tất cả các bài hát
+        // Find the position of the currently playing song in the list of all songs
         int currentSongIndex = -1;
         for (int i = 0; i < allSong.size(); i++) {
             if (allSong.get(i).getId() == currentSongId) {
@@ -132,12 +133,14 @@ public class PlayList extends AppCompatActivity {
             }
         }
 
-        // Kiểm tra xem có thể lấy thêm 10 bài hát tiếp theo hay không
+        // Check if it's possible to get the next 10 songs
         if (currentSongIndex != -1 && currentSongIndex + 10 <= allSong.size()) {
-            // Lấy danh sách 10 bài hát tiếp theo
-            List<Song> nextSongs = allSong.subList(currentSongIndex + 1, currentSongIndex + 11);
+            // Get the list of the next 10 songs
+            List<Song> nextSongs = new ArrayList<>();
+            nextSongs.add(allSong.get(currentSongIndex)); // Add the currently playing song at the top
+            nextSongs.addAll(allSong.subList(currentSongIndex + 1, currentSongIndex + 11)); // Add the next 10 songs
 
-            // Cập nhật RecyclerView với danh sách mới
+            // Update the RecyclerView with the new list
             adapterAllSong.setmData(nextSongs);
             adapterAllSong.notifyDataSetChanged();
         }
@@ -161,7 +164,7 @@ public class PlayList extends AppCompatActivity {
                     if (diffY > 0) {
                         // Swipe down, switch to another activity
                         overridePendingTransition(anim.slide_in_down, anim.slide_out_up);
-                        Intent intent = new Intent(PlayList.this, PlayView.class);
+                        Intent intent = new Intent(MusicPlaying.this, PlayView.class);
                         startActivity(intent);
                         result = true;
                     }

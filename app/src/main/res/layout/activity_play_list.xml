@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:background="#1A0437"
     android:orientation="vertical"
-    tools:context=".activities.PlayList"
+    tools:context=".activities.MusicPlaying"
     android:id="@+id/PlayListView">
 
     <ImageView
         android:id="@+id/ivClose"
-        android:layout_width="68dp"
-        android:layout_height="63dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="15dp"
         app:srcCompat="@drawable/ic_close" />
 
     <TextView
@@ -31,15 +31,15 @@
         android:textColor="@color/white"
         android:textSize="28sp" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="49dp"
-        android:layout_height="43dp"
-        android:layout_alignLeft="@+id/tvPlayList"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="258dp"
-        android:layout_marginTop="12dp"
-        app:srcCompat="@drawable/baseline_dehaze_24" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="49dp"-->
+<!--        android:layout_height="43dp"-->
+<!--        android:layout_alignLeft="@+id/tvPlayList"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginLeft="258dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        app:srcCompat="@drawable/baseline_dehaze_24" />-->
 
     <ScrollView
         android:layout_width="match_parent"

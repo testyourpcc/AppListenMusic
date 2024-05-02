@@ -40,7 +40,7 @@
             android:name=".activities.SearchPlayList"
             android:exported="false" />
         <activity
-            android:name=".activities.PlayList"
+            android:name=".activities.MusicPlaying"
             android:exported="false" />
         <activity
             android:name=".activities.PlaylistAddSong"

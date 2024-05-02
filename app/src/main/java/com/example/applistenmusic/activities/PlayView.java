@@ -1,6 +1,10 @@
 package com.example.applistenmusic.activities;
 
+import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,14 +30,19 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.applistenmusic.dialogs.AlertDialogManager;
 import com.example.applistenmusic.helpers.SongHelper;
@@ -43,8 +53,10 @@ import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.example.applistenmusic.singletons.PlayListSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
 import com.example.applistenmusic.singletons.SongSingleton;
+import com.example.applistenmusic.singletons.TimerSingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -82,6 +94,13 @@ public class PlayView extends AppCompatActivity {
     String currentUserId;
     List<PlayList> allPlayList;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // Lấy thông tin người dùng hiện tại
+    private TimerSingleton timerSingleton;
+    private TextView textViewTimer;
+    private Switch switchTimer;
+    ImageView BottomSheet;
+    LinearLayout henGio, addToPlaylist, openPlaylist;
+    private long timeLeftInMillis;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -406,7 +425,7 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favorite) {
-                   /// saveData(song.getId());
+                    //saveData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
 
@@ -507,6 +526,65 @@ public class PlayView extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(timerUpdateReceiver,
+                new IntentFilter("com.example.timer.UPDATE"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(timerUpdateReceiver,
+                new IntentFilter("com.example.timer.FINISHED"));
+        BottomSheetDialog optionDialog = new BottomSheetDialog(this);
+        BottomSheetDialog henGioDialog = new BottomSheetDialog(this);
+        optionDialog.setContentView(R.layout.play_bottom_sheet_layout);
+        henGioDialog.setContentView(R.layout.layout_hen_gio);
+        BottomSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionDialog.show();
+            }
+        });
+
+        henGio = optionDialog.findViewById(R.id.hengio);
+        addToPlaylist = optionDialog.findViewById(R.id.addPlaylist);
+        openPlaylist = optionDialog.findViewById(R.id.openPlaylist);
+        henGio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionDialog.dismiss();
+                henGioDialog.show();
+            }
+        });
+        addToPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        openPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        timerSingleton = TimerSingleton.getInstance();
+        textViewTimer = henGioDialog.findViewById(R.id.textViewTimer);
+        switchTimer = henGioDialog.findViewById(R.id.switch_timer);
+        if (timerSingleton.isTimerRunning()){
+            switchTimer.setChecked(timerSingleton.isTimerRunning());
+            timeLeftInMillis = timerSingleton.getTimeLeftInMillis();
+            updateCountDownText(timeLeftInMillis);
+        }
+
+        switchTimer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    showTimePickerDialog();
+                } else {
+                    timerSingleton.stopTimer();
+                    textViewTimer.setText("00:00:00");
+                }
             }
         });
 
@@ -622,6 +700,7 @@ public class PlayView extends AppCompatActivity {
         if (handler1 != null) {
             handler1.removeCallbacksAndMessages(null);
         }
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(timerUpdateReceiver);
     }
 
     public void getAndPlaySong(String Url) {
@@ -825,8 +904,8 @@ public class PlayView extends AppCompatActivity {
         shuffleImg = findViewById(R.id.shuffleImg);
         repeatImg = findViewById(R.id.repeatImg);
         ivFavorite = findViewById(R.id.ivFavorite);
-
-
+        textViewTimer = findViewById(R.id.textViewTimer);
+        BottomSheet = findViewById(R.id.navigationButton);
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -870,7 +949,7 @@ public class PlayView extends AppCompatActivity {
                         // Swipe up, switch to PlayList activity
                         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
                         Log.d("12345", "onFling: vuot len");
-                        Intent intent = new Intent(PlayView.this, PlayList.class);
+                        Intent intent = new Intent(PlayView.this, MusicPlaying.class);
                         startActivity(intent);
                         result = true;
                     } else {
@@ -886,6 +965,42 @@ public class PlayView extends AppCompatActivity {
             }
             return result;
         }
+    }
+
+    private void showTimePickerDialog() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timeLeftInMillis = (hourOfDay * 3600 + minute * 60) * 1000L;
+                timerSingleton.startTimer(timeLeftInMillis, 1000);
+            }
+        }, 0, 0, true);
+        timePickerDialog.show();
+    }
+
+    private void updateCountDownText(long timeLeftInMillis) {
+        int hours = (int) (timeLeftInMillis / 1000) / 3600;
+        int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+        textViewTimer.setText(timeFormatted);
+    }
+
+    private BroadcastReceiver timerUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.example.timer.UPDATE")) {
+                long timeLeftInMillis = intent.getLongExtra("timeLeft", 0);
+                updateCountDownText(timeLeftInMillis);
+            }else if (intent.getAction().equals("com.example.timer.FINISHED")) {
+                handleTimerFinished();
+            }
+        }
+    };
+    private void handleTimerFinished() {
+        Toast.makeText(this, "Timer has finished!", Toast.LENGTH_SHORT).show();
+        playButton.setImageResource(R.drawable.play_icon);
+        switchTimer.setChecked(false);
     }
 }
 
