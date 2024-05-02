@@ -27,7 +27,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class UserDetail extends AppCompatActivity {
 
-    TextView username, useremail,userUid, userAddress,userPhone,userPremium;
+    TextView username, useremail,userUid, userAddress,userPhone,userPremium,userCoin,userRole;
     ImageView userImage;
     Button back;
     ImageView userAvatar;
@@ -45,6 +45,8 @@ public class UserDetail extends AppCompatActivity {
         userPhone = findViewById(R.id.phone);
         userPremium = findViewById(R.id.premium);
         userAvatar = findViewById(R.id.noImageIcon);
+        userCoin = findViewById(R.id.coin);
+        userRole = findViewById(R.id.role);
 
 
 
@@ -63,6 +65,8 @@ public class UserDetail extends AppCompatActivity {
         String phone = OtpIntent.getStringExtra("phone");
         String premium = OtpIntent.getStringExtra("premium");
         String image = OtpIntent.getStringExtra("image");
+        String coin = OtpIntent.getStringExtra("coin");
+        String role = OtpIntent.getStringExtra("role");
 
         if (image!=null) {
             StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(image);
@@ -85,6 +89,8 @@ public class UserDetail extends AppCompatActivity {
         userAddress.setText("Address: "+address);
         userPhone.setText("Phone: "+phone);
         userPremium.setText("Premium: "+premium);
+        userCoin.setText("Coin: "+coin);
+        userRole.setText("Role: "+role);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

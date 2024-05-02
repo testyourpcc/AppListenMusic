@@ -8,8 +8,9 @@ public class UserInfo {
     String name, email, phone, address, role,image;
     boolean premium;
     Integer shuffle,repeat;
+    Integer coin;
 
-    public UserInfo(String name, String email, String phone, String address, String role, String image, boolean premium, Integer shuffle, Integer repeat) {
+    public UserInfo(String name, String email, String phone, String address, String role, String image, boolean premium, Integer shuffle, Integer repeat, Integer coin) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -19,6 +20,15 @@ public class UserInfo {
         this.premium = premium;
         this.shuffle = shuffle;
         this.repeat = repeat;
+        this.coin = coin;
+    }
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
     }
 
     public String getImage() {

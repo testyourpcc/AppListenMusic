@@ -67,7 +67,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, Home.class);
+                Intent playIntent = new Intent(SearchAlbumView.this, HomeAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();
@@ -85,7 +85,7 @@ public class SearchAlbumView extends AppCompatActivity {
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(SearchAlbumView.this, AccountInfo.class);
+                Intent playIntent = new Intent(SearchAlbumView.this, AccountInfoAdmin.class);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

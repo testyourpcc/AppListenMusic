@@ -62,9 +62,11 @@ public class UserManager extends AppCompatActivity {
                 intent.putExtra("name", clickedUser.getName());
                 intent.putExtra("email", clickedUser.getEmail());
                 intent.putExtra("phone", clickedUser.getPhone());
-                intent.putExtra("premium", clickedUser.isPremium());
+                intent.putExtra("premium",  Boolean.toString(clickedUser.isPremium()));
                 intent.putExtra("address", clickedUser.getAddress());
                 intent.putExtra("image", clickedUser.getImage());
+                intent.putExtra("coin", Integer.toString(clickedUser.getCoin()));
+                intent.putExtra("role", clickedUser.getRole());
                 intent.putExtra("uid", uid);
 
                 startActivity(intent);

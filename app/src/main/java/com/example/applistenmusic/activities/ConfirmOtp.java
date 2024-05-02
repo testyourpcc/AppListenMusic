@@ -124,7 +124,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                             emailaddr=user.getEmail();
                                         }
 
-                                        UserInfo userInfo = new UserInfo(name,emailaddr,"12345678","97 Man Thien","USER","gs://applistenmusic-b4e45.appspot.com/images/" + user.getUid() + "/avatar",false,0,0);
+                                        UserInfo userInfo = new UserInfo(name,emailaddr,"12345678","97 Man Thien","USER","gs://applistenmusic-b4e45.appspot.com/images/" + user.getUid() + "/avatar",false,0,0,0);
 
                                         reference.child("users").child(mAuth.getUid()).setValue(userInfo);
 
@@ -132,7 +132,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                                 .setDisplayName(name)
                                                 .build();
 
-                                        createDefaultPlaylist(user.getUid());
+//                                        createDefaultPlaylist(user.getUid());
 
                                         user.updateProfile(profileUpdates)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
