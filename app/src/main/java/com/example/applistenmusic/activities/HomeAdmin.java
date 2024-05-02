@@ -142,7 +142,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                     }
                     // Arist
                     case 2:{
-                        Intent playIntent = new Intent(HomeAdmin.this, AccountInfoAdmin.class);
+                        Intent playIntent = new Intent(HomeAdmin.this, ArtistManager.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
