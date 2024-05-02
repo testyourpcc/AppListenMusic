@@ -74,7 +74,7 @@ public class PlayView extends AppCompatActivity {
     TextView startTime, endTime, songName;
     private Handler handler, handler1;
 
-    ImageView repeatImg, shuffleImg;
+    ImageView repeatImg, shuffleImg,ivBack;
     private MediaPlayer mediaPlayer;
     private ImageView playButton, songImage, Home, Search, Play, Account;
 
@@ -425,15 +425,27 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favorite) {
-                    //saveData(song.getId());
+                    saveData(song.getId());
+
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
+
 
                 } else {
                     removeData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_off);
                     favorite = false;
                 }
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(PlayView.this, Home.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
             }
         });
 
@@ -778,6 +790,7 @@ public class PlayView extends AppCompatActivity {
         });
     }
 
+
     private void saveData(int songId) {
 
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId);
@@ -790,21 +803,21 @@ public class PlayView extends AppCompatActivity {
                 boolean flag = true;
                 for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                     PlayList playList = songSnapshot.getValue(PlayList.class);
-                    if(playList.getId() == 1) {
+                    if(playList.getId() == 0) {
                         if (playList.getSongIdList().contains(0)) {
                             flag = false;
-                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("1");
+                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("0");
                             playlistRef.setValue(songId);
                         }
                     }
                 }
 
-              if(flag){
+                if(flag){
                     DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList");
 
                     for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                         PlayList song = songSnapshot.getValue(PlayList.class);
-                        if(song.getId() == 1) {
+                        if(song.getId() == 0) {
                             List<Integer> a = song.getSongIdList();
                             a.add(songId);
                             playlistRef.setValue(a);
@@ -821,6 +834,7 @@ public class PlayView extends AppCompatActivity {
         });
     }
 
+
     private void removeData(int songId) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId);
 
@@ -829,21 +843,20 @@ public class PlayView extends AppCompatActivity {
             public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                     PlayList playList = songSnapshot.getValue(PlayList.class);
-                    if(playList.getId() == 1) {
+                    if(playList.getId() == 0) {
                         List<Integer> songIdList = playList.getSongIdList();
                         if (songIdList.contains(songId)) {
-                            // Remove the songId from the list
-                            songIdList.remove(Integer.valueOf(songId));
-                            // Update the songIdList in Firebase
-                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList");
                             // Check if songIdList only contains one element
                             if (songIdList.size() == 1) {
-                                // If songIdList only contains one element, set the value of child "1" to 0
-                                DatabaseReference newChildRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("1");
-                                newChildRef.setValue(0);
+                                // If songIdList only contains one element, set the value of this element to 0
+                                songIdList.set(0, 0);
                             } else {
-                                playlistRef.setValue(songIdList);
+                                // Remove the songId from the list
+                                songIdList.remove(Integer.valueOf(songId));
                             }
+                            // Update the songIdList in Firebase
+                            DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList");
+                            playlistRef.setValue(songIdList);
                         }
                     }
                 }
@@ -864,7 +877,7 @@ public class PlayView extends AppCompatActivity {
             public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                     PlayList playList = songSnapshot.getValue(PlayList.class);
-                    if(playList.getId() == 1) {
+                    if(playList.getId() == 0) {
                         List<Integer> songIdList = playList.getSongIdList();
                         if (songIdList.contains(currentSongId)) {
                             // If the current song ID is in the songIdList, set the heart icon to red and favorite to true
@@ -906,6 +919,7 @@ public class PlayView extends AppCompatActivity {
         ivFavorite = findViewById(R.id.ivFavorite);
         textViewTimer = findViewById(R.id.textViewTimer);
         BottomSheet = findViewById(R.id.navigationButton);
+        ivBack = findViewById(R.id.ivBack);
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -1002,5 +1016,6 @@ public class PlayView extends AppCompatActivity {
         playButton.setImageResource(R.drawable.play_icon);
         switchTimer.setChecked(false);
     }
+
 }
 

@@ -54,6 +54,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ConfirmOtp extends AppCompatActivity {
@@ -68,6 +69,7 @@ public class ConfirmOtp extends AppCompatActivity {
     MailHelper resend = new MailHelper();
     String[] otpDigits = new String[6];
     CountDownTimer countDownTimer;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +122,8 @@ public class ConfirmOtp extends AppCompatActivity {
 
                                         reference.child("users").child(mAuth.getUid()).setValue(userInfo);
 
+
+
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name)
                                                 .build();
@@ -137,7 +141,7 @@ public class ConfirmOtp extends AppCompatActivity {
                                                         }
                                                     }
                                                 });
-                                        createDefaultPlaylist(user.getUid());
+
                                     } else {
                                         Toast.makeText(ConfirmOtp.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
@@ -337,20 +341,6 @@ public class ConfirmOtp extends AppCompatActivity {
         return otpInput.toString();
     }
 
-    private void createDefaultPlaylist(String userId) {
-        DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(userId).child("0");
 
-        // Tạo một đối tượng Playlist mới
-        PlayList defaultPlaylist = new PlayList();
-        defaultPlaylist.setName("Favorite");
-        defaultPlaylist.setId(1);
-        defaultPlaylist.setImage("");
-        defaultPlaylist.setUser(userId.toString());
-        ArrayList<Integer> a = new ArrayList<>();
-        a.add(1,0);
-        defaultPlaylist.setSongIdList(a);
-        // Lưu playlist vào Firebase Realtime Database
-        playlistRef.setValue(defaultPlaylist);
-    }
 
 }
