@@ -83,6 +83,11 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
 
             }
         });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
         HomeFeature.setOnClickListener(new View.OnClickListener() {
             @Override
