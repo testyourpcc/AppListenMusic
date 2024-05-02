@@ -63,7 +63,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
         setcontrol();
 
         menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(1,"Playlists","playlist"));
+        menuItems.add(new MenuItem(1,"Users","playlist"));
         menuItems.add(new MenuItem(2,"Artists","artist"));
         menuItems.add(new MenuItem(3,"Songs","song"));
         menuItems.add(new MenuItem(4,"Albums","album"));

@@ -107,7 +107,7 @@ public class PlayView extends AppCompatActivity {
             });
         }
 
-        fvr = allPlayList.get(0);
+       // fvr = allPlayList.get(0);
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
@@ -132,15 +132,15 @@ public class PlayView extends AppCompatActivity {
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
             song = SongSingleton.getInstance().getSong();
-            if( fvr.getSongIdList().contains(song.getId())){
-                favorite = true;
-                ivFavorite.setImageResource(R.drawable.ic_heart_on);
-
-        } else {
-                favorite = false;
-                ivFavorite.setImageResource(R.drawable.ic_heart_off);
-
-            }
+//            if( fvr.getSongIdList().contains(song.getId())){
+//                favorite = true;
+//                ivFavorite.setImageResource(R.drawable.ic_heart_on);
+//
+//        } else {
+//                favorite = false;
+//                ivFavorite.setImageResource(R.drawable.ic_heart_off);
+//
+//            }
 
 
             imageUrl = song.getImage();
@@ -406,7 +406,7 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favorite) {
-                    saveData(song.getId());
+                   /// saveData(song.getId());
                     ivFavorite.setImageResource(R.drawable.ic_heart_on);
                     favorite = true;
 
