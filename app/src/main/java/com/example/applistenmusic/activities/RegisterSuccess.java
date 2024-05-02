@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterSuccess extends AppCompatActivity {
     FirebaseAuth auth;
@@ -37,6 +38,22 @@ public class RegisterSuccess extends AppCompatActivity {
         userInfo = findViewById(R.id.userAccount);
         user = auth.getCurrentUser();
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String userId = user.getUid(); // replace with actual user ID
+        DatabaseReference userPlaylistsRef = database.getReference("playList").child(userId);
+
+        // Create a new Playlist object
+        PlayList playlist = new PlayList();
+        playlist.setId(0);
+        playlist.setName("Favorite");
+        playlist.setUser(userId);
+        List<Integer> songIdList = new ArrayList<>();
+        songIdList.add(0); // Add a child "1" with value "0"
+        playlist.setSongIdList(songIdList);
+
+        // Save the Playlist object to Firebase
+        userPlaylistsRef.child("0").setValue(playlist);
+
         if(user==null){
             Intent intent = new Intent(getApplicationContext(), LoginAndRegister.class);
             startActivity(intent);
@@ -45,6 +62,10 @@ public class RegisterSuccess extends AppCompatActivity {
             userInfo.setText(user.getDisplayName());
             auth.signOut();
         }
+
+
+
+
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

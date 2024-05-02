@@ -284,10 +284,9 @@ public class SongEdit extends AppCompatActivity {
                 .override(275, 275)
                 .centerCrop()
                 .into(AlbumImage);
-        spinnerGenres.setSelection(song.getAlbum() - 1);
-        spinnerAlbum.setSelection(song.getAlbum() - 1);
-        spinnerArtist.setSelection(song.getArtist() - 1);
-
+       editTextAlbum.setText(AlbumHelper.getAlbumNameByID(song.getAlbum()));
+       editTextArtist.setText(ArtistHelper.getArtistNameByID(song.getArtist()));
+       editTextGenres.setText(GenresHelper.getGenresNameByID(song.getGenres()));
     }
 
     // Phương thức lấy dữ liệu từ các EditText và hiển thị thông báo
