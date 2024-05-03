@@ -47,6 +47,7 @@ public class RegisterSuccess extends AppCompatActivity {
         playlist.setId(0);
         playlist.setName("Favorite");
         playlist.setUser(userId);
+        playlist.setImage("https://firebasestorage.googleapis.com/v0/b/applistenmusic-b4e45.appspot.com/o/images%2FFavorite%2FFavorite.jpg?alt=media&token=042ff6bd-d05b-4773-99c7-6b5bfff1da59");
         List<Integer> songIdList = new ArrayList<>();
         songIdList.add(0); // Add a child "1" with value "0"
         playlist.setSongIdList(songIdList);

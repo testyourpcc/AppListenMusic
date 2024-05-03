@@ -942,14 +942,14 @@ public class PlayView extends AppCompatActivity {
                     if (diffX < 0) {
                         // Vuốt sang trái, chuyển sang một activity khác
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        Log.d("12345", "onFling: sang phải");
+
                         Intent intent = new Intent(PlayView.this, LyricView.class);
                         intent.putExtra("seekBarProcess", seekBar.getProgress());
                         startActivity(intent);
                         result = true;
                     } else {
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                        Log.d("12345", "onFling: sang trái");
+
                         // Vuốt sang phải, chuyển sang activity khác
                         Intent intent = new Intent(PlayView.this, SongDetailView.class);
 
