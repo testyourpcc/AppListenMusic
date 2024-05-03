@@ -812,6 +812,10 @@ public class PlayView extends AppCompatActivity {
                             flag = false;
                             DatabaseReference playlistRef = FirebaseDatabase.getInstance().getReference().child("playList").child(currentUserId).child("0").child("songIdList").child("0");
                             playlistRef.setValue(songId);
+                            List<Integer> a = new ArrayList<>();
+                            a.add(songId);
+                            playList.setSongIdList(a);
+
                         }
                     }
                 }
@@ -823,7 +827,9 @@ public class PlayView extends AppCompatActivity {
                         PlayList song = songSnapshot.getValue(PlayList.class);
                         if(song.getId() == 0) {
                             List<Integer> a = song.getSongIdList();
-                            a.add(songId);
+                             a.add(songId);
+                            song.setSongIdList(a);
+                            allPlayList.get(0).setSongIdList(a);
                             playlistRef.setValue(a);
                         }
                     }
@@ -853,9 +859,19 @@ public class PlayView extends AppCompatActivity {
                             // Check if songIdList only contains one element
                             if (songIdList.size() == 1) {
                                 // If songIdList only contains one element, set the value of this element to 0
+                                List<Integer> a = new ArrayList<>();//playList.getSongIdList();
+                                a.add(0);
+                                //playList.setSongIdList(a);
+                                allPlayList.get(0).setSongIdList(a);
                                 songIdList.set(0, 0);
                             } else {
                                 // Remove the songId from the list
+                                List<Integer> a = playList.getSongIdList();
+                                if(a.contains(songId)){
+                                    a.remove(Integer.valueOf(songId));
+                                }
+                                //playList.setSongIdList(a);
+                                allPlayList.get(0).setSongIdList(a);
                                 songIdList.remove(Integer.valueOf(songId));
                             }
                             // Update the songIdList in Firebase

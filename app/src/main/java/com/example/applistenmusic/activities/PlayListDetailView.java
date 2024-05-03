@@ -62,7 +62,7 @@ public class PlayListDetailView extends AppCompatActivity {
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(PlayListImage);
-            textViewSongSize.setText(playList.getSongIdList().size() - 1  + " bài hát");
+            textViewSongSize.setText(playList.getSongIdList().size()   + " bài hát");
             for (Integer songid : playList.getSongIdList()) {
                 if(songid != null) {
                     if(!SongHelper.getSongById(allSong, songid.intValue()).equals(new Song())){
