@@ -98,22 +98,22 @@ public class AlbumManagement extends AppCompatActivity {
         layoutAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(AlbumManagement.this, SongAdd.class);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+//                Intent playIntent = new Intent(AlbumManagement.this, SongAdd.class);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
 
             }
         });
         adapterAllAlbum.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAlbum(album);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+//                Album album = AlbumHelper.getAlbumByID(id);
+//                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
+//                AlbumSingleton.getInstance().setAlbum(album);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
             }
 
             @Override
@@ -124,12 +124,12 @@ public class AlbumManagement extends AppCompatActivity {
         adapterSearchResult.setOnItemClickListener(new AlbumSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Album album = AlbumHelper.getAlbumByID(id);
-                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
-                AlbumSingleton.getInstance().setAlbum(album);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+//                Album album = AlbumHelper.getAlbumByID(id);
+//                Intent playIntent = new Intent(AlbumManagement.this, AlbumDetailView.class);
+//                AlbumSingleton.getInstance().setAlbum(album);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
             }
 
             @Override

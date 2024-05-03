@@ -127,12 +127,12 @@ public class SongManagement extends AppCompatActivity {
         adapterTrendingSong.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+//                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
+//                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+//                playIntent.putExtra("playNow",true);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
             }
 
             @Override
@@ -162,17 +162,35 @@ public class SongManagement extends AppCompatActivity {
         adapterSearchResult.setOnItemClickListener(new SongSearchResultAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int id) {
-                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
-                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
-                playIntent.putExtra("playNow",true);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+//                Intent playIntent = new Intent(SongManagement.this, PlayView.class);
+//                SongSingleton.getInstance().setSong(SongHelper.getSongById(SongListSingleton.getInstance().getAllSongIfExist(),id));
+//                playIntent.putExtra("playNow",true);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
             }
 
             @Override
             public void onButtonClick(int id, View view) {
+                if (recyclerViewMenubar.getVisibility() == View.VISIBLE) {
+                    recyclerViewMenubar.setVisibility(View.INVISIBLE);
+                    adapterMenuBar.setmData(new ArrayList<>());
+                } else {
+                    recyclerViewMenubar.setVisibility(View.VISIBLE);
+                    adapterMenuBar.setmData(menuItems);
+                    adapterMenuBar.setSongId(id);
+                    int[] location = new int[2];
+                    view.getLocationInWindow(location);
+                    int x = location[0];
+                    int y = location[1];
 
+                    // Set vị trí mới cho RecyclerView
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) recyclerViewMenubar.getLayoutParams();
+                    layoutParams.leftMargin = x - 510; // Vị trí x - chiều rộng RecyclerView
+                    layoutParams.topMargin = y; // Vị trí y
+
+                    recyclerViewMenubar.setLayoutParams(layoutParams);
+                }
             }
         });
 

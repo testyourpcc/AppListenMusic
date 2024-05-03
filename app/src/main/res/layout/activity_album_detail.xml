@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:contentDescription="Go back to previous screen"
-                android:onClick="onBackPressed"
                 android:src="@drawable/back_icon" />
         </LinearLayout>
 
@@ -53,7 +52,6 @@
             android:layout_gravity="end"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Navigation Menu"
-            android:onClick="openNavigationDrawer"
             android:padding="16dp"
             android:src="@drawable/ic_menu" /> <!-- Adjust padding as needed -->
 

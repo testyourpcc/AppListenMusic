@@ -56,8 +56,8 @@ public class SearchView extends AppCompatActivity {
         USUKSong = new ArrayList<>();
         TrendingSong = new ArrayList<>();
         menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(1,"Edit","playlist"));
-        menuItems.add(new MenuItem(2,"Delete","artist"));
+        menuItems.add(new MenuItem(1,"Add to Playlist","playlist"));
+        menuItems.add(new MenuItem(2,"Show Song info","artist"));
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
         } else {
@@ -197,26 +197,26 @@ public class SearchView extends AppCompatActivity {
                 switch (id) {
                     //edit
                     case 1: {
-                        Intent playIntent = new Intent(SearchView.this, SongEdit.class);
-                        playIntent.putExtra("id",songId);
-                        startActivity(playIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                        break;
+//                        Intent playIntent = new Intent(SearchView.this, SongEdit.class);
+//                        playIntent.putExtra("id",songId);
+//                        startActivity(playIntent);
+//                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        finish();
+//                        break;
                     }
                     // delete
                     case 2: {
-                        ConfirmDialogManager.showDialog(SearchView.this, "Xác nhận xóa", "Bài hát sẽ bị xóa vĩnh viễn, bạn chắc chứ?", new ConfirmDialogManager.OnClickListener() {
-                            @Override
-                            public void onCancel() {
-                            }
-
-                            @Override
-                            public void onOK() {
-
-                            }
-                        });
-                        break;
+//                        ConfirmDialogManager.showDialog(SearchView.this, "Xác nhận xóa", "Bài hát sẽ bị xóa vĩnh viễn, bạn chắc chứ?", new ConfirmDialogManager.OnClickListener() {
+//                            @Override
+//                            public void onCancel() {
+//                            }
+//
+//                            @Override
+//                            public void onOK() {
+//
+//                            }
+//                        });
+//                        break;
                     }
                 }
             }

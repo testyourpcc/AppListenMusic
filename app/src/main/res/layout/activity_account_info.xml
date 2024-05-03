@@ -213,7 +213,22 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/CoinAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Coin: 0"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
+            <TextView
+                android:id="@+id/getMoreCoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Get more coin"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
             <TextView
                 android:id="@+id/resetPasswdText"
                 android:layout_width="match_parent"

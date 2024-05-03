@@ -42,7 +42,7 @@ public class AlbumHelper {
         return false;
     }
 
-    public static List<Long> getAlbumIDByAlbumName(String name) {
+    public static List<Integer> getAlbumIDByAlbumName(String name) {
         if (AlbumSingleton.getInstance().hasAlbum()) {
             allAlbum = AlbumSingleton.getInstance().getAllAlbumIfExist();
         } else {
@@ -53,14 +53,11 @@ public class AlbumHelper {
                 }
             });
         }
-        List<Long> aristIDList = new ArrayList<>();
+        List<Integer> aristIDList = new ArrayList<>();
         for(Album a : allAlbum){
             if (a.getName().toLowerCase().contains(name.toLowerCase())){
                 if(a.getSongIdList() != null) {
-                    List<Long> result = a.getSongIdList().stream()
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList());
-                    aristIDList.addAll(result);
+                    aristIDList.add(a.getId());
                 }
             }
         }
