@@ -94,7 +94,7 @@ public class SearchYoutube extends AppCompatActivity {
                             List<YouTubeVideo> videos = response.body().getVideos();
                             for (YouTubeVideo video : videos) {
                                 String title = video.getSnippet().getTitle();
-                                String thumbnailUrl = video.getSnippet().getThumbnails().getDefault().getUrl();
+                                String thumbnailUrl = video.getSnippet().getThumbnails().getHigh().getUrl();
                                 String videoId = video.getId().getVideoId();
                                 VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId);
                                 videoItems.add(videoItem);
@@ -130,7 +130,7 @@ public class SearchYoutube extends AppCompatActivity {
                             List<YouTubeVideo> videos = response.body().getVideos();
                             for (YouTubeVideo video : videos) {
                                 String title = video.getSnippet().getTitle();
-                                String thumbnailUrl = video.getSnippet().getThumbnails().getDefault().getUrl();
+                                String thumbnailUrl = video.getSnippet().getThumbnails().getHigh().getUrl();
                                 String videoId = video.getId().getVideoId();
                                 VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId);
                                 videoItems.add(videoItem);
