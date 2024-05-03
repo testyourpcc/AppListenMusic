@@ -75,15 +75,15 @@ public class AlbumManagement extends AppCompatActivity {
                 finish();
             }
         });
-        Play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent playIntent = new Intent(AlbumManagement.this, PlayView.class);
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
+//        Play.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent playIntent = new Intent(AlbumManagement.this, PlayView.class);
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
         Account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
