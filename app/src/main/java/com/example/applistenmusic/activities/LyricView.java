@@ -212,8 +212,9 @@ public class LyricView extends AppCompatActivity {
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);
                 Url = s.getUrl();
-                getAndPlaySong(Url);
                 getData();
+                getAndPlaySong(Url);
+
             }
         });
 
@@ -224,8 +225,9 @@ public class LyricView extends AppCompatActivity {
                 Song s = SongHelper.getRandomSong(songs);
                 SongSingleton.getInstance().setSong(s);
                 Url = s.getUrl();
-                getAndPlaySong(Url);
                 getData();
+                getAndPlaySong(Url);
+
             }
         });
 
