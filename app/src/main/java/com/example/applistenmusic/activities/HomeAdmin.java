@@ -67,7 +67,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
         menuItems.add(new MenuItem(2,"Artists","artist"));
         menuItems.add(new MenuItem(3,"Songs","song"));
         menuItems.add(new MenuItem(4,"Albums","album"));
-        menuItems.add(new MenuItem(5,"Downloaded","downloaded"));
+        menuItems.add(new MenuItem(5,"Genres","downloaded"));
         MenuAdapter adapterMenuItem = new MenuAdapter(menuItems);
         LinearLayoutManager layoutManagerMenuItem = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewMenuBar.setLayoutManager(layoutManagerMenuItem);
@@ -137,7 +137,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
             @Override
             public void onItemClick(int id, int songId) {
                 switch (id){
-                    //playlist
+                    //user
                     case 1: {
                         Intent playIntent = new Intent(HomeAdmin.this, UserManager.class);
                         startActivity(playIntent);
@@ -168,7 +168,7 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                         finish();
                         break;
                     }
-                    // download
+                    // genres
                     case 5: {
                         Intent playIntent = new Intent(HomeAdmin.this, LyricView.class);
                         startActivity(playIntent);
