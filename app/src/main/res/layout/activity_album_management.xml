@@ -146,6 +146,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -161,22 +162,14 @@
             android:layout_weight="1"
             android:src="@drawable/homebtnimg" />
 
-        <ImageView
-            android:id="@+id/imageViewSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:src="@drawable/searchimgbtn" />
 
         <ImageView
-            android:id="@+id/imageViewHeadPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imageViewFeature"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:onClick="onImageView3Clicked"
-            android:src="@drawable/headphoneimgbtn" />
+            android:src="@drawable/admin_feature" />
 
         <ImageView
             android:id="@+id/imageViewAccount"
@@ -187,5 +180,6 @@
             android:onClick="onImageView4Clicked"
             android:src="@drawable/accounticon" />
     </LinearLayout>
+
 
 </RelativeLayout>
