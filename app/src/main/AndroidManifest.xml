@@ -20,6 +20,12 @@
         android:theme="@style/Theme.AppListenMusic"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ArtistManager"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PlayViewAdmin"
+            android:exported="false" />
+        <activity
             android:name=".activities.AccountInfoAdmin"
             android:exported="false" />
         <activity
