@@ -32,6 +32,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,16 +64,16 @@ import java.util.UUID;
 
 public class AccountInfo extends AppCompatActivity {
 
-    TextView nameText, emailText, uploadText, logoutText, resetPasswdText, changePhoneNumber,changeAddress;
+    TextView nameText, emailText, uploadText, logoutText, resetPasswdText, changePhoneNumber,changeAddress, coin, getCoin;
     FirebaseAuth auth;
+    private RewardedAd rewardedAd;
     FirebaseUser user;
     DatabaseReference reference;
     ImageView Home, Search, Play, Account, noImage, backgroundAcountImg;
     EditText address,phoneNumber;
-
+    int coinAmount =0;
     private AdView adView;
 
-    private RewardedAd rewardedAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +145,46 @@ public class AccountInfo extends AppCompatActivity {
         changeAddress = findViewById(R.id.changeAddress);
         address = findViewById(R.id.address);
         phoneNumber = findViewById(R.id.phoneNumber);
+        coin = findViewById(R.id.CoinAmount);
+        getCoin = findViewById(R.id.getMoreCoin);
+
+        //
+        RewardedAd.load(
+                AccountInfo.this,
+                "ca-app-pub-1250830090477010/3793425606", // Thay thế bằng ID quảng cáo rewarded của bạn
+                new AdRequest.Builder().build(),
+                new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd ad) {
+                        rewardedAd = ad;
+                        rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Quảng cáo đã kết thúc
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Lỗi khi hiển thị quảng cáo
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Quảng cáo đã được hiển thị
+                                rewardedAd = null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Lỗi khi tải quảng cáo
+                        rewardedAd = null;
+                    }
+                }
+        );
+
+
 
         user = auth.getCurrentUser();
         if (user != null && user.getUid() != null) {
@@ -199,6 +241,27 @@ public class AccountInfo extends AppCompatActivity {
 
             }
         });
+        getCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rewardedAd != null) {
+                    rewardedAd.show(AccountInfo.this, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                            // Người dùng đã kiếm được phần thưởng, xử lý ở đây
+                            coinAmount +=5;
+                            coin.setText("Coin: " + coinAmount);
+
+                        }
+                    });
+                } else {
+                    // Quảng cáo chưa được tải hoặc đã bị giải phóng, xử lý tương ứng
+                }
+//                Intent intent = new Intent(AccountInfo.this, ResetPasswd.class);
+//                startActivity(intent);
+            }
+        });
+
         logoutText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
