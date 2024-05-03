@@ -273,31 +273,33 @@ public class PlayView extends AppCompatActivity {
                 if (songs != null && !songs.isEmpty()) {
                     // Kiểm tra xem shuffle có được bật hay không
                     if (!shufferSong) {
-                        // Lấy ID của bài hát hiện tại
-                        int currentSongId = SongSingleton.getInstance().getSong().getId();
+                        if(SongSingleton.getInstance().getSong()!=null) {
+                            // Lấy ID của bài hát hiện tại
+                            int currentSongId = SongSingleton.getInstance().getSong().getId();
 
-                        // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
-                        int nextSongIndex = -1;
-                        for (int i = 0; i < songs.size(); i++) {
-                            if (songs.get(i).getId() == currentSongId + 1) {
-                                nextSongIndex = i;
-                                break;
+                            // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
+                            int nextSongIndex = -1;
+                            for (int i = 0; i < songs.size(); i++) {
+                                if (songs.get(i).getId() == currentSongId + 1) {
+                                    nextSongIndex = i;
+                                    break;
+                                }
                             }
+
+                            // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
+                            if (nextSongIndex == -1) {
+                                nextSongIndex = 0;
+                            }
+
+                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                            SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
+
+                            // Lấy bài hát tiếp theo từ danh sách
+                            Song nextSong = songs.get(nextSongIndex);
+
+                            // Cập nhật thông tin và phát bài hát tiếp theo
+                            updateAndPlayNextSong(nextSong);
                         }
-
-                        // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
-                        if (nextSongIndex == -1) {
-                            nextSongIndex = 0;
-                        }
-
-                        // Cập nhật vị trí hiện tại của bài hát trong danh sách
-                        SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
-
-                        // Lấy bài hát tiếp theo từ danh sách
-                        Song nextSong = songs.get(nextSongIndex);
-
-                        // Cập nhật thông tin và phát bài hát tiếp theo
-                        updateAndPlayNextSong(nextSong);
                     } else {
                         // Nếu shuffle được bật
                         // Chọn một bài hát ngẫu nhiên từ danh sách
@@ -320,31 +322,33 @@ public class PlayView extends AppCompatActivity {
                 if (songs != null && !songs.isEmpty()) {
                     // Kiểm tra xem shuffle có được bật hay không
                     if (!shufferSong) {
-                        // Lấy ID của bài hát hiện tại
-                        int currentSongId = SongSingleton.getInstance().getSong().getId();
+                        if(SongSingleton.getInstance().getSong()!=null) {
+                            // Lấy ID của bài hát hiện tại
+                            int currentSongId = SongSingleton.getInstance().getSong().getId();
 
-                        // Tìm vị trí của bài hát có ID trước đó trong danh sách
-                        int previousSongIndex = -1;
-                        for (int i = 0; i < songs.size(); i++) {
-                            if (songs.get(i).getId() == currentSongId - 1) {
-                                previousSongIndex = i;
-                                break;
+                            // Tìm vị trí của bài hát có ID trước đó trong danh sách
+                            int previousSongIndex = -1;
+                            for (int i = 0; i < songs.size(); i++) {
+                                if (songs.get(i).getId() == currentSongId - 1) {
+                                    previousSongIndex = i;
+                                    break;
+                                }
                             }
+
+                            // Nếu không tìm thấy bài hát có ID trước đó, chọn bài hát cuối cùng trong danh sách
+                            if (previousSongIndex == -1) {
+                                previousSongIndex = songs.size() - 1;
+                            }
+
+                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                            SongListSingleton.getInstance().setCurrentIndex(previousSongIndex);
+
+                            // Lấy bài hát trước đó từ danh sách
+                            Song previousSong = songs.get(previousSongIndex);
+
+                            // Cập nhật thông tin và phát bài hát trước đó
+                            updateAndPlayNextSong(previousSong);
                         }
-
-                        // Nếu không tìm thấy bài hát có ID trước đó, chọn bài hát cuối cùng trong danh sách
-                        if (previousSongIndex == -1) {
-                            previousSongIndex = songs.size() - 1;
-                        }
-
-                        // Cập nhật vị trí hiện tại của bài hát trong danh sách
-                        SongListSingleton.getInstance().setCurrentIndex(previousSongIndex);
-
-                        // Lấy bài hát trước đó từ danh sách
-                        Song previousSong = songs.get(previousSongIndex);
-
-                        // Cập nhật thông tin và phát bài hát trước đó
-                        updateAndPlayNextSong(previousSong);
                     } else {
                         // Nếu shuffle được bật
                         // Chọn một bài hát ngẫu nhiên từ danh sách (ở đây bạn có thể sử dụng logic khác để chọn bài hát trước đó)
