@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,9 +55,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchYoutube extends AppCompatActivity {
 
-    private TextView textViewTitle, textViewChannelName, textViewPublishTime;
+    private TextView textViewTitle, textViewChannelName, textViewPublishTime,textViewTitleZoomIn;
     private EditText edtSearch;
-    private ImageView btnSearch, imgChannel, logoImageView, imageViewBack;
+    private NestedScrollView scrollView;
+    private ImageView btnSearch, imgChannel, logoImageView, imageViewBack, btnPlayZoomIn, image_view_thumbnail_zoom_in;
     private WebView webView;
     private String videoId;
     //private final String APIkey = "AIzaSyBzG3L2hjlJZ9iDS4DfFJwzKAimzE5FTVc";
@@ -66,7 +68,7 @@ public class SearchYoutube extends AppCompatActivity {
     private List<VideoItem> videoItems = new ArrayList<>();
     private VideoItem videoItem;
     private static final int RC_SIGN_IN = 1001;
-    private LinearLayout playVideoLayout;
+    private LinearLayout playVideoLayout, layoutPlayVideoZoomIn;
     private GoogleSignInClient mGoogleSignInClient;
     private List<VideoItem> videoItemsHome;
 
@@ -84,6 +86,11 @@ public class SearchYoutube extends AppCompatActivity {
         logoImageView =  findViewById(R.id.logoImageView);
         imageViewBack = findViewById(R.id.imageViewBack);
         textViewPublishTime = findViewById(R.id.textViewPublishTime);
+        layoutPlayVideoZoomIn = findViewById(R.id.layoutPlayVideoZoomIn);
+        textViewTitleZoomIn = findViewById(R.id.textViewTitleZoomIn);
+        btnPlayZoomIn = findViewById(R.id.btnPlayZoomIn);
+        image_view_thumbnail_zoom_in = findViewById(R.id.image_view_thumbnail_zoom_in);
+        scrollView = findViewById(R.id.scrollView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new VideoAdapter(videoItems);
         recyclerView.setAdapter(adapter);
@@ -98,6 +105,7 @@ public class SearchYoutube extends AppCompatActivity {
             @Override
             public void onItemClick(String VideoId) {
                 playVideoLayout.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.VISIBLE);
                 for(VideoItem v : videoItems){
                     if(v.getVideoId().equals(VideoId)){
                         videoItem = v;
@@ -113,7 +121,9 @@ public class SearchYoutube extends AppCompatActivity {
                 textViewChannelName.setText(videoItem.getChannelTitle());
                 String html = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; }</style></head><body><iframe src=\"https://www.youtube.com/embed/" + videoItem.getVideoId() + "\" frameborder=\"0\" allow=\"autoplay\" allowfullscreen></iframe></body></html>";
                 webView.loadData(html, "text/html", "utf-8");
-
+                if (layoutPlayVideoZoomIn.getVisibility() == View.VISIBLE) {
+                    layoutPlayVideoZoomIn.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -124,8 +134,8 @@ public class SearchYoutube extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 playVideoLayout.setVisibility(View.GONE);
+                webView.setVisibility(View.GONE);
                 adapter.setmData(new ArrayList<>());
-
             }
 
             @Override
@@ -143,6 +153,23 @@ public class SearchYoutube extends AppCompatActivity {
                         inputMethodManager.hideSoftInputFromWindow(btnSearch.getWindowToken(), 0);
                     }
                     searchYouTubeVideos(edtSearch.getText().toString());
+
+                    if(playVideoLayout.getVisibility() == View.VISIBLE){
+                        playVideoLayout.setVisibility(View.GONE);
+                        webView.setVisibility(View.GONE);
+                        textViewTitleZoomIn.setText(videoItem.getTitle());
+                        Glide.with(SearchYoutube.this)
+                                .load(videoItem.getThumbnailUrl()) // videoItem.getThumbnailUrl() là URL của hình ảnh
+                                .into(image_view_thumbnail_zoom_in);
+                        layoutPlayVideoZoomIn.setVisibility(View.VISIBLE);
+                    }
+                    if(playVideoLayout.getVisibility() == View.GONE){
+                        textViewTitleZoomIn.setText(videoItem.getTitle());
+                        Glide.with(SearchYoutube.this)
+                                .load(videoItem.getThumbnailUrl()) // videoItem.getThumbnailUrl() là URL của hình ảnh
+                                .into(image_view_thumbnail_zoom_in);
+                        layoutPlayVideoZoomIn.setVisibility(View.VISIBLE);
+                    }
                 }else {
                     edtSearch.setVisibility(View.VISIBLE);
                     // Focus vào EditText
@@ -151,6 +178,7 @@ public class SearchYoutube extends AppCompatActivity {
                     if (inputMethodManager != null) {
                         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     }
+
                 }
             }
         });
@@ -162,9 +190,28 @@ public class SearchYoutube extends AppCompatActivity {
                 if (inputMethodManager != null) {
                     inputMethodManager.hideSoftInputFromWindow(btnSearch.getWindowToken(), 0);
                 }
-
+                if(playVideoLayout.getVisibility() == View.VISIBLE){
+                    playVideoLayout.setVisibility(View.GONE);
+                    webView.setVisibility(View.GONE);
+                    textViewTitleZoomIn.setText(videoItem.getTitle());
+                    Glide.with(SearchYoutube.this)
+                            .load(videoItem.getThumbnailUrl()) // videoItem.getThumbnailUrl() là URL của hình ảnh
+                            .into(image_view_thumbnail_zoom_in);
+                    layoutPlayVideoZoomIn.setVisibility(View.VISIBLE);
+                }
             }
         });
+
+        layoutPlayVideoZoomIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playVideoLayout.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.VISIBLE);
+                layoutPlayVideoZoomIn.setVisibility(View.GONE);
+                scrollView.smoothScrollTo(0, 0);
+            }
+        });
+
         imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
