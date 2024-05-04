@@ -9,6 +9,7 @@ public class YouTubeVideo {
     @SerializedName("snippet")
     private YouTubeSnippet snippet;
 
+
     public YouTubeVideoId getId() {
         return id;
     }
@@ -17,5 +18,6 @@ public class YouTubeVideo {
         return snippet;
     }
 
-    // Getters...
+
+// Getters...
 }

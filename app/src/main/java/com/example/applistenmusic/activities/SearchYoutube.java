@@ -1,14 +1,19 @@
 package com.example.applistenmusic.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.adapters.VideoAdapter;
 import com.example.applistenmusic.interfaces.YouTubeAPI;
@@ -44,9 +51,11 @@ public class SearchYoutube extends AppCompatActivity {
 
     private TextView textViewTitle, textViewChannelName;
     private EditText edtSearch;
-    private Button btnSearch;
+    private ImageView btnSearch, imgChannel;
     private WebView webView;
-    private String videoId = "F0B7HDiY-10"; // Thay VIDEO_ID bằng id của video muốn phát
+    private String videoId;
+    //private final String APIkey = "AIzaSyBzG3L2hjlJZ9iDS4DfFJwzKAimzE5FTVc";
+    private final String APIkey = "AIzaSyBYTlcmOLL5LBNysaT-jAP09WEupEZEYHY";
     private RecyclerView recyclerView;
     private VideoAdapter adapter;
     private List<VideoItem> videoItems = new ArrayList<>();
@@ -54,6 +63,7 @@ public class SearchYoutube extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1001;
     private LinearLayout playVideoLayout;
     private GoogleSignInClient mGoogleSignInClient;
+    private List<VideoItem> videoItemsHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +75,7 @@ public class SearchYoutube extends AppCompatActivity {
         playVideoLayout = findViewById(R.id.layoutPlayVideo);
         textViewChannelName =  findViewById(R.id.textViewChannel);
         textViewTitle =  findViewById(R.id.textViewTitle);
+        imgChannel =  findViewById(R.id.imageViewChannel);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new VideoAdapter(videoItems);
         recyclerView.setAdapter(adapter);
@@ -75,8 +86,6 @@ public class SearchYoutube extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        String html = "<html><body><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + videoId + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
-        webView.loadData(html, "text/html", "utf-8");
         adapter.setOnItemClickListener(new VideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String VideoId) {
@@ -86,10 +95,32 @@ public class SearchYoutube extends AppCompatActivity {
                         videoItem = v;
                     }
                 }
-                textViewTitle.setText(videoItem.getTitle().toString());
-                textViewChannelName.setText(videoItem.getVideoId().toString());
+                Glide.with(SearchYoutube.this)
+                        .load(R.drawable.noimage) // videoItem.getThumbnailUrl() là URL của hình ảnh
+                        .apply(RequestOptions.circleCropTransform())
+                        .override(40, 40)
+                        .into(imgChannel);
+                textViewTitle.setText(videoItem.getTitle().replace("&#39;","'"));
+                textViewChannelName.setText(videoItem.getChannelTitle());
                 String html = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; }</style></head><body><iframe src=\"https://www.youtube.com/embed/" + videoItem.getVideoId() + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
                 webView.loadData(html, "text/html", "utf-8");
+
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                playVideoLayout.setVisibility(View.GONE);
+                adapter.setmData(new ArrayList<>());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -97,7 +128,21 @@ public class SearchYoutube extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchYouTubeVideos(edtSearch.getText().toString());
+                if(!edtSearch.getText().toString().equals("") && edtSearch.getText() != null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (inputMethodManager != null) {
+                        inputMethodManager.hideSoftInputFromWindow(btnSearch.getWindowToken(), 0);
+                    }
+                    searchYouTubeVideos(edtSearch.getText().toString());
+                }else {
+                    edtSearch.setVisibility(View.VISIBLE);
+                    // Focus vào EditText
+                    edtSearch.requestFocus();
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (inputMethodManager != null) {
+                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    }
+                }
             }
         });
 
@@ -150,19 +195,22 @@ public class SearchYoutube extends AppCompatActivity {
 
         YouTubeAPI youTubeAPI = retrofit.create(YouTubeAPI.class);
 
-        youTubeAPI.searchVideos("AIzaSyBzG3L2hjlJZ9iDS4DfFJwzKAimzE5FTVc", "ive", "snippet", 20, "video", "viewCount")
+        youTubeAPI.searchVideos(APIkey, "ive", "snippet", 20, "video", "viewCount")
                 .enqueue(new Callback<YouTubeSearchResponse>() {
                     @Override
                     public void onResponse(Call<YouTubeSearchResponse> call, Response<YouTubeSearchResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             List<YouTubeVideo> videos = response.body().getVideos();
                             for (YouTubeVideo video : videos) {
-                                String title = video.getSnippet().getTitle();
+                                String title = video.getSnippet().getTitle().replace("&#39;","'");
                                 String thumbnailUrl = video.getSnippet().getThumbnails().getHigh().getUrl();
                                 String videoId = video.getId().getVideoId();
-                                VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId);
+                                String channelTitle = video.getSnippet().getChannelTitle();
+                                String publishAt = video.getSnippet().getPublishAt();
+                                VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId,channelTitle,publishAt);
                                 videoItems.add(videoItem);
                             }
+                            videoItemsHome = videoItems;
                             adapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(SearchYoutube.this, "Failed to fetch videos", Toast.LENGTH_SHORT).show();
@@ -185,7 +233,7 @@ public class SearchYoutube extends AppCompatActivity {
 
         YouTubeAPI youTubeAPI = retrofit.create(YouTubeAPI.class);
 
-        youTubeAPI.searchVideos("AIzaSyBzG3L2hjlJZ9iDS4DfFJwzKAimzE5FTVc", keyword, "snippet", 20, "video", "viewCount")
+        youTubeAPI.searchVideos(APIkey, keyword, "snippet", 20, "video", "viewCount")
                 .enqueue(new Callback<YouTubeSearchResponse>() {
                     @Override
                     public void onResponse(Call<YouTubeSearchResponse> call, Response<YouTubeSearchResponse> response) {
@@ -193,10 +241,12 @@ public class SearchYoutube extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             List<YouTubeVideo> videos = response.body().getVideos();
                             for (YouTubeVideo video : videos) {
-                                String title = video.getSnippet().getTitle();
+                                String title = video.getSnippet().getTitle().replace("&#39;","'");
                                 String thumbnailUrl = video.getSnippet().getThumbnails().getHigh().getUrl();
                                 String videoId = video.getId().getVideoId();
-                                VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId);
+                                String channelTitle = video.getSnippet().getChannelTitle();
+                                String publishAt = video.getSnippet().getPublishAt();
+                                VideoItem videoItem = new VideoItem(title, thumbnailUrl, videoId,channelTitle,publishAt);
                                 videoItems.add(videoItem);
                             }
                             adapter.setmData(videoItems);

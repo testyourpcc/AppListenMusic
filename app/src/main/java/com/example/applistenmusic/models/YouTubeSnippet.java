@@ -10,6 +10,12 @@ public class YouTubeSnippet {
 
     @SerializedName("thumbnails")
     private YouTubeThumbnails thumbnails;
+    @SerializedName("channelTitle")
+    private String channelTitle;
+
+    @SerializedName("publishedAt")
+    private String publishAt;
+
 
     public String getTitle() {
         return title;
@@ -17,6 +23,14 @@ public class YouTubeSnippet {
 
     public YouTubeThumbnails getThumbnails() {
         return thumbnails;
+    }
+
+    public String getChannelTitle() {
+        return channelTitle;
+    }
+
+    public String getPublishAt() {
+        return publishAt;
     }
 // Getter...
 }
