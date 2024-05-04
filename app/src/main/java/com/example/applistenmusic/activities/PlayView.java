@@ -968,13 +968,18 @@ public class PlayView extends AppCompatActivity {
                         startActivity(intent);
                         result = true;
                     } else {
+
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
-                        // Vuốt sang phải, chuyển sang activity khác
-                        Intent intent = new Intent(PlayView.this, SongDetailView.class);
 
-                        startActivity(intent);
-                        result = true;
+                        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        //Log.d("12345", "onFling: sang trái");
+
+                        // Vuốt sang phải, chuyển sang activity khác
+                        //Intent intent = new Intent(PlayView.this, SongDetailView.class);
+
+                        //startActivity(intent);
+                        //result = true;
                     }
                 }
                 //vuốt lên và xuống

@@ -55,8 +55,9 @@ dependencies {
     implementation("jp.wasabeef:glide-transformations:4.3.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    implementation(files("libs/activation.jar", "libs/mail.jar","libs/additionnal.jar"))
+    implementation(files("libs/activation.jar", "libs/mail.jar", "libs/additionnal.jar"))
     implementation("com.github.PhilJay:MPAndroidChart:v3.0.2")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 }

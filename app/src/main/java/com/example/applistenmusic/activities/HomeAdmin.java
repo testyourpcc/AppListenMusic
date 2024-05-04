@@ -170,11 +170,6 @@ public class HomeAdmin extends AppCompatActivity implements OnChartValueSelected
                     }
                     // genres
                     case 5: {
-                        Intent playIntent = new Intent(HomeAdmin.this, LyricView.class);
-                        startActivity(playIntent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        finish();
-                        break;
                     }
                 }
 

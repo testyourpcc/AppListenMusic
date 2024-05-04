@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#201F1F">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0C0C0C"
+        android:elevation="4dp"
+        android:padding="10dp">
+
+        <!-- New ImageView -->
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/back_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Existing Logo ImageView -->
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/youtube"
+            app:layout_constraintStart_toEndOf="@id/imageViewBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Existing Search Button -->
+        <ImageView
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/searchimgbtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Existing EditText -->
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:visibility="invisible"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:foregroundGravity="center_vertical"
+            android:background="@drawable/searchyoutube_edittext_background"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            app:layout_constraintStart_toEndOf="@+id/logoImageView"
+            app:layout_constraintEnd_toStartOf="@+id/searchButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutPlayVideo"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:orientation="vertical"
+        android:background="#0C0C0C"
+        android:visibility="gone"
+        android:layout_below="@id/searchLayout">
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"/>
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:layout_marginStart="7dp"
+            android:maxLines="2"
+            android:textSize="22sp"/>
+        <TextView
+            android:id="@+id/textViewPublishTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:layout_marginStart="7dp"
+            android:maxLines="1"
+            android:textSize="18sp"/>
+        <LinearLayout
+            android:id="@+id/layoutChannel"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginStart="7dp"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/imageViewChannel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/noimage"
+                android:layout_alignParentStart="true"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/textViewChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                android:textSize="24sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutPlayVideo"
+        android:layout_alignParentRight="true"
+       />
+
+</RelativeLayout>
