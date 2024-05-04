@@ -165,6 +165,7 @@
             android:layout_weight="6"
             android:padding="7dp"
             android:textSize="22sp"
+            android:maxLines="1"
             android:textColor="@color/black"
             android:text="Your Text"
             android:gravity="start"/>

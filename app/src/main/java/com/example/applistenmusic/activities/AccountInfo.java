@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.models.UserInfo;
+import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -73,13 +75,13 @@ public class AccountInfo extends AppCompatActivity {
     EditText address,phoneNumber;
     int coinAmount =0;
     private AdView adView;
-
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_info);
-
+        mediaPlayer = MediaPlayerSingleton.getInstance().getMediaPlayer();
         adView = findViewById(R.id.adView);
 
         // Khởi tạo quảng cáo
@@ -370,6 +372,11 @@ public class AccountInfo extends AppCompatActivity {
         });
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mediaPlayer != null){
+            mediaPlayer.reset();
+        }
+    }
 }

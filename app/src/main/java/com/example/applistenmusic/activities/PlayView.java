@@ -696,7 +696,7 @@ public class PlayView extends AppCompatActivity {
         handler1.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mediaPlayer != null) {
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                     seekBar.setProgress(mediaPlayer.getCurrentPosition());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
                     startTime.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
