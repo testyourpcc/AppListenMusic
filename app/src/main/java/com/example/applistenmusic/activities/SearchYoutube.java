@@ -102,7 +102,7 @@ public class SearchYoutube extends AppCompatActivity {
                         .into(imgChannel);
                 textViewTitle.setText(videoItem.getTitle().replace("&#39;","'"));
                 textViewChannelName.setText(videoItem.getChannelTitle());
-                String html = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; }</style></head><body><iframe src=\"https://www.youtube.com/embed/" + videoItem.getVideoId() + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+                String html = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; }</style></head><body><iframe src=\"https://www.youtube.com/embed/" + videoItem.getVideoId() + "\" frameborder=\"0\" allow=\"autoplay\" allowfullscreen></iframe></body></html>";
                 webView.loadData(html, "text/html", "utf-8");
 
             }
