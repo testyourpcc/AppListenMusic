@@ -1,5 +1,6 @@
 package com.example.applistenmusic.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,6 +66,7 @@ public class SongEdit extends AppCompatActivity {
     boolean isFirstSelectionGenres , isFirstSelectionAlbum , isFirstSelectionArtist ;
     Song song;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
