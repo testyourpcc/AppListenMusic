@@ -38,6 +38,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +54,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchYoutube extends AppCompatActivity {
 
-    private TextView textViewTitle, textViewChannelName;
+    private TextView textViewTitle, textViewChannelName, textViewPublishTime;
     private EditText edtSearch;
-    private ImageView btnSearch, imgChannel;
+    private ImageView btnSearch, imgChannel, logoImageView, imageViewBack;
     private WebView webView;
     private String videoId;
     //private final String APIkey = "AIzaSyBzG3L2hjlJZ9iDS4DfFJwzKAimzE5FTVc";
@@ -76,6 +81,9 @@ public class SearchYoutube extends AppCompatActivity {
         textViewChannelName =  findViewById(R.id.textViewChannel);
         textViewTitle =  findViewById(R.id.textViewTitle);
         imgChannel =  findViewById(R.id.imageViewChannel);
+        logoImageView =  findViewById(R.id.logoImageView);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        textViewPublishTime = findViewById(R.id.textViewPublishTime);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new VideoAdapter(videoItems);
         recyclerView.setAdapter(adapter);
@@ -100,6 +108,7 @@ public class SearchYoutube extends AppCompatActivity {
                         .apply(RequestOptions.circleCropTransform())
                         .override(40, 40)
                         .into(imgChannel);
+                textViewPublishTime.setText(getTimeDifference(videoItem.getPublishTime()));
                 textViewTitle.setText(videoItem.getTitle().replace("&#39;","'"));
                 textViewChannelName.setText(videoItem.getChannelTitle());
                 String html = "<html><head><style>body, html { margin: 0; padding: 0; } iframe { width: 100%; height: 100%; }</style></head><body><iframe src=\"https://www.youtube.com/embed/" + videoItem.getVideoId() + "\" frameborder=\"0\" allow=\"autoplay\" allowfullscreen></iframe></body></html>";
@@ -143,6 +152,26 @@ public class SearchYoutube extends AppCompatActivity {
                         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     }
                 }
+            }
+        });
+        logoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.setmData(videoItemsHome);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(btnSearch.getWindowToken(), 0);
+                }
+
+            }
+        });
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent playIntent = new Intent(SearchYoutube.this, Home.class);
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
         });
 
@@ -261,5 +290,53 @@ public class SearchYoutube extends AppCompatActivity {
                         Toast.makeText(SearchYoutube.this, "Failed to fetch videos", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public static String getTimeDifference(String uploadTime) {
+        // Chuyển đổi thời gian đăng tải thành đối tượng LocalDateTime
+        LocalDateTime uploadDateTime = null;
+        long seconds = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            uploadDateTime = LocalDateTime.parse(uploadTime, DateTimeFormatter.ISO_DATE_TIME);
+
+
+        // Lấy thời gian hiện tại
+        Instant currentInstant = Instant.now();
+        LocalDateTime currentDateTime = LocalDateTime.ofInstant(currentInstant, ZoneId.systemDefault());
+
+        // Tính khoảng cách giữa hai thời điểm
+        Duration duration = Duration.between(uploadDateTime, currentDateTime);
+
+        // Xử lý kết quả
+        seconds = duration.getSeconds();
+        }
+        if (seconds < 3600) {
+            // Dưới 1 giờ
+            long minutes = seconds / 60;
+            return minutes + " phút trước";
+        } else if (seconds < 86400) {
+            // Dưới 1 ngày
+            long hours = seconds / 3600;
+            return hours + " giờ trước";
+        } else if (seconds < 2592000) {
+            // Dưới 1 tháng (30 ngày)
+            long days = seconds / 86400;
+            return days + " ngày trước";
+        } else if (seconds < 31536000) {
+            // Dưới 1 năm (365 ngày)
+            long months = seconds / 2592000;
+            return months + " tháng trước";
+        } else {
+            // Trên 1 năm
+            long years = seconds / 31536000;
+            return years + " năm trước";
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
     }
 }

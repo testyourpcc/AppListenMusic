@@ -10,11 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.applistenmusic.R;
+import com.example.applistenmusic.activities.SearchYoutube;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.models.VideoItem;
 import com.squareup.picasso.Picasso;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
@@ -47,6 +54,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
         Glide.with(holder.itemView.getContext())
                 .load(videoItem.getThumbnailUrl())
                 .into(holder.thumbnailImageView);
+        Glide.with(holder.itemView.getContext())
+                .load(R.drawable.noimage) // videoItem.getThumbnailUrl() là URL của hình ảnh
+                .apply(RequestOptions.circleCropTransform())
+                .override(40, 40)
+                .into(holder.channelImageView);
+        holder.describeTextView.setText(videoItem.getChannelTitle() +" . " + getTimeDifference(videoItem.getPublishTime()));
     }
 
     @Override
@@ -55,13 +68,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     }
 
      class VideoViewHolder extends RecyclerView.ViewHolder{
-        ImageView thumbnailImageView;
-        TextView titleTextView;
+        ImageView thumbnailImageView, channelImageView;
+        TextView titleTextView, describeTextView;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             thumbnailImageView = itemView.findViewById(R.id.image_view_thumbnail);
             titleTextView = itemView.findViewById(R.id.text_view_title);
+            describeTextView = itemView.findViewById(R.id.text_view_describe);
+            channelImageView = itemView.findViewById(R.id.image_view_channel);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,4 +96,47 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     public interface OnItemClickListener {
         void onItemClick(String videoId);
     }
+
+
+    public static String getTimeDifference(String uploadTime) {
+        // Chuyển đổi thời gian đăng tải thành đối tượng LocalDateTime
+        LocalDateTime uploadDateTime = null;
+        long seconds = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            uploadDateTime = LocalDateTime.parse(uploadTime, DateTimeFormatter.ISO_DATE_TIME);
+
+
+            // Lấy thời gian hiện tại
+            Instant currentInstant = Instant.now();
+            LocalDateTime currentDateTime = LocalDateTime.ofInstant(currentInstant, ZoneId.systemDefault());
+
+            // Tính khoảng cách giữa hai thời điểm
+            Duration duration = Duration.between(uploadDateTime, currentDateTime);
+
+            // Xử lý kết quả
+            seconds = duration.getSeconds();
+        }
+        if (seconds < 3600) {
+            // Dưới 1 giờ
+            long minutes = seconds / 60;
+            return minutes + " phút trước";
+        } else if (seconds < 86400) {
+            // Dưới 1 ngày
+            long hours = seconds / 3600;
+            return hours + " giờ trước";
+        } else if (seconds < 2592000) {
+            // Dưới 1 tháng (30 ngày)
+            long days = seconds / 86400;
+            return days + " ngày trước";
+        } else if (seconds < 31536000) {
+            // Dưới 1 năm (365 ngày)
+            long months = seconds / 2592000;
+            return months + " tháng trước";
+        } else {
+            // Trên 1 năm
+            long years = seconds / 31536000;
+            return years + " năm trước";
+        }
+    }
+
 }
