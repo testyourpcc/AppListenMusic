@@ -1,5 +1,6 @@
 package com.example.applistenmusic.activities;
 
+import android.app.DownloadManager;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -76,7 +78,7 @@ public class PlayView extends AppCompatActivity {
 
     ImageView repeatImg, shuffleImg,ivBack;
     private MediaPlayer mediaPlayer;
-    private ImageView playButton, songImage, Home, Search, Play, Account;
+    private ImageView playButton, songImage, Home, Search, Play, Account, Download;
 
     private ImageView playPrevious, playNext, ivFavorite;
     private DatabaseReference databaseReference;
@@ -604,6 +606,45 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
+        Download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(PlayView.this, "Download.",
+                        Toast.LENGTH_SHORT).show();
+                String songname = SongSingleton.getInstance().getSong().getUrl();
+                Toast.makeText(PlayView.this, songname,
+                        Toast.LENGTH_SHORT).show();
+                DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/"+songname);
+
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String downloadUrl = uri.toString();
+
+                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, songname+".mp3");
+
+                        downloadManager.enqueue(request);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Xử lý lỗi nếu có
+                        Log.e("TAG", "Error downloading image", exception);
+                    }
+                });
+
+
+            }
+        });
+
     }
 
     private void checkShuffleFromFirebase() {
@@ -940,6 +981,7 @@ public class PlayView extends AppCompatActivity {
         textViewTimer = findViewById(R.id.textViewTimer);
         BottomSheet = findViewById(R.id.navigationButton);
         ivBack = findViewById(R.id.ivBack);
+        Download = findViewById(R.id.download);
     }
 
     class GestureListener extends GestureDetector.SimpleOnGestureListener {

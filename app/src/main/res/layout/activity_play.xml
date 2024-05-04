@@ -86,19 +86,31 @@
             android:id="@+id/favorite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="@id/discImageView"
             app:layout_constraintStart_toStartOf="@id/discImageView"
             app:layout_constraintTop_toBottomOf="@id/discImageView">
-
             <ImageView
-                android:id="@+id/ivFavorite"
+                android:id="@+id/download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:src="@drawable/download" />
+            <ImageView
+                android:id="@+id/ivFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_heart_off" />
+
         </LinearLayout>
 
         <LinearLayout
