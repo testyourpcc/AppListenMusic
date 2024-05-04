@@ -3,13 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginLeft="90dp"
-    android:padding="8dp">
+    android:paddingBottom="30dp">
 
     <ImageView
         android:id="@+id/image_view_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
 
         android:scaleType="centerCrop"
         android:src="@drawable/noimage" />
@@ -19,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:textAppearanceMedium"
-        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="7dp"
         android:text="Video Title" />
 
 </LinearLayout>
