@@ -45,7 +45,8 @@ public class Home extends AppCompatActivity {
         menuItems.add(new MenuItem(2,"Artists","artist"));
         menuItems.add(new MenuItem(3,"Songs","song"));
         menuItems.add(new MenuItem(4,"Albums","album"));
-        menuItems.add(new MenuItem(5,"Youtube","downloaded"));
+        menuItems.add(new MenuItem(5,"Youtube","youtube"));
+        menuItems.add(new MenuItem(6,"Download","downloaded"));
 
         if (SongListSingleton.getInstance().hasSong()){
             allSong = SongListSingleton.getInstance().getAllSongIfExist();
@@ -240,9 +241,17 @@ public class Home extends AppCompatActivity {
                         finish();
                         break;
                     }
-                    // download
+                    // youtube
                     case 5: {
                         Intent playIntent = new Intent(Home.this, SearchYoutube.class);
+                        startActivity(playIntent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
+                        break;
+                    }
+                    // download
+                    case 6: {
+                        Intent playIntent = new Intent(Home.this, SearchDownload.class);
                         startActivity(playIntent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         finish();

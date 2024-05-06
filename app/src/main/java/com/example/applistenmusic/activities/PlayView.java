@@ -128,7 +128,6 @@ public class PlayView extends AppCompatActivity {
             });
         }
 
-       // fvr = allPlayList.get(0);
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
@@ -150,6 +149,12 @@ public class PlayView extends AppCompatActivity {
         }
         Intent intent = getIntent();
         boolean playNow = intent.getBooleanExtra("playNow", false);
+
+        //download
+        String filePath = intent.getStringExtra("filePath");
+
+        // Play the downloaded audio
+        //playDownloadedSong(filePath);
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
             song = SongSingleton.getInstance().getSong();
@@ -629,7 +634,7 @@ public class PlayView extends AppCompatActivity {
 
                         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, songname+".mp3");
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, songname); //xoá phần thừa mp3
 
                         downloadManager.enqueue(request);
                     }
@@ -646,6 +651,25 @@ public class PlayView extends AppCompatActivity {
         });
 
     }
+
+    private void playDownloadedSong(String filePath) {
+        // Initialize the MediaPlayer
+        mediaPlayer = new MediaPlayer();
+
+        try {
+            // Set the data source to the file path
+            mediaPlayer.setDataSource(filePath);
+
+            // Prepare the MediaPlayer
+            mediaPlayer.prepare();
+
+            // Start playing the audio
+            mediaPlayer.start();
+        } catch (IOException e) {
+            Log.e("PlayView", "Error playing audio", e);
+        }
+    }
+
 
     private void checkShuffleFromFirebase() {
         DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("shuffle");

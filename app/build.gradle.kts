@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.applistenmusic"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -59,5 +59,6 @@ dependencies {
     implementation("com.github.PhilJay:MPAndroidChart:v3.0.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("org.apache.tika:tika-core:1.24.1")
 
 }
