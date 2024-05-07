@@ -53,7 +53,7 @@ public class SearchDownload extends AppCompatActivity {
     ImageView Feature, Home, Search, Play, Account;
     Button btnPlay, btnShuffle;
     TextView textViewSongSize;
-    List<SongDownload> allSongInPlayList;
+    List<Song> allSongInPlayList;
     RecyclerView recyclerViewAllSongInPlayList;
     ImageView ivBack;
 
@@ -111,29 +111,29 @@ public class SearchDownload extends AppCompatActivity {
 
             }
         });
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
-                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
-
-        btnShuffle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
-                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
-                startActivity(playIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-            }
-        });
+//        btnPlay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
+//                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
+//                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
+//
+//        btnShuffle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
+//                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
+//                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
+//                startActivity(playIntent);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                finish();
+//            }
+//        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +159,7 @@ public class SearchDownload extends AppCompatActivity {
     }
 
 
+    // SearchDownload.java
     private void loadSongs() {
         File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         File songsFolder = new File(downloadFolder, "songs");
@@ -167,7 +168,7 @@ public class SearchDownload extends AppCompatActivity {
             for (File file : files1) {
                 if (file.getName().endsWith(".mp3")) {
                     Log.d("DownloadFolder", "File name: " + file.getName());
-                    SongDownload song = SongDownload.fromFile(file); // Assuming you have a method to convert a File to a Song
+                    Song song = Song.fromFile(file); // Assuming you have a method to convert a File to a Song
                     allSongInPlayList.add(song);
                     // Set the text for the TextView
                     textViewSongSize.setText( allSongInPlayList.size()+" bài hát");
@@ -178,11 +179,11 @@ public class SearchDownload extends AppCompatActivity {
         downloadAdapter.setOnItemClickListener(new DownloadAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                SongDownload clickedSong = allSongInPlayList.get(position);
+                Song clickedSong = allSongInPlayList.get(position);
                 // Handle the click event here
                 // For example, start a new activity and pass the clicked song data
                 Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-                playIntent.putExtra("song", SongDownloadHelper.songToBundle(clickedSong));
+                playIntent.putExtra("song", SongHelper.songToBundle(clickedSong));
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

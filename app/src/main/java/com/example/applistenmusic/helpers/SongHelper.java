@@ -1,5 +1,6 @@
 package com.example.applistenmusic.helpers;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -195,4 +196,28 @@ public class SongHelper {
         }
         return new ArrayList<>();
     }
+
+    public static Song getSongByFilePath(List<Song> songList, String filePath) {
+        for (Song song : songList) {
+            if (song.getUrl().equals(filePath)) {
+                return song;
+            }
+        }
+        return null;
+    }
+
+    public static Bundle songToBundle(Song song) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", song.getId());
+        bundle.putString("name", song.getName());
+        bundle.putString("url", song.getUrl());
+        bundle.putString("image", song.getImage());
+        bundle.putString("lyric", song.getLyric());
+        bundle.putInt("genres", song.getGenres());
+        bundle.putInt("artist", song.getArtist());
+        bundle.putInt("album", song.getAlbum());
+        bundle.putInt("view", song.getView());
+        return bundle;
+    }
+
 }

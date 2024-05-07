@@ -1,6 +1,7 @@
 package com.example.applistenmusic.adapters;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.activities.PlayView;
+import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.models.SongDownload;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHolder> {
 
-    private List<SongDownload> mData;
+    private List<Song> mData;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -31,7 +34,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHo
         mListener = listener;
     }
 
-    public DownloadAdapter(List<SongDownload> data) {
+    public DownloadAdapter(List<Song> data) {
         mData = data;
     }
 
@@ -45,8 +48,13 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SongDownload item = mData.get(position);
-        holder.textView.setText(item.getName());
+        Song item = mData.get(position);
+        String songName = item.getName();
+        if (songName != null) {
+            holder.textView.setText(songName);
+        } else {
+            holder.textView.setText("");
+        }
     }
 
     @Override
@@ -72,12 +80,13 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHo
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            SongDownload item = mData.get(position);
-                            String filePath = item.getFilePath(); // Get the file path of the song
-                            Log.d("DownloadAdapter", "File path: " + filePath);
+                            Song item = mData.get(position);
+                            String url = item.getUrl(); // Get the url of the song
+                            Log.d("DownloadAdapter", "Song url: " + url);
 
                             Intent playIntent = new Intent(v.getContext(), PlayView.class);
-                            playIntent.putExtra("filePath", filePath); // Pass the file path to PlayView
+                            playIntent.putExtra("url", url); // Pass the url to PlayView
+                            playIntent.putParcelableArrayListExtra("downloadList", (ArrayList<? extends Parcelable>) mData); // Pass the download list to PlayView
                             v.getContext().startActivity(playIntent);
                             Log.d("DownloadAdapter", "Starting PlayView activity");
                         }

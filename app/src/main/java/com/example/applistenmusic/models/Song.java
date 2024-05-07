@@ -1,6 +1,13 @@
 package com.example.applistenmusic.models;
 
-public class Song {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.io.File;
+
+public class Song implements Parcelable {
     private int id;
     private String name;
     private String url;
@@ -11,6 +18,7 @@ public class Song {
     private int album;
     private int view;
 
+    private static int idCounter = 0;
 
     public Song() {
     }
@@ -27,6 +35,30 @@ public class Song {
         this.view = view;
 
     }
+
+    protected Song(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        url = in.readString();
+        image = in.readString();
+        lyric = in.readString();
+        genres = in.readInt();
+        artist = in.readInt();
+        album = in.readInt();
+        view = in.readInt();
+    }
+
+    public static final Creator<Song> CREATOR = new Creator<Song>() {
+        @Override
+        public Song createFromParcel(Parcel in) {
+            return new Song(in);
+        }
+
+        @Override
+        public Song[] newArray(int size) {
+            return new Song[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -102,5 +134,38 @@ public class Song {
 
     public void addView() {
         this.view +=1;
+    }
+
+    public static Song fromFile(File file) {
+        int id = idCounter++;
+        String name = file.getName();
+        String url = file.getAbsolutePath();
+
+        // Create a new Song object with the extracted name, url and id
+        // Other fields are set to default values
+        Song song = new Song();
+        song.setId(id);
+        song.setName(name);
+        song.setUrl(url);
+
+        return song;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(url);
+        dest.writeString(image);
+        dest.writeString(lyric);
+        dest.writeInt(genres);
+        dest.writeInt(artist);
+        dest.writeInt(album);
+        dest.writeInt(view);
     }
 }

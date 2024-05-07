@@ -51,6 +51,7 @@ import com.example.applistenmusic.helpers.SongHelper;
 import com.example.applistenmusic.interfaces.DataLoadListener;
 import com.example.applistenmusic.interfaces.PlayListLoadListener;
 import com.example.applistenmusic.models.Song;
+import com.example.applistenmusic.singletons.DownloadListSingleton;
 import com.example.applistenmusic.singletons.MediaPlayerSingleton;
 import com.example.applistenmusic.singletons.PlayListSingleton;
 import com.example.applistenmusic.singletons.SongListSingleton;
@@ -95,6 +96,7 @@ public class PlayView extends AppCompatActivity {
     PlayList fvr;
     String currentUserId;
     List<PlayList> allPlayList;
+    List<Song> allDownloads;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser(); // Lấy thông tin người dùng hiện tại
     private TimerSingleton timerSingleton;
     private TextView textViewTimer;
@@ -116,7 +118,7 @@ public class PlayView extends AppCompatActivity {
             // Sử dụng currentUserId ở đây
         }
 
-
+        // lấy nhạc từ playList
         if(PlayListSingleton.getInstance().hasPlayList()){
             allPlayList = PlayListSingleton.getInstance().getAllPlayListIfExist();
         } else {
@@ -128,6 +130,18 @@ public class PlayView extends AppCompatActivity {
             });
         }
 
+        // lấy danh sách nhạc đã tải về từ điện thoại allDownl;
+        if(DownloadListSingleton.getInstance().hasDownload()){
+            allDownloads = DownloadListSingleton.getInstance().getAllDownloadIfExist();
+        } else {
+            DownloadListSingleton.getInstance().getAllDownload(new DataLoadListener() {
+                @Override
+                public void onDataLoaded(List<Song> downloadList) {
+                    allDownloads = downloadList;
+                    Log.d("DownloadList", "Download list size: " + allDownloads.size());
+                }
+            });
+        }
 
         // Kiểm tra giá trị của repeat trên Firebase và cập nhật nút repeatImg
         checkRepeatFromFirebase();
@@ -150,24 +164,32 @@ public class PlayView extends AppCompatActivity {
         Intent intent = getIntent();
         boolean playNow = intent.getBooleanExtra("playNow", false);
 
-        //download
-        String filePath = intent.getStringExtra("filePath");
+//        if (intent != null) {
+//            // Get the song URL and download list from the Intent
+//            String songUrl = intent.getStringExtra("url");
+//            Log.d("PlayView", "Song URL: " + songUrl);
+//            ArrayList<Song> downloadList = intent.getParcelableArrayListExtra("downloadList");
+//
+//            // Find the song in the download list
+//            Song songToPlay = null;
+//            for (Song song : downloadList) {
+//                if (song.getUrl().equals(songUrl)) {
+//                    songToPlay = song;
+//                    break;
+//                }
+//            }
+//
+//            // Play the song
+//            if (songToPlay != null) {
+//                String localFilePath = songToPlay.getUrl(); // Assuming Song has a getFilePath() method
+//                getAndPlaySongLocal(localFilePath);
+//                Log.d("PlayView", "Playing song: " + songToPlay.getName());
+//            }
+//        }
 
-        // Play the downloaded audio
-        //playDownloadedSong(filePath);
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
             song = SongSingleton.getInstance().getSong();
-//            if( fvr.getSongIdList().contains(song.getId())){
-//                favorite = true;
-//                ivFavorite.setImageResource(R.drawable.ic_heart_on);
-//
-//        } else {
-//                favorite = false;
-//                ivFavorite.setImageResource(R.drawable.ic_heart_off);
-//
-//            }
-
 
             imageUrl = song.getImage();
             songName.setText(song.getName());
@@ -652,21 +674,112 @@ public class PlayView extends AppCompatActivity {
 
     }
 
-    private void playDownloadedSong(String filePath) {
+    public void getAndPlaySongLocal(String filePath) {
         // Initialize the MediaPlayer
-        mediaPlayer = new MediaPlayer();
+        MediaPlayer mediaPlayer = new MediaPlayer();
 
         try {
+            // Reset MediaPlayer before use
+            mediaPlayer.reset();
+
+            // Set AudioAttributes for MediaPlayer
+            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build());
+
             // Set the data source to the file path
             mediaPlayer.setDataSource(filePath);
 
             // Prepare the MediaPlayer
             mediaPlayer.prepare();
 
-            // Start playing the audio
+            handler = new Handler();
+
+            // Set max duration for seek bar
+            seekBar.setMax(mediaPlayer.getDuration());
+
+            // Update seek bar every 100 milliseconds
+            handler.postDelayed(updateSeekBar, 250);
+
+            // Seek bar change listener
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser) {
+                        mediaPlayer.seekTo(progress);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                }
+            });
+
+            // Start playing the song
             mediaPlayer.start();
+            updateTime();
+
+            // Set the play button to display the pause icon because the song is playing
+            playButton.setImageResource(R.drawable.ic_pause_40px);
+
+            // Set up listeners for the next song and previous song buttons to change the song when clicked
+            playNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Get the current song
+                    Song currentSong = SongSingleton.getInstance().getSong();
+
+                    // Find the index of the current song in the allDownloads list
+                    int currentIndex = allDownloads.indexOf(currentSong);
+
+                    // Check if the current song is not the last song in the list
+                    if (currentIndex < allDownloads.size() - 1) {
+                        // Get the next song
+                        Song nextSong = allDownloads.get(currentIndex + 1);
+
+                        // Play the next song
+                        String nextSongFilePath = nextSong.getUrl(); // Assuming Song has a getFilePath() method
+                        getAndPlaySongLocal(nextSongFilePath);
+                        Log.d("PlayView", "Playing next song: " + nextSong.getName());
+                    } else {
+                        // If the current song is the last song in the list, play the first song
+                        Song firstSong = allDownloads.get(0);
+
+                        // Play the first song
+                        String firstSongFilePath = firstSong.getUrl(); // Assuming Song has a getFilePath() method
+                        getAndPlaySongLocal(firstSongFilePath);
+                        Log.d("PlayView", "Playing first song: " + firstSong.getName());
+                    }
+                }
+            });
+
+            playPrevious.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Code to play the previous song
+                }
+            });
+
+            // Set up a listener for the play/pause button to pause or resume the song when clicked
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause();
+                        playButton.setImageResource(R.drawable.ic_play_arrow_24px);
+                    } else {
+                        mediaPlayer.start();
+                        playButton.setImageResource(R.drawable.ic_pause_40px);
+                    }
+                }
+            });
         } catch (IOException e) {
-            Log.e("PlayView", "Error playing audio", e);
+            e.printStackTrace();
         }
     }
 
@@ -783,7 +896,6 @@ public class PlayView extends AppCompatActivity {
         }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(timerUpdateReceiver);
     }
-
     public void getAndPlaySong(String Url) {
         // Khởi tạo FirebaseStorage
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -858,6 +970,7 @@ public class PlayView extends AppCompatActivity {
             }
         });
     }
+
 
 
     private void saveData(int songId) {
