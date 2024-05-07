@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.applistenmusic.R;
 import com.example.applistenmusic.activities.PlayView;
+import com.example.applistenmusic.models.PlayList;
 import com.example.applistenmusic.models.Song;
 import com.example.applistenmusic.models.SongDownload;
 
@@ -26,7 +27,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHo
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick(int id);
+        void onItemClick(String url);
         void onButtonClick(int id);
     }
 
@@ -76,19 +77,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("DownloadAdapter", "Item clicked");
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             Song item = mData.get(position);
-                            String url = item.getUrl(); // Get the url of the song
-                            Log.d("DownloadAdapter", "Song url: " + url);
-
-                            Intent playIntent = new Intent(v.getContext(), PlayView.class);
-                            playIntent.putExtra("url", url); // Pass the url to PlayView
-                            playIntent.putParcelableArrayListExtra("downloadList", (ArrayList<? extends Parcelable>) mData); // Pass the download list to PlayView
-                            v.getContext().startActivity(playIntent);
-                            Log.d("DownloadAdapter", "Starting PlayView activity");
+                            mListener.onItemClick(item.getUrl());
                         }
                     }
                 }

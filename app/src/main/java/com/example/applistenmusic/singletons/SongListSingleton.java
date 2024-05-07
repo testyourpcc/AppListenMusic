@@ -20,6 +20,7 @@ public class SongListSingleton {
 
     private static volatile SongListSingleton instance;
     private List<Song> allSong;
+    private List<Song> allDownLoadSong;
     private boolean isDataLoaded = false;
     private DataLoadListener dataLoadListener;
 
@@ -100,4 +101,10 @@ public class SongListSingleton {
         currentIndex = index;
     }
 
+    public void setListDownLoadSong(List<Song> allSongInPlayList) {
+        allDownLoadSong = allSongInPlayList;
+    }
+    public synchronized List<Song> getAllDownLoadSongIfExist(){
+        return allDownLoadSong;
+    }
 }

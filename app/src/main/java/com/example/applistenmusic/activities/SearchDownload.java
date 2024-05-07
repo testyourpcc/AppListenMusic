@@ -115,6 +115,7 @@ public class SearchDownload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Song clickedSong = allSongInPlayList.get(0);
+                SongSingleton.getInstance().setSong(clickedSong);
                 Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
                 playIntent.putExtra("url", clickedSong.getUrl());
                 startActivity(playIntent);
@@ -127,6 +128,7 @@ public class SearchDownload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Song clickedSong = allSongInPlayList.get(0);
+                SongSingleton.getInstance().setSong(clickedSong);
                 Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
                 playIntent.putExtra("url", clickedSong.getUrl());
                 startActivity(playIntent);
@@ -174,16 +176,21 @@ public class SearchDownload extends AppCompatActivity {
                     textViewSongSize.setText( allSongInPlayList.size()+" bài hát");
                 }
             }
+            SongListSingleton.getInstance().setListDownLoadSong(allSongInPlayList);
         }
         DownloadAdapter downloadAdapter = new DownloadAdapter(allSongInPlayList);
         downloadAdapter.setOnItemClickListener(new DownloadAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Song clickedSong = allSongInPlayList.get(position);
-                // Handle the click event here
-                // For example, start a new activity and pass the clicked song data
+            public void onItemClick(String url) {
                 Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-                playIntent.putExtra("url", clickedSong.getUrl());
+                for(Song song : allSongInPlayList){
+                    if(song.getUrl().equals(url))
+                    {
+                        SongSingleton.getInstance().setSong(song);
+                        break;
+                    }
+                }
+                playIntent.putExtra("url", url);
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

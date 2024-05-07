@@ -168,6 +168,8 @@ public class PlayView extends AppCompatActivity {
             // Get the song URL and download list from the Intent
             String songUrl = intent.getStringExtra("url");
             if (songUrl != null) {
+                song = SongSingleton.getInstance().getSong();
+                songName.setText(song.getName());
                 getAndPlaySongLocal(songUrl);
             }
         }
@@ -175,27 +177,10 @@ public class PlayView extends AppCompatActivity {
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
             song = SongSingleton.getInstance().getSong();
-
-            imageUrl = song.getImage();
-            songName.setText(song.getName());
-            playButton.setImageResource(R.drawable.ic_pause_40px);
-            // Sử dụng Glide để tải và hiển thị ảnh từ URL
-            int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
-            Glide.with(this)
-                    .load(imageUrl)
-                    .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
-                    .transform(new RoundedCornersTransformation(50, 0))
-                    .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
-                    .into(songImage);
-
-            Url = song.getUrl();
-            SongSingleton.getInstance().setSong(song);
-            getAndPlaySong(Url);
-
-        } else {
-            if (SongSingleton.getInstance().getSong() != null) {
-                imageUrl = SongSingleton.getInstance().getSong().getImage();
-                songName.setText(SongSingleton.getInstance().getSong().getName());
+            if(song.getUrl().startsWith("songs")) {
+                imageUrl = song.getImage();
+                songName.setText(song.getName());
+                playButton.setImageResource(R.drawable.ic_pause_40px);
                 // Sử dụng Glide để tải và hiển thị ảnh từ URL
                 int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
                 Glide.with(this)
@@ -204,6 +189,26 @@ public class PlayView extends AppCompatActivity {
                         .transform(new RoundedCornersTransformation(50, 0))
                         .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
                         .into(songImage);
+
+                Url = song.getUrl();
+                SongSingleton.getInstance().setSong(song);
+                getAndPlaySong(Url);
+            }
+
+        } else {
+            if (SongSingleton.getInstance().getSong() != null) {
+                if(SongSingleton.getInstance().getSong().getUrl().startsWith("songs")) {
+                    imageUrl = SongSingleton.getInstance().getSong().getImage();
+                    songName.setText(SongSingleton.getInstance().getSong().getName());
+                    // Sử dụng Glide để tải và hiển thị ảnh từ URL
+                    int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size); // Kích thước cố định của hình ảnh
+                    Glide.with(this)
+                            .load(imageUrl)
+                            .override(sizeInPixels, sizeInPixels) // Đặt kích thước cố định cho hình ảnh
+                            .transform(new RoundedCornersTransformation(50, 0))
+                            .circleCrop() // Chuyển đổi hình ảnh thành hình tròn
+                            .into(songImage);
+                }
             }
         }
 
@@ -280,6 +285,7 @@ public class PlayView extends AppCompatActivity {
         playNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(SongSingleton.getInstance().getSong().getUrl().startsWith("songs")){
                 // Lấy danh sách bài hát
                 List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
 
@@ -323,6 +329,9 @@ public class PlayView extends AppCompatActivity {
                         updateAndPlayNextSong(nextSong);
                     }
                 }
+                }else{
+
+                }
             }
         });
 
@@ -330,47 +339,51 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Lấy danh sách bài hát
-                List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+                if(SongSingleton.getInstance().getSong().getUrl().startsWith("songs")){
+                    List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
 
-                // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
-                if (songs != null && !songs.isEmpty()) {
-                    // Kiểm tra xem shuffle có được bật hay không
-                    if (!shufferSong) {
-                        if(SongSingleton.getInstance().getSong()!=null) {
-                            // Lấy ID của bài hát hiện tại
-                            int currentSongId = SongSingleton.getInstance().getSong().getId();
+                    // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+                    if (songs != null && !songs.isEmpty()) {
+                        // Kiểm tra xem shuffle có được bật hay không
+                        if (!shufferSong) {
+                            if(SongSingleton.getInstance().getSong()!=null) {
+                                // Lấy ID của bài hát hiện tại
+                                int currentSongId = SongSingleton.getInstance().getSong().getId();
 
-                            // Tìm vị trí của bài hát có ID trước đó trong danh sách
-                            int previousSongIndex = -1;
-                            for (int i = 0; i < songs.size(); i++) {
-                                if (songs.get(i).getId() == currentSongId - 1) {
-                                    previousSongIndex = i;
-                                    break;
+                                // Tìm vị trí của bài hát có ID trước đó trong danh sách
+                                int previousSongIndex = -1;
+                                for (int i = 0; i < songs.size(); i++) {
+                                    if (songs.get(i).getId() == currentSongId - 1) {
+                                        previousSongIndex = i;
+                                        break;
+                                    }
                                 }
+
+                                // Nếu không tìm thấy bài hát có ID trước đó, chọn bài hát cuối cùng trong danh sách
+                                if (previousSongIndex == -1) {
+                                    previousSongIndex = songs.size() - 1;
+                                }
+
+                                // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                                SongListSingleton.getInstance().setCurrentIndex(previousSongIndex);
+
+                                // Lấy bài hát trước đó từ danh sách
+                                Song previousSong = songs.get(previousSongIndex);
+
+                                // Cập nhật thông tin và phát bài hát trước đó
+                                updateAndPlayNextSong(previousSong);
                             }
-
-                            // Nếu không tìm thấy bài hát có ID trước đó, chọn bài hát cuối cùng trong danh sách
-                            if (previousSongIndex == -1) {
-                                previousSongIndex = songs.size() - 1;
-                            }
-
-                            // Cập nhật vị trí hiện tại của bài hát trong danh sách
-                            SongListSingleton.getInstance().setCurrentIndex(previousSongIndex);
-
-                            // Lấy bài hát trước đó từ danh sách
-                            Song previousSong = songs.get(previousSongIndex);
+                        } else {
+                            // Nếu shuffle được bật
+                            // Chọn một bài hát ngẫu nhiên từ danh sách (ở đây bạn có thể sử dụng logic khác để chọn bài hát trước đó)
+                            Song previousSong = SongHelper.getRandomSong(songs);
 
                             // Cập nhật thông tin và phát bài hát trước đó
                             updateAndPlayNextSong(previousSong);
                         }
-                    } else {
-                        // Nếu shuffle được bật
-                        // Chọn một bài hát ngẫu nhiên từ danh sách (ở đây bạn có thể sử dụng logic khác để chọn bài hát trước đó)
-                        Song previousSong = SongHelper.getRandomSong(songs);
-
-                        // Cập nhật thông tin và phát bài hát trước đó
-                        updateAndPlayNextSong(previousSong);
                     }
+                 }else{
+
                 }
             }
         });
@@ -467,61 +480,61 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                if(SongSingleton.getInstance().hasSong()){
-                    if (repeatSong) {
-                        // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
-                        mediaPlayer.seekTo(0);
-                        mediaPlayer.start();
-                    } else {
-                        // Lấy danh sách bài hát
-                        List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
-
-                        // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
-                        if (songs != null && !songs.isEmpty()) {
-                            // Kiểm tra xem shuffle có được bật hay không
-                            if (!shufferSong) {
-                                // Lấy ID của bài hát hiện tại
-                                int currentSongId = SongSingleton.getInstance().getSong().getId();
-
-                                // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
-                                int nextSongIndex = -1;
-                                for (int i = 0; i < songs.size(); i++) {
-                                    if (songs.get(i).getId() == currentSongId + 1) {
-                                        nextSongIndex = i;
-                                        break;
-                                    }
-                                }
-
-                                // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
-                                if (nextSongIndex == -1) {
-                                    nextSongIndex = 0;
-                                }
-
-                                // Cập nhật vị trí hiện tại của bài hát trong danh sách
-                                SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
-
-                                // Lấy bài hát tiếp theo từ danh sách
-                                Song nextSong = songs.get(nextSongIndex);
-
-                                // Cập nhật thông tin và phát bài hát tiếp theo
-                                updateAndPlayNextSong(nextSong);
-                            } else {
-                                // Nếu shuffle được bật
-                                // Chọn một bài hát ngẫu nhiên từ danh sách
-                                Song nextSong = SongHelper.getRandomSong(songs);
-
-                                // Cập nhật thông tin và phát bài hát tiếp theo
-                                updateAndPlayNextSong(nextSong);
-                            }
-                        }
-
-                    }
-                }
-            }
-        });
+//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mediaPlayer) {
+//                if(SongSingleton.getInstance().hasSong()){
+//                    if (repeatSong) {
+//                        // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
+//                        mediaPlayer.seekTo(0);
+//                        mediaPlayer.start();
+//                    } else {
+//                        // Lấy danh sách bài hát
+//                        List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+//
+//                        // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+//                        if (songs != null && !songs.isEmpty()) {
+//                            // Kiểm tra xem shuffle có được bật hay không
+//                            if (!shufferSong) {
+//                                // Lấy ID của bài hát hiện tại
+//                                int currentSongId = SongSingleton.getInstance().getSong().getId();
+//
+//                                // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
+//                                int nextSongIndex = -1;
+//                                for (int i = 0; i < songs.size(); i++) {
+//                                    if (songs.get(i).getId() == currentSongId + 1) {
+//                                        nextSongIndex = i;
+//                                        break;
+//                                    }
+//                                }
+//
+//                                // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
+//                                if (nextSongIndex == -1) {
+//                                    nextSongIndex = 0;
+//                                }
+//
+//                                // Cập nhật vị trí hiện tại của bài hát trong danh sách
+//                                SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
+//
+//                                // Lấy bài hát tiếp theo từ danh sách
+//                                Song nextSong = songs.get(nextSongIndex);
+//
+//                                // Cập nhật thông tin và phát bài hát tiếp theo
+//                                updateAndPlayNextSong(nextSong);
+//                            } else {
+//                                // Nếu shuffle được bật
+//                                // Chọn một bài hát ngẫu nhiên từ danh sách
+//                                Song nextSong = SongHelper.getRandomSong(songs);
+//
+//                                // Cập nhật thông tin và phát bài hát tiếp theo
+//                                updateAndPlayNextSong(nextSong);
+//                            }
+//                        }
+//
+//                    }
+//                }
+//            }
+//        });
 
 
         Home.setOnClickListener(new View.OnClickListener() {
@@ -660,12 +673,9 @@ public class PlayView extends AppCompatActivity {
     }
 
     public void getAndPlaySongLocal(String filePath) {
-        // Initialize the MediaPlayer
-        MediaPlayer mediaPlayer = new MediaPlayer();
-
         try {
             // Reset MediaPlayer before use
-            mediaPlayer.reset();
+    //            mediaPlayer.reset();
 
             // Set AudioAttributes for MediaPlayer
             mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
@@ -712,57 +722,57 @@ public class PlayView extends AppCompatActivity {
             // Set the play button to display the pause icon because the song is playing
             playButton.setImageResource(R.drawable.ic_pause_40px);
 
-            // Set up listeners for the next song and previous song buttons to change the song when clicked
-            playNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Get the current song
-                    Song currentSong = SongSingleton.getInstance().getSong();
-
-                    // Find the index of the current song in the allDownloads list
-                    int currentIndex = allDownloads.indexOf(currentSong);
-
-                    // Check if the current song is not the last song in the list
-                    if (currentIndex < allDownloads.size() - 1) {
-                        // Get the next song
-                        Song nextSong = allDownloads.get(currentIndex + 1);
-
-                        // Play the next song
-                        String nextSongFilePath = nextSong.getUrl(); // Assuming Song has a getFilePath() method
-                        getAndPlaySongLocal(nextSongFilePath);
-                        Log.d("PlayView", "Playing next song: " + nextSong.getName());
-                    } else {
-                        // If the current song is the last song in the list, play the first song
-                        Song firstSong = allDownloads.get(0);
-
-                        // Play the first song
-                        String firstSongFilePath = firstSong.getUrl(); // Assuming Song has a getFilePath() method
-                        getAndPlaySongLocal(firstSongFilePath);
-                        Log.d("PlayView", "Playing first song: " + firstSong.getName());
-                    }
-                }
-            });
-
-            playPrevious.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Code to play the previous song
-                }
-            });
-
-            // Set up a listener for the play/pause button to pause or resume the song when clicked
-            playButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.pause();
-                        playButton.setImageResource(R.drawable.ic_play_arrow_24px);
-                    } else {
-                        mediaPlayer.start();
-                        playButton.setImageResource(R.drawable.ic_pause_40px);
-                    }
-                }
-            });
+//            // Set up listeners for the next song and previous song buttons to change the song when clicked
+//            playNext.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // Get the current song
+//                    Song currentSong = SongSingleton.getInstance().getSong();
+//
+//                    // Find the index of the current song in the allDownloads list
+//                    int currentIndex = allDownloads.indexOf(currentSong);
+//
+//                    // Check if the current song is not the last song in the list
+//                    if (currentIndex < allDownloads.size() - 1) {
+//                        // Get the next song
+//                        Song nextSong = allDownloads.get(currentIndex + 1);
+//
+//                        // Play the next song
+//                        String nextSongFilePath = nextSong.getUrl(); // Assuming Song has a getFilePath() method
+//                        getAndPlaySongLocal(nextSongFilePath);
+//                        Log.d("PlayView", "Playing next song: " + nextSong.getName());
+//                    } else {
+//                        // If the current song is the last song in the list, play the first song
+//                        Song firstSong = allDownloads.get(0);
+//
+//                        // Play the first song
+//                        String firstSongFilePath = firstSong.getUrl(); // Assuming Song has a getFilePath() method
+//                        getAndPlaySongLocal(firstSongFilePath);
+//                        Log.d("PlayView", "Playing first song: " + firstSong.getName());
+//                    }
+//                }
+//            });
+//
+//            playPrevious.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // Code to play the previous song
+//                }
+//            });
+//
+//            // Set up a listener for the play/pause button to pause or resume the song when clicked
+//            playButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (mediaPlayer.isPlaying()) {
+//                        mediaPlayer.pause();
+//                        playButton.setImageResource(R.drawable.ic_play_arrow_24px);
+//                    } else {
+//                        mediaPlayer.start();
+//                        playButton.setImageResource(R.drawable.ic_pause_40px);
+//                    }
+//                }
+//            });
         } catch (IOException e) {
             e.printStackTrace();
         }
