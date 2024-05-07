@@ -111,29 +111,29 @@ public class SearchDownload extends AppCompatActivity {
 
             }
         });
-//        btnPlay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-//                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
-//                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
-//                startActivity(playIntent);
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                finish();
-//            }
-//        });
-//
-//        btnShuffle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-//                SongDownload song = SongDownloadHelper.getSongByFilePath(allSongInPlayList, "filePath"); // replace "filePath" with the actual file path
-//                playIntent.putExtra("song", SongDownloadHelper.songToBundle(song));
-//                startActivity(playIntent);
-//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                finish();
-//            }
-//        });
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song clickedSong = allSongInPlayList.get(0);
+                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
+                playIntent.putExtra("url", clickedSong.getUrl());
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
+
+        btnShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song clickedSong = allSongInPlayList.get(0);
+                Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
+                playIntent.putExtra("url", clickedSong.getUrl());
+                startActivity(playIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
+            }
+        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +183,7 @@ public class SearchDownload extends AppCompatActivity {
                 // Handle the click event here
                 // For example, start a new activity and pass the clicked song data
                 Intent playIntent = new Intent(SearchDownload.this, PlayView.class);
-                playIntent.putExtra("song", SongHelper.songToBundle(clickedSong));
+                playIntent.putExtra("url", clickedSong.getUrl());
                 startActivity(playIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

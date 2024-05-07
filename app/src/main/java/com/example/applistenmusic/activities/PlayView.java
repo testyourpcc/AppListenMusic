@@ -164,28 +164,13 @@ public class PlayView extends AppCompatActivity {
         Intent intent = getIntent();
         boolean playNow = intent.getBooleanExtra("playNow", false);
 
-//        if (intent != null) {
-//            // Get the song URL and download list from the Intent
-//            String songUrl = intent.getStringExtra("url");
-//            Log.d("PlayView", "Song URL: " + songUrl);
-//            ArrayList<Song> downloadList = intent.getParcelableArrayListExtra("downloadList");
-//
-//            // Find the song in the download list
-//            Song songToPlay = null;
-//            for (Song song : downloadList) {
-//                if (song.getUrl().equals(songUrl)) {
-//                    songToPlay = song;
-//                    break;
-//                }
-//            }
-//
-//            // Play the song
-//            if (songToPlay != null) {
-//                String localFilePath = songToPlay.getUrl(); // Assuming Song has a getFilePath() method
-//                getAndPlaySongLocal(localFilePath);
-//                Log.d("PlayView", "Playing song: " + songToPlay.getName());
-//            }
-//        }
+        if (intent != null) {
+            // Get the song URL and download list from the Intent
+            String songUrl = intent.getStringExtra("url");
+            if (songUrl != null) {
+                getAndPlaySongLocal(songUrl);
+            }
+        }
 
 
         if (SongSingleton.getInstance().getSong() != null && playNow) {
