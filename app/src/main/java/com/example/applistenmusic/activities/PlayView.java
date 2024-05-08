@@ -342,26 +342,33 @@ public class PlayView extends AppCompatActivity {
 
                     // Check if the download list exists and is not empty
                     if (downloads != null && !downloads.isEmpty()) {
-                        // Get the current song
-                        Song currentSong = SongSingleton.getInstance().getSong();
+                        if (!shufferSong) {
+                            // Get the current song
+                            Song currentSong = SongSingleton.getInstance().getSong();
 
-                        // Find the index of the current song in the download list
-                        int currentIndex = downloads.indexOf(currentSong);
-                        // Check if the current song is not the last song in the list
-                        if (currentIndex < downloads.size() - 1) {
-                            // Get the next song
-                            Song nextSong = downloads.get(currentIndex + 1);
+                            // Find the index of the current song in the download list
+                            int currentIndex = downloads.indexOf(currentSong);
+                            // Check if the current song is not the last song in the list
+                            if (currentIndex < downloads.size() - 1) {
+                                // Get the next song
+                                Song nextSong = downloads.get(currentIndex + 1);
 
-                            // Play the next song
-                            String nextSongFilePath = nextSong.getUrl(); // Assuming Song has a getFilePath() method
-                            updateAndPlayNextSongLocal(nextSong);
+                                // Play the next song
+                                String nextSongFilePath = nextSong.getUrl(); // Assuming Song has a getFilePath() method
+                                updateAndPlayNextSongLocal(nextSong);
+                            } else {
+                                // If the current song is the last song in the list, play the first song
+                                Song firstSong = downloads.get(0);
+                                updateAndPlayNextSongLocal(firstSong);
+                            }
                         } else {
-                            // If the current song is the last song in the list, play the first song
-                            Song firstSong = downloads.get(0);
-                            updateAndPlayNextSongLocal(firstSong);
+                            Song nextSong = SongHelper.getRandomSongLocal(downloads);
 
-//
+                            // Cập nhật thông tin và phát bài hát tiếp theo
+                            updateAndPlayNextSongLocal(nextSong);
                         }
+
+
                     }
                 }
             }
@@ -470,11 +477,17 @@ public class PlayView extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                            if (shufferSong == true) {
+                                shufferSong = false;
+                                shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                            } else {
+                                shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                                shufferSong = true;
+                            }
                         }
                     });
                 } else {
-                    if(shufferSong == true){
+                    if (shufferSong == true) {
                         shufferSong = false;
                         shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
                     } else {
@@ -511,36 +524,43 @@ public class PlayView extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-                            // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                            if (repeatSong == true) {
+                                repeatSong = false;
+                                repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                            } else {
+                                repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                                repeatSong = true;
+                            }
                         }
                     });
                 } else {
-                if(repeatSong == true){
-                    repeatSong = false;
-                    repeatImg.setImageResource(R.drawable.ic_repeat_off);
-                } else {
-                    repeatImg.setImageResource(R.drawable.ic_repeat_on);
-                    repeatSong = true;
+                    if (repeatSong == true) {
+                        repeatSong = false;
+                        repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                    } else {
+                        repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                        repeatSong = true;
+                    }
                 }
             }
-        }
-    });
+        });
 
 
         ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!favorite) {
-                    saveData(song.getId());
-
-                    ivFavorite.setImageResource(R.drawable.ic_heart_on);
-                    favorite = true;
-
-
-                } else {
-                    removeData(song.getId());
-                    ivFavorite.setImageResource(R.drawable.ic_heart_off);
-                    favorite = false;
+                if (SongSingleton.getInstance().hasSong()) {
+                    if (SongSingleton.getInstance().getSong().getUrl().startsWith("songs")) {
+                        if (favorite) {
+                            ivFavorite.setImageResource(R.drawable.ic_heart_off);
+                            favorite = false;
+                        } else {
+                            ivFavorite.setImageResource(R.drawable.ic_heart_on);
+                            favorite = true;
+                        }
+                    } else {
+                        Toast.makeText(PlayView.this, "Bạn đang ngoại tuyến.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -559,12 +579,11 @@ public class PlayView extends AppCompatActivity {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 if (SongSingleton.getInstance().hasSong()) {
-                    if (SongSingleton.getInstance().getSong().getUrl().startsWith("songs")){
+                    if (SongSingleton.getInstance().getSong().getUrl().startsWith("songs")) {
                         if (repeatSong) {
                             // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
                             mediaPlayer.seekTo(0);
                             mediaPlayer.start();
-                        } else {
                             // Lấy danh sách bài hát
                             List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
 
@@ -608,7 +627,7 @@ public class PlayView extends AppCompatActivity {
                             }
 
                         }
-                } else {
+                    } else {
                         if (repeatSong) {
                             // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
                             mediaPlayer.seekTo(0);
@@ -648,7 +667,7 @@ public class PlayView extends AppCompatActivity {
                         }
                     }
 
-            }
+                }
             }
         });
 
@@ -751,33 +770,38 @@ public class PlayView extends AppCompatActivity {
         Download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PlayView.this, "Download.",
-                        Toast.LENGTH_SHORT).show();
-                String songname = SongSingleton.getInstance().getSong().getUrl();
-                Toast.makeText(PlayView.this, songname,
-                        Toast.LENGTH_SHORT).show();
-                DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/" + songname);
+                if (SongSingleton.getInstance().hasSong()) {
+                    if (SongSingleton.getInstance().getSong().getUrl().startsWith("songs")) {
+                        Toast.makeText(PlayView.this, "Download.",
+                                Toast.LENGTH_SHORT).show();
+                        String songname = SongSingleton.getInstance().getSong().getUrl();
+                        Toast.makeText(PlayView.this, songname,
+                                Toast.LENGTH_SHORT).show();
+                        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://applistenmusic-b4e45.appspot.com/" + songname);
 
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        String downloadUrl = uri.toString();
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String downloadUrl = uri.toString();
 
-                        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, songname); //xoá phần thừa mp3
+                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
+                                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, songname); //xoá phần thừa mp3
 
-                        downloadManager.enqueue(request);
+                                downloadManager.enqueue(request);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Xử lý lỗi nếu có
+                                Log.e("TAG", "Error downloading image", exception);
+                            }
+                        });
+                    } else {
+                        Toast.makeText(PlayView.this, "Bạn đang ngoại tuyến.", Toast.LENGTH_SHORT).show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Xử lý lỗi nếu có
-                        Log.e("TAG", "Error downloading image", exception);
-                    }
-                });
-
+                }
 
             }
         });
@@ -786,6 +810,13 @@ public class PlayView extends AppCompatActivity {
 
     public void getAndPlaySongLocal(String filePath) {
         try {
+            int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size);
+            Glide.with(PlayView.this)
+                    .load(R.drawable.local_song_default)
+                    .override(sizeInPixels, sizeInPixels)
+                    .transform(new RoundedCornersTransformation(50, 0))
+                    .circleCrop()
+                    .into(songImage);
             // Reset MediaPlayer before use
             mediaPlayer.reset();
 
@@ -920,6 +951,13 @@ public class PlayView extends AppCompatActivity {
         SongSingleton.getInstance().setSong(nextSong);
         song = SongSingleton.getInstance().getSong();
         songName.setText(nextSong.getName());
+        int sizeInPixels = getResources().getDimensionPixelSize(R.dimen.image_size);
+        Glide.with(PlayView.this)
+                .load(R.drawable.local_song_default)
+                .override(sizeInPixels, sizeInPixels)
+                .transform(new RoundedCornersTransformation(50, 0))
+                .circleCrop()
+                .into(songImage);
         // Lấy đường dẫn file của bài hát mới và phát nó
         String nextSongFilePath = nextSong.getUrl();
         getAndPlaySongLocal(nextSongFilePath);
@@ -1032,7 +1070,7 @@ public class PlayView extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(PlayView.this, "Failed to download music", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayView.this, "Failed to play song", Toast.LENGTH_SHORT).show();
             }
         });
     }

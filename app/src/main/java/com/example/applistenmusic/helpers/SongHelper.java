@@ -220,4 +220,15 @@ public class SongHelper {
         return bundle;
     }
 
+    public static Song getRandomSongLocal(List<Song> downloads) {
+        Random random = new Random();
+        int id = random.nextInt(downloads.size());
+
+//        for (Song song : songList) {
+//            if (song.getId() == id) {
+//                return song;
+//            }
+//        }
+        return downloads.get(id);
+    }
 }
