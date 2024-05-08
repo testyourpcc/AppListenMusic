@@ -21,6 +21,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.applistenmusic.helpers.NetworkUtils;
 import com.example.applistenmusic.models.PlayList;
 
 import android.media.AudioAttributes;
@@ -92,8 +93,8 @@ public class PlayView extends AppCompatActivity {
     Animation animation;
     Song song;
 
-    boolean repeatSong;
-    boolean shufferSong;
+    boolean repeatSong = false;
+    boolean shufferSong = false;
     boolean favorite = false;
     PlayList fvr;
     String currentUserId;
@@ -446,64 +447,84 @@ public class PlayView extends AppCompatActivity {
         shuffleImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("shuffle");
-                shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            int shuffleValue = dataSnapshot.getValue(Integer.class);
+                if (NetworkUtils.isNetworkConnected(PlayView.this)) {
+                    DatabaseReference shuffleRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("shuffle");
+                    shuffleRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                int shuffleValue = dataSnapshot.getValue(Integer.class);
 
-                            // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
-                            if (shuffleValue == 0) {
-                                shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
-                                shuffleRef.setValue(1);
-                                shufferSong = true;
-                            } else {
-                                shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
-                                shuffleRef.setValue(0);
-                                shufferSong = false;
+                                // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                                if (shuffleValue == 0) {
+                                    shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                                    shuffleRef.setValue(1);
+                                    shufferSong = true;
+                                } else {
+                                    shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                                    shuffleRef.setValue(0);
+                                    shufferSong = false;
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                        }
+                    });
+                } else {
+                    if(shufferSong == true){
+                        shufferSong = false;
+                        shuffleImg.setImageResource(R.drawable.ic_shuffer_off);
+                    } else {
+                        shuffleImg.setImageResource(R.drawable.ic_shuffer_on);
+                        shufferSong = true;
                     }
-                });
+                }
             }
         });
 
         repeatImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("repeat");
-                repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            int repeatValue = dataSnapshot.getValue(Integer.class);
+                if (NetworkUtils.isNetworkConnected(PlayView.this)) {
+                    DatabaseReference repeatRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("repeat");
+                    repeatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                int repeatValue = dataSnapshot.getValue(Integer.class);
 
-                            // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
-                            if (repeatValue == 0) {
-                                repeatImg.setImageResource(R.drawable.ic_repeat_on);
-                                repeatRef.setValue(1);
-                                repeatSong = true;
-                            } else {
-                                repeatImg.setImageResource(R.drawable.ic_repeat_off);
-                                repeatRef.setValue(0);
-                                repeatSong = false;
+                                // Cập nhật giao diện người dùng tùy thuộc vào giá trị của repeatValue
+                                if (repeatValue == 0) {
+                                    repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                                    repeatRef.setValue(1);
+                                    repeatSong = true;
+                                } else {
+                                    repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                                    repeatRef.setValue(0);
+                                    repeatSong = false;
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Xử lý khi có lỗi xảy ra trong quá trình đọc từ Firebase
+                        }
+                    });
+                } else {
+                if(repeatSong == true){
+                    repeatSong = false;
+                    repeatImg.setImageResource(R.drawable.ic_repeat_off);
+                } else {
+                    repeatImg.setImageResource(R.drawable.ic_repeat_on);
+                    repeatSong = true;
+                }
             }
-        });
+        }
+    });
 
 
         ivFavorite.setOnClickListener(new View.OnClickListener() {
@@ -534,61 +555,102 @@ public class PlayView extends AppCompatActivity {
             }
         });
 
-//        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mediaPlayer) {
-//                if(SongSingleton.getInstance().hasSong()){
-//                    if (repeatSong) {
-//                        // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
-//                        mediaPlayer.seekTo(0);
-//                        mediaPlayer.start();
-//                    } else {
-//                        // Lấy danh sách bài hát
-//                        List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
-//
-//                        // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
-//                        if (songs != null && !songs.isEmpty()) {
-//                            // Kiểm tra xem shuffle có được bật hay không
-//                            if (!shufferSong) {
-//                                // Lấy ID của bài hát hiện tại
-//                                int currentSongId = SongSingleton.getInstance().getSong().getId();
-//
-//                                // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
-//                                int nextSongIndex = -1;
-//                                for (int i = 0; i < songs.size(); i++) {
-//                                    if (songs.get(i).getId() == currentSongId + 1) {
-//                                        nextSongIndex = i;
-//                                        break;
-//                                    }
-//                                }
-//
-//                                // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
-//                                if (nextSongIndex == -1) {
-//                                    nextSongIndex = 0;
-//                                }
-//
-//                                // Cập nhật vị trí hiện tại của bài hát trong danh sách
-//                                SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
-//
-//                                // Lấy bài hát tiếp theo từ danh sách
-//                                Song nextSong = songs.get(nextSongIndex);
-//
-//                                // Cập nhật thông tin và phát bài hát tiếp theo
-//                                updateAndPlayNextSong(nextSong);
-//                            } else {
-//                                // Nếu shuffle được bật
-//                                // Chọn một bài hát ngẫu nhiên từ danh sách
-//                                Song nextSong = SongHelper.getRandomSong(songs);
-//
-//                                // Cập nhật thông tin và phát bài hát tiếp theo
-//                                updateAndPlayNextSong(nextSong);
-//                            }
-//                        }
-//
-//                    }
-//                }
-//            }
-//        });
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if (SongSingleton.getInstance().hasSong()) {
+                    if (SongSingleton.getInstance().getSong().getUrl().startsWith("songs")){
+                        if (repeatSong) {
+                            // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
+                            mediaPlayer.seekTo(0);
+                            mediaPlayer.start();
+                        } else {
+                            // Lấy danh sách bài hát
+                            List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
+
+                            // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+                            if (songs != null && !songs.isEmpty()) {
+                                // Kiểm tra xem shuffle có được bật hay không
+                                if (!shufferSong) {
+                                    // Lấy ID của bài hát hiện tại
+                                    int currentSongId = SongSingleton.getInstance().getSong().getId();
+
+                                    // Tìm vị trí của bài hát có ID tiếp theo trong danh sách
+                                    int nextSongIndex = -1;
+                                    for (int i = 0; i < songs.size(); i++) {
+                                        if (songs.get(i).getId() == currentSongId + 1) {
+                                            nextSongIndex = i;
+                                            break;
+                                        }
+                                    }
+
+                                    // Nếu không tìm thấy bài hát có ID tiếp theo, chọn bài hát đầu tiên trong danh sách
+                                    if (nextSongIndex == -1) {
+                                        nextSongIndex = 0;
+                                    }
+
+                                    // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                                    SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
+
+                                    // Lấy bài hát tiếp theo từ danh sách
+                                    Song nextSong = songs.get(nextSongIndex);
+
+                                    // Cập nhật thông tin và phát bài hát tiếp theo
+                                    updateAndPlayNextSong(nextSong);
+                                } else {
+                                    // Nếu shuffle được bật
+                                    // Chọn một bài hát ngẫu nhiên từ danh sách
+                                    Song nextSong = SongHelper.getRandomSong(songs);
+
+                                    // Cập nhật thông tin và phát bài hát tiếp theo
+                                    updateAndPlayNextSong(nextSong);
+                                }
+                            }
+
+                        }
+                } else {
+                        if (repeatSong) {
+                            // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
+                            mediaPlayer.seekTo(0);
+                            mediaPlayer.start();
+                        } else {
+                            // Lấy danh sách bài hát
+                            List<Song> songs = SongListSingleton.getInstance().getAllDownLoadSongIfExist();
+
+                            // Kiểm tra xem danh sách bài hát có tồn tại và không rỗng
+                            if (songs != null && !songs.isEmpty()) {
+                                // Kiểm tra xem shuffle có được bật hay không
+                                if (!shufferSong) {
+                                    // Lấy ID của bài hát hiện tại
+                                    Song currentSongURL = SongSingleton.getInstance().getSong();
+
+
+                                    int nextSongIndex = (songs.indexOf(currentSongURL) + 1) % songs.size();
+
+                                    // Cập nhật vị trí hiện tại của bài hát trong danh sách
+                                    SongListSingleton.getInstance().setCurrentIndex(nextSongIndex);
+
+                                    // Lấy bài hát tiếp theo từ danh sách
+                                    Song nextSong = songs.get(nextSongIndex);
+
+                                    // Cập nhật thông tin và phát bài hát tiếp theo
+                                    updateAndPlayNextSongLocal(nextSong);
+                                } else {
+                                    // Nếu shuffle được bật
+                                    // Chọn một bài hát ngẫu nhiên từ danh sách
+                                    Song nextSong = SongHelper.getRandomSong(songs);
+
+                                    // Cập nhật thông tin và phát bài hát tiếp theo
+                                    updateAndPlayNextSongLocal(nextSong);
+                                }
+                            }
+
+                        }
+                    }
+
+            }
+            }
+        });
 
 
         Home.setOnClickListener(new View.OnClickListener() {
