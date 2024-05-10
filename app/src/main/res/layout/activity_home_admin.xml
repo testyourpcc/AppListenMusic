@@ -56,7 +56,7 @@
     <com.github.mikephil.charting.charts.CombinedChart
         android:id="@+id/combinedChart"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="130dp" />
@@ -64,10 +64,21 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="410dp" />
+        android:layout_marginTop="380dp" />
+    <Button
+        android:id="@+id/buttonExport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/textViewMusicplayer"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="105dp"
+        android:layout_marginTop="600dp"
+        android:text="Export to PDF"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:id="@+id/menu"

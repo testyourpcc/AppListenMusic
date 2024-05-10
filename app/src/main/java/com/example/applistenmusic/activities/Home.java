@@ -2,6 +2,7 @@ package com.example.applistenmusic.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,10 +32,13 @@ public class Home extends AppCompatActivity {
     List<MenuItem> menuItems;
     List<Song> allSong, KpopSong, VpopSong, USUKSong, TrendingSong;
     RecyclerView recyclerViewKpopSong, recyclerViewUSUKSong, recyclerViewVpopSong, recyclerViewTrendingSong, recyclerViewMenuBar;
+    static final String PREFS_NAME = "CountPrefs";
+    static final String VISIT_COUNT_KEY = "visitCount";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        updateVisitCount();
         setcontrol();
         KpopSong = new ArrayList<>();
         VpopSong = new ArrayList<>();
@@ -265,6 +269,20 @@ public class Home extends AppCompatActivity {
 
 
 
+    }
+
+    private void updateVisitCount(){
+        // Lấy số lượt truy cập hiện tại từ SharedPreferences
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        int visitCount = preferences.getInt(VISIT_COUNT_KEY, 0);
+
+        // Tăng số lượt truy cập lên 1
+        visitCount++;
+
+        // Lưu số lượt truy cập mới vào SharedPreferences
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(VISIT_COUNT_KEY, visitCount);
+        editor.apply();
     }
 
     public void setcontrol() {
