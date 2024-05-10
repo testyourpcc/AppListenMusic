@@ -554,9 +554,11 @@ public class PlayView extends AppCompatActivity {
                         if (favorite) {
                             ivFavorite.setImageResource(R.drawable.ic_heart_off);
                             favorite = false;
+                            removeData(SongSingleton.getInstance().getSong().getId());
                         } else {
                             ivFavorite.setImageResource(R.drawable.ic_heart_on);
                             favorite = true;
+                            saveData(SongSingleton.getInstance().getSong().getId());
                         }
                     } else {
                         Toast.makeText(PlayView.this, "Bạn đang ngoại tuyến.", Toast.LENGTH_SHORT).show();
