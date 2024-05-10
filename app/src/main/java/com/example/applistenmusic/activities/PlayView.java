@@ -111,6 +111,7 @@ public class PlayView extends AppCompatActivity {
     ImageView BottomSheet;
     LinearLayout henGio, addToPlaylist, openPlaylist;
     private long timeLeftInMillis;
+    private ObjectAnimator rotateAnimator;
 
 
     @Override
@@ -118,6 +119,8 @@ public class PlayView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         setcontrol();
+
+        startRotateAnimation();
 
         // lấy danh sách bài hát từ điện thoại
         SongListSingleton.getInstance().getAllDownLoadSongIfExist();
@@ -275,6 +278,7 @@ public class PlayView extends AppCompatActivity {
                         mediaPlayer.seekTo(seekBar.getProgress());
                         mediaPlayer.start();
                         updateTime();
+                        startRotateAnimation();
                     } else {
                         if (!SongSingleton.getInstance().hasSong()) {
                             AlertDialogManager.showAlert(PlayView.this, "Cảnh báo", "Bạn phải chọn bài hát trước khi phát");
@@ -289,6 +293,7 @@ public class PlayView extends AppCompatActivity {
                 } else {
                     mediaPlayer.pause();
                     playButton.setImageResource(R.drawable.play_icon);
+                    rotateAnimator.cancel();
                 }
             }
         });
@@ -811,21 +816,8 @@ public class PlayView extends AppCompatActivity {
 
             }
         });
-
-        ValueAnimator rotateAnimator = ValueAnimator.ofFloat(0f, 360f);
-        rotateAnimator.setDuration(22000);
-        rotateAnimator.setInterpolator(new LinearInterpolator());
-        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        rotateAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float rotation = (float) animation.getAnimatedValue();
-                songImage.setRotation(rotation); // Cập nhật góc xoay của ImageView
-            }
-        });
-        rotateAnimator.start();
-
     }
+
 
     public void getAndPlaySongLocal(String filePath) {
         try {
@@ -1342,6 +1334,15 @@ public class PlayView extends AppCompatActivity {
         Toast.makeText(this, "Timer has finished!", Toast.LENGTH_SHORT).show();
         playButton.setImageResource(R.drawable.play_icon);
         switchTimer.setChecked(false);
+        rotateAnimator.cancel();
+    }
+
+    private void startRotateAnimation() {
+        rotateAnimator = ObjectAnimator.ofFloat(songImage,"rotation",songImage.getRotation(),songImage.getRotation() + 360f);
+        rotateAnimator.setDuration(22000);
+        rotateAnimator.setInterpolator(new LinearInterpolator());
+        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        rotateAnimator.start();
     }
 
 }
