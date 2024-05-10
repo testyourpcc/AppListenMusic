@@ -1,5 +1,7 @@
 package com.example.applistenmusic.activities;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.DownloadManager;
 import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
@@ -16,6 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
@@ -807,6 +811,19 @@ public class PlayView extends AppCompatActivity {
 
             }
         });
+
+        ValueAnimator rotateAnimator = ValueAnimator.ofFloat(0f, 360f);
+        rotateAnimator.setDuration(22000);
+        rotateAnimator.setInterpolator(new LinearInterpolator());
+        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        rotateAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float rotation = (float) animation.getAnimatedValue();
+                songImage.setRotation(rotation); // Cập nhật góc xoay của ImageView
+            }
+        });
+        rotateAnimator.start();
 
     }
 
