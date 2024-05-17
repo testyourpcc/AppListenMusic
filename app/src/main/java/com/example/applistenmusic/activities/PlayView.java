@@ -595,6 +595,7 @@ public class PlayView extends AppCompatActivity {
                             // Nếu chế độ lặp lại được bật, quay lại đầu bài hát và phát lại
                             mediaPlayer.seekTo(0);
                             mediaPlayer.start();
+                        } else {
                             // Lấy danh sách bài hát
                             List<Song> songs = SongListSingleton.getInstance().getAllSongIfExist();
 
@@ -636,7 +637,6 @@ public class PlayView extends AppCompatActivity {
                                     updateAndPlayNextSong(nextSong);
                                 }
                             }
-
                         }
                     } else {
                         if (repeatSong) {
